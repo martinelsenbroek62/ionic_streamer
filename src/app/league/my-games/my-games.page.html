@@ -1,0 +1,80 @@
+<ion-header>
+  <app-header></app-header>
+  
+  <!-- header tab buttons -->
+  <div>
+    <div>
+      <ion-segment mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="currentSegmentName">
+        <ion-segment-button value="0">
+          <ion-label>Leagues</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1">
+          <ion-label>Matches</ion-label>
+        </ion-segment-button>  
+        <ion-segment-button value="2">
+          <ion-label>Schedule</ion-label>
+        </ion-segment-button>                
+      </ion-segment>
+    </div>            
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="secondary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <ion-slides mode="md" #slides (ionSlideDidChange)="slideChanged()" scrollbar="false"> 
+    <ng-container *ngIf="errorMessage">
+      <div class="not-found-msg">{{errorMessage}}</div>
+    </ng-container>
+    <!-- My leagues display -->
+    <ion-slide>
+      <ion-content class="slide-content">
+        <ion-card class="ion-no-margin mt-7 league w-100" *ngFor="let league of myLeagues">
+          <ion-card-content (click)="goToLeaguePage(league)">
+            <ion-item lines="none">
+              <ion-avatar slot="start" class="leauge-logo">
+                <img class="img-size" [src]="ccUtil.RESOURCE_URL + league.logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14">
+                  {{league.clubName}}
+                </span>
+                <ng-container>
+                  <p>{{league.location}}</p>
+                </ng-container>
+              </ion-label>
+              <span class="status" slot="end">Playing</span>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-slide>
+    <ion-slide>
+      <ion-content>
+        <ng-container *ngIf="errorMessage">
+          <div class="not-found-msg">{{errorMessage}}</div>
+        </ng-container>
+        <!-- Start: template to display Matches List -->
+        <app-matches *ngIf="!errorMessage" [matchList]="myGames" class="w-100" (cardClick)="onCardClick($event)"></app-matches>
+        <!-- End: template to display Matches List -->
+      </ion-content>
+    </ion-slide>
+    <ion-slide>
+      <ion-content>
+        <ng-container *ngIf="errorMessage">
+          <div class="not-found-msg">{{errorMessage}}</div>
+        </ng-container>
+        <!-- Start: template to display Schedule List -->
+        <app-schedule [sourcePage]="'mySchedule'" *ngIf="!errorMessage" (availabilityClick)="updatePlayerAvailability($event)" [scheduleList]="mySchedule" class="w-100"></app-schedule>
+        <!-- End: template to display Schedule List -->
+      </ion-content>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

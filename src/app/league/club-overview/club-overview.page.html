@@ -1,0 +1,405 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">
+      CricClubs
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <div class="club-info-header" *ngIf="leagueDetails">
+    <div class="bg-club">
+      <img class="b-club" [src]="leagueDetails.backGroundImagePath ? (ccUtil.RESOURCE_URL + leagueDetails.backGroundImagePath) : '/assets/images/background.jpeg'">
+      <div class="bg-img">
+      </div>
+      <img class="profile-img" [src]="leagueDetails.logoFilePath ? (ccUtil.RESOURCE_URL + leagueDetails.logoFilePath) : '/assets/images/background.jpeg'">
+    </div>
+    <div class="name-club">
+      <h1 class="mt-0">{{league.clubName}}</h1>
+      <p class="m-0 bold"><span>{{league.location}}</span> <span class="bolder"> {{leagueDetails.followersCount}} <small>Followers</small> </span></p>
+      <ion-item lines="none" class="ion-text-left">
+        <ion-buttons class="continue-b mt-5">
+          <button block outline class="medium-button-primary mr-5" (click)="followUnfollowLeague(leagueDetails.pageId, 'FOLLOWED')">Follow</button>
+          <button block outline class="medium-button-secondary ml-5">More...</button>
+        </ion-buttons>
+      </ion-item>
+    </div>
+  </div>
+
+<!-- header tab buttons -->
+  <div>
+    <ion-segment class="sticky-me" id="sticky-segment" mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="currentSegmentName">
+        <ion-segment-button value="0">
+          <ion-label>Home</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1">
+          <ion-label>Matches</ion-label>
+        </ion-segment-button>  
+        <ion-segment-button value="2">
+          <ion-label>Points Table</ion-label>
+        </ion-segment-button>    
+        <ion-segment-button value="3">
+          <ion-label>Player Stats</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="4">
+          <ion-label>Teams</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="5">
+          <ion-label>Series</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="6">
+          <ion-label>Albums</ion-label>
+        </ion-segment-button>                  
+    </ion-segment>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content color="primary"></ion-refresher-content>
+    </ion-refresher>
+    <ion-slides mode="md" #slides (ionSlideDidChange)="slideChanged()" scrollbar="false"> 
+      <!-- League Home Tab -->
+      <ion-slide *ngIf="currentSegmentName == 0">
+        <div class="slide-content">
+          <!-- <div class="w-100"> -->
+            <ion-card class="ion-no-margin mt-7 league-des w-100">
+              <ion-card-content *ngIf="leagueDetails">
+                <ion-grid class="club-info ion-text-left p-0">
+                  <ion-row>
+                    <ion-col size="12">
+                      <p>Current Series</p>
+                      <h4>{{leagueDetails.currentSeries}}</h4>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngIf="leagueDetails.aboutClub">
+                    <ion-col size="12">
+                      <p>About</p>
+                      <h4>
+                        <span *ngIf="showFullAbout">{{leagueDetails.aboutClub}}</span>
+                        <span *ngIf="leagueDetails.aboutClub.length > 100 && !showFullAbout">
+                          {{leagueDetails.aboutClub.substring(0,100)}}</span>
+                        <ion-text color="secondary" class="bolder" (click)="showFullAbout=!showFullAbout">
+                          {{showFullAbout ? 'Show Less' : 'Show More'}}</ion-text>
+                      </h4>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+
+            <!-- News Section -->
+            <div class="newsFeeds">
+              <div class="news">
+                News  <ion-buttons class="">
+                  <button block outline (click)="viewNewsList(newsList)">View More</button>
+                  </ion-buttons>
+              </div>
+              <ion-row class="news-card">
+                <ion-col *ngFor="let news of newsList">
+                  <ion-card>
+                    <div class="img-frame">
+                      <img class="main-img" [src]="ccUtil.RESOURCE_URL + news.image" />
+                    </div>
+                    <div class="gallery-desc">
+                      <p class="title f-16">
+                        {{news.title}}
+                      </p>
+                      <p class="f-12">
+                        {{news.date}}
+                      </p>
+                    </div>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </div>
+
+            <!-- Blogs/Articles Section -->
+            <div class="newsFeeds">
+              <div class="news">
+                Blog  <ion-buttons class="">
+                  <button block outline (click)="viewBlogList(articlesList)">View More</button>
+                  </ion-buttons>
+              </div>
+              <ion-row class="news-card">
+                <ion-col *ngFor="let article of articlesList">
+                  <ion-card>
+                    <div class="img-frame">
+                      <img class="main-img" [src]="ccUtil.RESOURCE_URL + article.image" />
+                    </div>
+                    <div class="gallery-desc">
+                      <p class="title f-16">
+                        {{article.title}}
+                      </p>
+                      <p class="f-12">
+                        {{article.date}}
+                      </p>
+                    </div>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </div>
+
+            <!-- Sponsors Section -->
+            <div class="sponsors pl-8 pr-8">
+              <h5 class="f-18 bolder m-0  text-left">Sponsors</h5>
+              <ion-row>
+                <ion-col *ngFor="let sponsor of sponsorsList" class="text-center justify-content-center">
+                    <ion-avatar class="header-avatar m-auto">
+                      <img [src]="ccUtil.RESOURCE_URL + sponsor.imagePath">
+                    </ion-avatar>
+                    <p class="f-14 bolder">{{sponsor.title}}</p>
+                </ion-col>
+              </ion-row>
+            </div>
+
+            <app-social-feed [postsList]="leaguePostsList" (showPostActions)="showPostActions($event)"></app-social-feed>
+          <!-- </div> -->
+        </div>
+      </ion-slide>
+      
+      <!-- Matches Tab -->
+      <ion-slide *ngIf="currentSegmentName == 1">
+        <div class="w-100">
+          <ion-card class="ion-no-margin mt-7 league w-100 border-radius-0 bs-0">
+            <ion-card-content class="internal-tabs">
+              <ion-row>
+                <ion-col size="12" class="text-center p-0">
+                  <ion-buttons class="continue-b tabs">
+                    <button [class]="showResults ? 'active' : ''" (click)="showResults=true;showSchedule=false;getMatchesOrSchedules()">
+                      Results</button>
+                    <button [class]="showSchedule ? 'active' : ''" (click)="showSchedule=true;showResults=false;getMatchesOrSchedules()">
+                      Schedule</button>
+                  </ion-buttons>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+
+          <!-- Series and Team dropdowns -->
+          <div class="select-series-teams">
+            <ion-row class="border-bottom"> 
+              <ion-col size="6" class="dropdown-100 p-0">
+                <ion-select class="f-14 bg-white pr-8" name="selectSeries" placeholder="Select Series" id="selectSeries" [(ngModel)]="selectSeriesDropdownMatches" (ionChange)="getTeamsList(selectSeriesDropdownMatches)">
+                  <ion-select-option [value]="''">
+                    All
+                  </ion-select-option>
+                  <ion-select-option [value]="series.seriesID" *ngFor="let series of seriesList">
+                    {{series.seriesName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+              <ion-col size="6" class="dropdown-100 p-0">
+                <ion-select class="f-14 bg-white pr-8" name="selectTeam" placeholder="Select Team" id="selectTeam" [(ngModel)]="selectTeamDropdownMatches" (ionChange)="getMatchesOrSchedules()">
+                  <ion-select-option [value]="''">
+                    All
+                  </ion-select-option>
+                  <ion-select-option [value]="team.teamID" *ngFor="let team of teamsList">
+                    {{team.teamName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </div>  
+
+          <app-matches *ngIf="showResults && matchesResultsList" [matchList]="matchesResultsList" class="w-100"></app-matches>
+          <ng-container>
+            <ion-col *ngIf="showResults && matchesResultsList" class="view-more">
+              <button block outline class="medium-button-primary mr-5" (click)="getMoreMatches()">View More</button>
+            </ion-col>
+          </ng-container>
+          <!-- <ion-row *ngIf="showResults && matchesResultsList">
+            <ion-col class="text-center">
+              <ion-buttons>
+                <button block outline class="medium-button-primary mr-5" (click)="getMoreMatches()">
+                  Load More</button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row> -->
+          <app-schedule [sourcePage]="'clubOverview'" *ngIf="showSchedule && schedulesList" [scheduleList]="schedulesList" class="w-100"></app-schedule>
+        </div>
+      </ion-slide>
+
+      <!-- Points Table Tab -->
+      <ion-slide *ngIf="currentSegmentName == 2">
+        <div class="slide-content">
+          <div class="w-100">
+            <ion-row class="select-series-teams">
+              <ion-col size="12" class="dropdown-100 p-0">
+                <ion-select class="f-14 bg-white pr-8" name="selectSeries" placeholder="Select Series" id="selectSeries" [(ngModel)]="selectSeriesDropdown" (ionChange)="getPointsTable()">
+                  <ion-select-option [value]="''">
+                    All
+                  </ion-select-option>
+                  <ion-select-option [value]="series.seriesID" *ngFor="let series of seriesList">
+                    {{series.seriesName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+
+            <ion-card *ngFor="let point of pointsList" class="ion-no-margin mt-7 league-table w-100">
+              <ion-card-subtitle>{{point.groupName}}</ion-card-subtitle>
+              <ion-row class="head"> 
+                <ion-col size="1">No</ion-col>
+                <ion-col size="3">Team Name</ion-col>
+                <ion-col size="1">M</ion-col>
+                <ion-col size="1">W</ion-col>
+                <ion-col size="1">L</ion-col>
+                <ion-col size="2">N/R</ion-col>
+                <ion-col size="1">PTS</ion-col>
+                <ion-col size="2">NRR</ion-col>
+              </ion-row>
+              <ion-row *ngFor="let team of point.teams; let i = index">
+                <ion-col size="1">{{i+1}}</ion-col>
+                <ion-col size="3" class="team-name">{{team.teamName}}</ion-col>
+                <ion-col size="1">{{team.team.matches}}</ion-col>
+                <ion-col size="1">{{team.team.won}}</ion-col>
+                <ion-col size="1">{{team.team.lost}}</ion-col>
+                <ion-col size="2">{{team.team.noResult}}</ion-col>
+                <ion-col size="1" class="team-name">{{team.team.points}}</ion-col>
+                <ion-col size="2">{{team.team.netRunRate}}</ion-col>
+              </ion-row>
+            </ion-card>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Player Stats Tab -->
+      <ion-slide *ngIf="currentSegmentName == 3">
+        <div class="slide-content">
+          <!-- Series and Team dropdowns -->
+          <div class="select-series-teams">
+            <ion-row>
+              <ion-col class="dropdown-100 p-0">
+                <ion-select class="f-14 bg-white pr-8" name="selectSeries" placeholder="Select Series" id="selectSeries" [(ngModel)]="selectSeriesDropdown" (ionChange)="getAllTopStats()">
+                  <ion-select-option [value]="''">
+                    All
+                  </ion-select-option>
+                  <ion-select-option [value]="series.seriesID" *ngFor="let series of seriesList">
+                    {{series.seriesName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </div>
+
+          <ion-card class="main-card w-100" *ngFor="let stats of allTopStatsList">
+            <ion-card-header (click)="playerStatsPage(stats)">
+              <ion-row>
+                <ion-col class="f-14 card-header-font text-left">
+                  <ion-text color="primary">{{stats.category}}</ion-text>
+                </ion-col>
+                <ion-col class="text-right">
+                  <ion-icon color="primary" name="chevron-forward-outline"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="leauge-logo">
+                  <img class="img-size" [src]="ccUtil.RESOURCE_URL + stats.profilepic_file_path">
+                </ion-avatar>
+                <ion-label size="9" class="ion-align-items-center">
+                  <span class="card-header-font f-14">
+                    {{stats.playerName}}
+                  </span>
+                  <ng-container>
+                    <p class="f-12">{{stats.teamName}}</p>
+                  </ng-container>
+                </ion-label>
+                <span slot="end" class="f-22 bold">{{stats.value}}</span>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+
+      <!-- Teams Tab -->
+      <ion-slide *ngIf="currentSegmentName == 4">
+        <div class="slide-content">
+          <div class="select-series-teams">
+            <ion-row>
+              <ion-col size="12" class="dropdown-100 p-0">
+                <ion-select class="f-14 bg-white pr-8" name="selectSeries" placeholder="Select Series" id="selectSeries" [(ngModel)]="selectSeriesDropdown" (ionChange)="getTeamsList(selectSeriesDropdown)">
+                  <ion-select-option [value]="''">
+                    All
+                  </ion-select-option>
+                  <ion-select-option [value]="series.seriesID" *ngFor="let series of seriesList">
+                    {{series.seriesName}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+          </div>
+          <!-- create team button -->
+          <ion-button expand="block" fill="clear" (click)="addUpdateTeamModal()">
+            <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+            Create Team
+          </ion-button>
+          <ion-card class="ion-no-margin main-card league w-100" *ngFor="let team of teamsList" (click)="actionOnTeamClick(team)">
+            <ion-card-content>
+              <ion-item lines="none">
+                <ion-avatar slot="start" class="leauge-logo">
+                  <img class="img-size" [src]="ccUtil.RESOURCE_URL + team.logo_file_path ? ccUtil.RESOURCE_URL + team.logo_file_path : '/assets/images/background.jpeg'">
+                </ion-avatar>
+                <ion-label size="9" class="ion-align-items-center">
+                  <span class="card-header-font f-14">
+                    {{team.teamName}} ({{team.teamID}})
+                  </span>
+                  <ng-container>
+                    <div class="captain">
+                    <p>Captain: <b>{{team.captainName}}</b></p>
+                    <p class="ml-10">Vice Captain: <b>{{team.viceCaptainName}}</b></p>
+                  </div>
+                  </ng-container>
+                </ion-label>
+                <ion-button slot="end" shape="round" fill="clear">
+                  <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+
+      <!-- Series Tab -->
+      <ion-slide *ngIf="currentSegmentName == 5">
+        <div class="slide-content">
+          <!-- create team button -->
+          <ion-button expand="block" fill="clear" (click)="addUpdateSeriesModal()">
+            <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+            Create Series
+          </ion-button>
+          <ion-card class="ion-no-margin main-card league w-100" *ngFor="let series of seriesList" (click)="actionOnSeriesClick(series)">
+            <ion-card-content>
+              <ion-item lines="none">
+                <!-- <ion-avatar slot="start" class="leauge-logo">
+                  <img class="img-size" [src]="ccUtil.RESOURCE_URL + team.logo_file_path">
+                </ion-avatar> -->
+                <ion-label size="9" class="ion-align-items-center">
+                  <span class="card-header-font f-14">
+                    {{series.seriesName}} ({{series.seriesID}})
+                  </span>
+                </ion-label>
+                <ion-button slot="end" shape="round" fill="clear">
+                  <ion-icon slot="icon-only" name="ellipsis-vertical"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-slide>
+
+      <!-- Albums Tab  -->
+      <ion-slide *ngIf="currentSegmentName == 6">
+        <div class="w-100">
+          <app-albums *ngIf="albumsList && league" [albumsList]="albumsList" [clubId]="league.clubId"></app-albums>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

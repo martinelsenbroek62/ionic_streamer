@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">Match Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+        <ion-item lines="none">
+          <p class="f-16">{{matchData.teamOneName}} <span>VS</span> {{matchData.teamTwoName}}</p>
+          <ion-badge slot="start">{{matchData.matchDate}}</ion-badge>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+        <pre>{{ballsData}}</pre>
+
+        <ion-item lines="none" class="submit ion-margin-top">    
+          <ion-button shape="round" (click)="uploadData()"><ion-icon item-start name="cloud-upload"></ion-icon> Upload</ion-button>
+          <ion-button shape="round" class="cancel" (click)="shareData()"><ion-icon item-start name="share"></ion-icon> Share</ion-button>
+        </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

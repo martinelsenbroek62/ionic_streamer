@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16"> Add Comment</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end">
+      
+      <ion-text slot="end" class="ion-padding" (click)='ccUtil.showNetworkStatus()'>
+        <ion-icon name="ellipse" [color]="ccUtil.isNetworkConnected ? 'success' : 'medium'" style="font-size:smaller;"></ion-icon>
+      </ion-text>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="main-card">
+    <ion-card-content>     
+      <ion-item *ngIf="matchType != 'superOver'" lines="none" class="border-bottom">
+        <ion-label>Match Level Comments</ion-label>
+        <ion-checkbox color="dark" [(ngModel)]="matchLevel"></ion-checkbox>
+      </ion-item>
+      
+      <ion-col class="comments">
+        <ion-label class="m-0">Comments</ion-label>
+        <textarea [(ngModel)]="comments" class="mt-0 f-16 pl-8" placeholder="Write comment"></textarea>
+      </ion-col>
+      <ion-label *ngIf="showError" color="danger" class="pl-8">Please Enter Comments</ion-label>
+      <ion-label *ngIf="showErrorDataTooLong" color="danger">Data is too long, you can add multiple comments</ion-label>
+
+      <ion-grid class="comment">
+        <ion-row>
+          <div class="btn" (click)="setAutoComment('LongOff')">
+            <ion-badge>Long Off</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('ThirdMan')">
+            <ion-badge>Third Man</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('Point')">
+            <ion-badge>Point</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('Cover')">
+            <ion-badge>Cover</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('Wide')">
+            <ion-badge>Wide</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('SquareLeg')">
+            <ion-badge>Square Leg</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('Straight')">
+            <ion-badge>Straight</ion-badge>
+          </div>
+          <div class="btn" (click)="setAutoComment('MidWicket')">
+            <ion-badge>Mid Wicket</ion-badge>
+          </div>
+          <div>
+            
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+      <ion-item lines="none" class="submit">    
+        <ion-button shape="round" (click)="saveComments()">Save</ion-button>
+        <ion-button shape="round" class="cancel" (click)="dismiss()">Cancel</ion-button>
+      </ion-item>
+  
+
+</ion-content>

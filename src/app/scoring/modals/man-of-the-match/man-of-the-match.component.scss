@@ -1,0 +1,40 @@
+ion-item ion-label{
+    text-align: left;
+    color: var(--ion-color-primary);
+    font-size: 1em!important;
+    display:inline-block;
+    margin:0px!important;
+}
+ion-list ion-item{
+    padding-bottom: 8px;
+}
+ion-buttons{
+    text-align: center;
+    padding-bottom: 8px;
+}
+p{
+   display: block;
+   white-space: normal;
+}
+
+.submit{
+    // border-top: 1px solid var(--ion-color-medium);
+    justify-content: center;
+    display: grid;
+    ion-button{
+        margin: 10px;
+        width: 80px;
+    }
+
+    .cancel{
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50px;
+    --background: #fff;
+    color: var(--ion-color-primary);
+    }
+
+}
+
+.radio-button{
+    margin-right: 7px;
+}

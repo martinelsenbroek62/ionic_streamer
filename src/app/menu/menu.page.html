@@ -1,0 +1,140 @@
+<ion-header>
+      <ion-toolbar>
+        <img src="../../assets/images/logo1.png" class="logoclas" style="width: 85%;">
+        <ion-icon routerLink="/maintabs/myhome" name="menu-sharp" slot="start" class="menuicon" style="color:#d9340f;margin-left:10px;font-size: 25px;" ></ion-icon>
+        <!-- <ion-icon name="notifications" slot="end" class="menuicon" style="color:#d9340f;font-size: 20px;"></ion-icon> -->
+    </ion-toolbar>
+</ion-header>
+<style>
+    .ripple-parent {
+            position: relative;
+            overflow: hidden;
+        }
+</style>
+<ion-content>
+        <ion-grid>
+            <div *ngIf="userObject && userObject.userRole && (userObject.userRole == '2' || userObject.userRole == 2)">
+                <ion-row class="menulist" routerLink="/dashboard-list">
+                    <ion-col size="10">
+                        <div>
+                            <h6>Admin Dashboard</h6>
+                        </div>
+                    </ion-col>
+                    <ion-col size="2">
+                        <ion-icon name="chevron-forward-sharp"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </div>
+            <div>
+              <ion-row class="menulist" routerLink="/pointssystem">
+                  <ion-col size="10">
+                      <div>
+                          <h6>Points System</h6>
+                      </div>
+                  </ion-col>
+                  <ion-col size="2">
+                      <ion-icon name="chevron-forward-sharp"></ion-icon>
+                  </ion-col>
+              </ion-row>
+           </div>
+           <div>           
+            <ion-row class="menulist" routerLink="/offers" style="outline:none">
+                <ion-col size="10">
+                    <div>
+                        <h6>Offers</h6>                        
+                    </div>
+                </ion-col>
+                <ion-col size="2">
+                    <ion-icon name="chevron-forward-sharp"></ion-icon>
+                </ion-col>              
+            </ion-row>
+            
+          </div>
+          <div>
+          <ion-row class="menulist" routerLink="/aboutus">
+              <ion-col size="10">
+                  <div>
+                      <h6>About Us</h6>
+                  </div>
+              </ion-col>
+              <ion-col size="2">
+                  <ion-icon name="chevron-forward-sharp"></ion-icon>
+              </ion-col>
+          </ion-row>
+        </div>
+        <div>
+          <ion-row class="menulist" routerLink="/contactus">
+              <ion-col size="10">
+                  <div>
+                      <h6>Contact Us</h6>
+                  </div>
+              </ion-col>
+              <ion-col size="2">
+                  <ion-icon name="chevron-forward-sharp"></ion-icon>
+              </ion-col>
+          </ion-row>
+       </div>
+       <div>
+        <ion-row class="menulist">
+            <ion-col size="10" (click)="toggleAccordion()">
+                <div>
+                    <h6>Policies</h6>
+                </div>
+            </ion-col>
+            <ion-col size="2">
+              
+              <ion-icon name="chevron-up-sharp" *ngIf="isMenuOpen"></ion-icon>
+                <!-- <ion-icon name="chevron-forward-sharp"></ion-icon> -->
+                <ion-icon name="chevron-forward-sharp" *ngIf="!isMenuOpen"></ion-icon>
+            </ion-col>
+        </ion-row>
+         <ion-row *ngIf="isMenuOpen">
+             <ion-col size="12">
+                  <ul>
+                      <li routerLink="/privacypolicy">Privacy Policy <span> <ion-icon name="chevron-forward-sharp" class="innermenu"></ion-icon></span></li>
+                      <li routerLink="/refundpolicy">Refund Policy  <span> <ion-icon name="chevron-forward-sharp" class="innermenu"></ion-icon></span></li>
+                      <li routerLink="/disclaimer">Disclaimer  <span> <ion-icon name="chevron-forward-sharp" class="innermenu"></ion-icon></span></li>
+                      <li routerLink="/termsconditions">Terms and Conditions  <span> <ion-icon name="chevron-forward-sharp" class="innermenu"></ion-icon></span></li>
+                      <li routerLink="/legality">Legality  <span> <ion-icon name="chevron-forward-sharp" class="innermenu"></ion-icon></span></li>
+                  </ul>
+             </ion-col>
+         </ion-row>
+       </div>
+       <div>
+        <ion-row class="menulist" routerLink="/faqs">
+            <ion-col size="10">
+                <div>
+                    <h6>FAQ's</h6>
+                </div>
+            </ion-col>
+            <ion-col size="2">
+                <ion-icon name="chevron-forward-sharp"></ion-icon>
+            </ion-col>
+        </ion-row>
+     </div>
+     <div>
+      <ion-row class="menulist" routerLink="/howtoplay">
+          <ion-col size="10">
+              <div>
+                  <h6>How To Play</h6>
+              </div>
+          </ion-col>
+          <ion-col size="2">
+              <ion-icon name="chevron-forward-sharp"></ion-icon>
+          </ion-col>
+      </ion-row>
+   </div>
+   <div>
+    <ion-row class="menulist">
+        <ion-col size="11">
+            <div>
+                <h6>App Version <span style="float: right;">{{APP_VERSION}}</span></h6>
+            </div>
+        </ion-col>
+        <ion-col size="1">
+           
+        </ion-col>
+    </ion-row>
+ </div>
+        </ion-grid>
+</ion-content>

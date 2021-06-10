@@ -1,0 +1,14 @@
+.submit{
+    border-top: 1px solid var(--ion-color-medium);
+    justify-content: center;
+    display: grid;
+    ion-button{
+        margin: 10px;
+        width: 80px;
+        --border-radius: 50px;
+    }
+}
+
+ion-card{
+    box-shadow: none;
+}

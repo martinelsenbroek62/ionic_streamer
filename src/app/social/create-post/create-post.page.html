@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16 p-0">Create Post</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="f-14 post" (click)="savePost()">Post</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list class="h-100">
+      <div class="ion-no-padding">
+        <ion-item lines="none">
+          <ion-avatar slot="start" class="header-avatar">
+            <img src="assets/images/dhoni.png">
+          </ion-avatar>
+          <div class="d-flex">
+          <ion-text color="dark" class="f-14">{{ccUtil.userFullName}}</ion-text>
+          <ion-select slot="end" class="f-12 select-option bg-white" name="selectSharing" id="selectSharing" [(ngModel)]="selectSharingId">
+            <ion-select-option value="private"> Only me </ion-select-option>
+            <ion-select-option value="friends"> Friends </ion-select-option>
+            <ion-select-option value="public"> Public </ion-select-option>
+          </ion-select>
+        </div>
+        </ion-item>
+      </div>
+      <ion-item lines="none" class="post-text">
+        <ion-textarea rows="6" placeholder="What's on your mind, ..... ?" class="desc" [(ngModel)]="postDescription"></ion-textarea>
+        <!-- <span class="text-danger spantop" *ngIf="(contactFormControl.message.touched || submitted) && contactFormControl.message.errors?.required">
+          Description is required
+        </span> -->
+      </ion-item>
+      <ion-item lines="none">
+        <ng-container *ngIf="loadingSpinner">
+          <div class="loading-spinner-wrap">
+            <ion-spinner class="loading-spinner-color"></ion-spinner>
+          </div>
+        </ng-container>
+        <div class="post-images">
+          <div class="bg-image ion-margin-top" *ngIf="imageUrl">
+            <img class="imgSize" [src]="ccUtil.RESOURCE_URL + imageUrl">
+          </div>
+        </div>
+      </ion-item>
+      <!-- <div class="ion-padding pb-0">
+        <ion-item lines="none" (click)="addToYourPost()">
+          <ion-label class="add-post ion-text-center ion-no-margin f-16"> 
+            Add to Your Post
+          </ion-label>
+        </ion-item>
+      </div> -->
+      <ion-card class="add-options">
+        <ion-card-header class="f-16 text-left bolder">
+          Add to Your Post
+        </ion-card-header>
+        <ion-card-content class="pl-0 pr-0">
+          <ion-item (click)="selectImage()" lines="none">
+            <ion-icon color="primary" class="f-18" name="images"></ion-icon> 
+            Add Image
+          </ion-item>
+          <ion-item (click)="showImg=!showImg" lines="none">
+            <ion-icon color="primary" class="f-18" name="videocam"></ion-icon> 
+            Add Video
+          </ion-item>
+          <ion-item (click)="tagFriendsModal()" lines="none">
+            <ion-icon color="primary" class="f-18" name="person-add"></ion-icon> 
+            Tag Friends
+          </ion-item>
+          <ion-item lines="none">
+            <ion-icon color="primary" class="f-18" name="easel"></ion-icon> 
+            Scorecard
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  <!-- </form> -->
+</ion-content>
+<!-- <ion-footer>
+  <ion-row>
+    <ion-col class="ion-text-right ion-margin-top">
+      <button block outline class="medium-button-secondary">
+        POST
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-footer> -->

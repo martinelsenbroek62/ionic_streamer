@@ -1,0 +1,54 @@
+
+.verify {
+    h4 {
+        letter-spacing: 1px;
+        text-align: center;
+        color: #296cac;
+        font-weight: 600;
+    }
+    h5 {
+        letter-spacing: 1px;
+        text-align: center;
+        color: #dd5727;
+        font-weight: 600;
+    }
+    p {
+        margin: 20px 30px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 23px;
+    }
+   
+}
+ion-input{
+    input{
+        padding-left: 0px;
+    }
+}
+
+.otppage img {
+    width: 45%;
+    margin: auto;
+    display: block;
+}
+.otppage h5 {
+    margin-top: 35px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.otppage p {
+    text-align: center;
+    margin: 20px;
+    font-weight: 600;
+    color: grey;
+    line-height: 28px;
+}
+.otp {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;   
+    text-align: center;
+    border-bottom: 2px solid grey;
+  }

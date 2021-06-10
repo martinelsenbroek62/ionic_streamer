@@ -1,0 +1,141 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">{{seriesObj ? 'Update Series' : 'Create Series'}}</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <form [formGroup]="formData" (ngSubmit)="submitForm()" novalidate>
+    <ion-item lines="full">
+      <ion-label position="floating">* Series Name</ion-label>
+      <ion-input formControlName="name" type="text"></ion-input>
+    </ion-item>
+    <div class="text-danger ion-padding-start" *ngIf="isSubmitted && errorControl.name.errors?.required">
+      Name is required.
+    </div>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Start Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" pickerFormat="MM/DD/YYYY" [max]="maxDate" formControlName="startDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">* Groups</ion-label>
+      <ion-input maxlength="100" formControlName="groups" type="text" required></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.groups.errors?.required">
+      Groups number is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.groups.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-select class="f-14 bg-white pr-8" name="maxOvers" placeholder="Maximum Overs" formControlName="maxOvers" style="display: contents;">
+        <ion-select-option [value]="over" *ngFor="let over of oversArray">
+          {{over}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.maxOvers.errors?.required">
+      Maximum Overs is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.maxOvers.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-select class="f-14 bg-white pr-8" name="maximumPlayers" placeholder="Maximum Players per Team in a match" formControlName="maximumPlayers" style="display: contents;">
+        <ion-select-option [value]="number" *ngFor="let number of maxPlayersPerTeam">
+          {{number}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.maximumPlayers.errors?.required">
+      Maximum Players is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.maximumPlayers.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-select class="f-14 bg-white pr-8" name="teamLimit" placeholder="Maximum Player Limit for Roster" formControlName="teamLimit" style="display: contents;">
+        <ion-select-option [value]="number" *ngFor="let number of playerLimitTeamRoster">
+          {{number}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.teamLimit.errors?.required">
+      Maximum Players is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.teamLimit.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-select class="f-14 bg-white pr-8" name="ballType" placeholder="Ball Type" formControlName="ballType" style="display: contents;">
+        <ion-select-option [value]="ballType.id" *ngFor="let ballType of BallTypes">
+          {{ballType.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.ballType.errors?.required">
+      Ball Type is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.ballType.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-select class="f-14 bg-white pr-8" name="seriesType" placeholder="Series Type" formControlName="seriesType" style="display: contents;">
+        <ion-select-option [value]="seriesType.id" *ngFor="let seriesType of SeriesTypes">
+          {{seriesType.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.seriesType.errors?.required">
+      Series Type is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.seriesType.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-label position="floating">* Win Points</ion-label>
+      <ion-input formControlName="winPoints" type="text" required></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.winPoints.errors?.required">
+      Win Points is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.winPoints.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-item lines="full">
+      <ion-label position="floating">* Bonus Points</ion-label>
+      <ion-input formControlName="bonusPoints" type="text" required></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bonusPoints.errors?.required">
+      Bonus Points is required.
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.bonusPoints.errors?.pattern">
+      Only numerical values allowed.
+    </span>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" [disabled]="loadingSpinner">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

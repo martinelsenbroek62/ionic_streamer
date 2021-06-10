@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" (click)="dismissModal()">
+      <ion-back-button class="ion-back-button-display"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0"> Scoring Actions</ion-title>
+    <ion-buttons slot="end">
+      <!-- indicator -->
+      <ion-text slot="end" class="ion-padding" (click)='ccUtil.showNetworkStatus()'>
+        <ion-icon name="ellipse" [color]="ccUtil.isNetworkConnected ? 'success' : 'medium'" style="font-size:smaller;"></ion-icon>
+      </ion-text>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="w-100 ion-no-margin">
+    <ion-card-header class="ion-no-padding">
+      <div class="border-bottom-grey">
+        <ion-item lines="none">
+          <ion-label>Disable PitchMap</ion-label> 
+          <ion-toggle [(ngModel)]="actionsData.disablePitchMap"></ion-toggle>        
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Disable Directions</ion-label> 
+          <ion-toggle [(ngModel)]="actionsData.disableDirections"></ion-toggle>        
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Disable On Strike Popup</ion-label>
+          <ion-toggle [(ngModel)]="actionsData.disableOnStrikePopup"></ion-toggle>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Extras As Good Ball</ion-label>
+          <ion-toggle [(ngModel)]="actionsData.extrasAsGoodBall"></ion-toggle>
+        </ion-item>
+      </div>
+    </ion-card-header>      
+    <ion-card-content class="ion-no-padding">
+      <ion-item lines="none" (click)="setClickedProp('addPlayers')">
+        <ion-label>Add Players</ion-label>    
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('removePlayers')">
+        <ion-label>Remove Players</ion-label>    
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('addPlayersFromClub')">
+        <ion-label>Add Players from Club</ion-label>    
+      </ion-item>
+      <ion-item lines="none" [disabled]="(actionsData.inningsNumber > 1 || actionsData.ballsLength > 3)" (click)="setClickedProp('changeToss')">
+        <ion-label>Change Toss</ion-label>    
+      </ion-item>
+      <ion-item lines="none" [disabled]="actionsData.inningsNumber >= 2 || actionsData.seriesType == 'Test' || actionsData.isDls" (click)="setClickedProp('changeMaxOvers')">
+        <ion-label>Change Max Overs</ion-label>    
+      </ion-item>
+      <ion-item lines="none" [disabled]="actionsData.inningsNumber < 2 || actionsData.seriesType == 'Test'" (click)="setClickedProp('targetRuns')">
+        <ion-label>Change Target Runs</ion-label>    
+      </ion-item>
+      <ion-item lines="none" [disabled]="actionsData.seriesType == 'Test'" (click)="setClickedProp('delayedMatch')">
+        <ion-label>Delayed Match</ion-label>    
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('retireBatsman')">
+        <ion-label>Retire Batsman</ion-label>    
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('retireBowler')">
+        <ion-label>Retire Bowler</ion-label>    
+      </ion-item>
+      <ion-item lines="none" color="light" *ngIf="actionsData.inningsNumber == 1" (click)="setAction('startSecondInning')">
+        <ion-label>Start Second Innings</ion-label>    
+      </ion-item>
+      <ion-item lines="none" color="light" *ngIf="actionsData.inningsNumber == 2 && this.actionsData.seriesType == 'Test'" (click)="setAction('startThirdInning')">
+        <ion-label>Start Third Innings</ion-label>    
+      </ion-item>
+      <ion-item lines="none" color="light" *ngIf="actionsData.inningsNumber == 3 && this.actionsData.seriesType == 'Test'" (click)="setAction('startFourthInning')">
+        <ion-label>Start Fourth Innings</ion-label>    
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('endOver')">
+        <ion-label>End Over</ion-label>    
+      </ion-item>
+      <ion-item lines="none" color="light" *ngIf="(actionsData.inningsNumber == 2 && this.actionsData.seriesType != 'Test') || (actionsData.inningsNumber == 4 && this.actionsData.seriesType == 'Test')" (click)="setAction('endMatch')">
+        <ion-label>End Match</ion-label>
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('changeRunForWide')">
+        <ion-label>Change Runs for Wide - {{ actionsData.runsForWide }} run(s)</ion-label>    
+      </ion-item>
+      <ion-item lines="none" (click)="setClickedProp('changeRunForNoBall')">
+        <ion-label>Change Runs for No Ball - {{ actionsData.runsForNoBall }} run(s)</ion-label>    
+      </ion-item>
+    </ion-card-content>
+    </ion-card>
+    <ion-item lines="none" class="submit">
+      <ion-button (click)="dismissModal()">Done</ion-button>
+    </ion-item>
+</ion-content>

@@ -1,0 +1,248 @@
+<ion-header>
+  <!-- Header -->
+  <!-- <app-header></app-header> -->
+
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">CricClubs</ion-title>
+  </ion-toolbar>
+
+  <!-- search box -->
+  <ion-item>
+    <ion-input [(ngModel)]="searchString" class="search" type="search" placeholder=""><ion-icon name="search" class="f-16"></ion-icon></ion-input>
+    <button color="secondary" class="search-button" (click)="search()">Search</button>
+  </ion-item>
+  
+  <!-- header tab buttons -->
+  <div>
+    <div>
+      <ion-segment mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="currentSegmentName">
+        <ion-segment-button value="0">
+          <ion-label>All</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1">
+          <ion-label>People</ion-label>
+        </ion-segment-button>  
+        <ion-segment-button value="2">
+          <ion-label>Posts</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="3">
+          <ion-label>League</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="4">
+          <ion-label>Academy</ion-label>
+        </ion-segment-button>                
+      </ion-segment>
+    </div>            
+  </div>
+</ion-header>
+
+<ion-content>
+  <!-- All Results -->
+  <ion-slides mode="md" #slides (ionSlideDidChange)="slideChanged()" scrollbar="false"> 
+    <ion-slide>
+      <ion-content class="slide-content">
+        <ng-container *ngIf="loadingSpinner">
+          <div class="loading-spinner-wrap">
+            <ion-spinner class="loading-spinner-color"></ion-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingSpinner && (searchList.usersList && searchList.usersList.length <= 0) && (searchList.postsList && searchList.postsList.length <= 0) && (searchList.leaguesList && searchList.leaguesList.length <= 0)  && (searchList.academyList && searchList.academyList.length <= 0)">
+          <div class="not-found-msg">No Results Found</div>
+        </ng-container>
+        <!-- People list -->
+        <ion-card class="ion-no-margin mt-7 main-card b-0 w-100" *ngIf="searchList.usersList && searchList.usersList.length > 0">
+          <ion-card-header class="ion-text-left">
+            <p class="mb-5 mt-5 bolder f-16">People</p>
+          </ion-card-header>
+          <ion-card-content class="p-0">
+            <ion-item *ngFor="let user of searchList.usersList">
+              <ion-avatar slot="start" class="leauge-logo">
+                <!-- <img class="imgSize ml-5" src="assets/images/logo-CC.png"> -->
+                <img class="img-size ml-5" [src]="ccUtil.RESOURCE_URL + user.profilePicPath" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'" onerror="this.src='assets/images/logo-CC.png'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14" (click)="goToUserPage(user.userId)">
+                  {{user.firstName}} {{user.lastName}}
+                </span>
+                <ng-container>
+                  <p>{{user.location}}</p>
+                </ng-container>
+              </ion-label>
+              <button slot="end" color="secondary" *ngIf="user.isFollowing == 0" (click)="followUnfollowUser(user.userId, 'FOLLOWED')">Follow</button>
+              <button slot="end" color="primary" *ngIf="user.isFollowing == 1" class="following"><ion-icon name="checkmark-sharp" class="mr-5"></ion-icon>Following</button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+        <!-- Posts List -->
+        <app-social-feed [postsList]="searchList.postsList" (showPostActions)="showPostActions($event)">
+        </app-social-feed>
+        <!-- League List -->
+        <ion-card class="ion-no-margin mt-7 main-card b-0 w-100" *ngIf="searchList.leaguesList && searchList.leaguesList.length > 0">
+          <ion-card-header class="ion-text-left">
+            <p class="mb-5 mt-5 bolder f-16">Leagues</p>
+          </ion-card-header>
+          <ion-card-content class="p-0">
+            <ion-item  *ngFor="let league of searchList.leaguesList">
+              <ion-avatar slot="start" class="leauge-logo">
+                <img class="img-size" [src]="ccUtil.RESOURCE_URL + league.logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'" onerror="this.src='assets/images/logo-CC.png'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14" (click)="goToLeaguePage(league)">
+                  {{league.clubName}}
+                </span>
+                <ng-container>
+                  <p><span *ngIf="league.location">{{league.location}} </span> <span *ngIf="league.followersCount > 0"> Followers - {{league.followersCount}}</span></p>
+                </ng-container>
+              </ion-label>
+              <button slot="end" color="secondary" *ngIf="league.isFollowing == 0" (click)="followUnfollowLeague(league.pageId, 'FOLLOWED', 'league')">Follow</button>
+              <button slot="end" color="primary" *ngIf="league.isFollowing == 1" class="following"><ion-icon name="checkmark-sharp" class="mr-5"></ion-icon>Following</button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+        <!-- Academy List -->
+        <ion-card class="ion-no-margin mt-7 main-card b-0 w-100" *ngIf="searchList.academyList && searchList.academyList.length > 0">
+          <ion-card-header class="ion-text-left">
+            <p class="mb-5 mt-5 bolder f-16">Academies</p>
+          </ion-card-header>
+          <ion-card-content class="p-0">
+            <ion-item  *ngFor="let league of searchList.academyList">
+              <ion-avatar slot="start" class="leauge-logo">
+                <img class="img-size" [src]="ccUtil.RESOURCE_URL + league.logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'" onerror="this.src='assets/images/logo-CC.png'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14" (click)="goToLeaguePage(league)">
+                  {{league.clubName}}
+                </span>
+                <ng-container>
+                  <p><span *ngIf="league.location">{{league.location}} </span> <span *ngIf="league.followersCount > 0"> Followers - {{league.followersCount}}</span></p>
+                </ng-container>
+              </ion-label>
+              <button slot="end" color="secondary" *ngIf="league.isFollowing == 0" (click)="followUnfollowLeague(league.pageId, 'FOLLOWED', 'academy')">Follow</button>
+              <button slot="end" color="primary" *ngIf="league.isFollowing == 1" class="following"><ion-icon name="checkmark-sharp" class="mr-5"></ion-icon>Following</button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-slide>
+
+    <!-- People Results -->
+    <ion-slide>
+      <ion-content class="slide-content">
+        <ng-container *ngIf="loadingSpinner">
+          <div class="loading-spinner-wrap">
+            <ion-spinner class="loading-spinner-color"></ion-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingSpinner && searchList.usersList && searchList.usersList.length <= 0">
+          <div class="not-found-msg">No People Found</div>
+        </ng-container>
+        <ion-card class="ion-no-margin mt-7 league w-100" *ngFor="let user of searchList.usersList">
+          <ion-card-content class="p-0">
+            <ion-item lines="none" class="w-100">
+              <ion-avatar slot="start" class="leauge-logo">
+                <img class="img-size" [src]="ccUtil.RESOURCE_URL + user.profilePicPath" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'" onerror="this.src='assets/images/logo-CC.png'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14" (click)="goToUserPage(user.userId)">
+                  {{user.firstName}} {{user.lastName}}
+                </span>
+                <ng-container>
+                  <p>{{user.location}}</p>
+                </ng-container>
+              </ion-label>
+              <button slot="end" color="secondary" *ngIf="user.isFollowing == 0" (click)="followUnfollowUser(user.userId, 'FOLLOWED')">Follow</button>
+              <button slot="end" color="primary" *ngIf="user.isFollowing == 1" class="following"><ion-icon name="checkmark-sharp" class="mr-5"></ion-icon>Following</button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-slide>
+
+    <!-- Post Results -->
+    <ion-slide>
+      <ion-content class="slide-content">
+        <ng-container *ngIf="loadingSpinner">
+          <div class="loading-spinner-wrap">
+            <ion-spinner class="loading-spinner-color"></ion-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingSpinner && searchList.postsList && searchList.postsList.length <= 0">
+          <div class="not-found-msg">No Posts Found</div>
+        </ng-container>
+
+        <app-social-feed [postsList]="searchList.postsList" (showPostActions)="showPostActions($event)"></app-social-feed>
+      </ion-content>
+    </ion-slide>
+
+    <!-- League Results -->
+    <ion-slide>
+      <ion-content class="slide-content">
+        <ng-container *ngIf="loadingSpinner">
+          <div class="loading-spinner-wrap">
+            <ion-spinner class="loading-spinner-color"></ion-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingSpinner && searchList.leaguesList && searchList.leaguesList.length <= 0">
+          <div class="not-found-msg">No Leagues Found</div>
+        </ng-container>
+        
+        <ion-card class="ion-no-margin mt-7 league w-100" *ngFor="let league of searchList.leaguesList">
+          <ion-card-content class="p-0">
+            <ion-item lines="none">
+              <ion-avatar slot="start" class="leauge-logo">
+                <img class="img-size" [src]="ccUtil.RESOURCE_URL + league.logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'" onerror="this.src='assets/images/logo-CC.png'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14" (click)="goToLeaguePage(league)">
+                  {{league.clubName}}
+                </span>
+                <ng-container>
+                  <p><span *ngIf="league.location">{{league.location}} </span> <span *ngIf="league.followersCount > 0"> Followers - {{league.followersCount}}</span></p>
+                </ng-container>
+              </ion-label>
+              <button slot="end" color="secondary" *ngIf="league.isFollowing == 0" (click)="followUnfollowLeague(league.pageId, 'FOLLOWED', 'league')">Follow</button>
+              <button slot="end" color="primary" *ngIf="league.isFollowing == 1" class="following"> <ion-icon name="checkmark-sharp" class="mr-5"></ion-icon>Following</button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-slide>
+
+    <!-- Academy Results -->
+    <ion-slide>
+      <ion-content class="slide-content">
+        <ng-container *ngIf="loadingSpinner">
+          <div class="loading-spinner-wrap">
+            <ion-spinner class="loading-spinner-color"></ion-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loadingSpinner && searchList.academyList && searchList.academyList.length <= 0">
+          <div class="not-found-msg">No Academies Found</div>
+        </ng-container>
+
+        <ion-card class="ion-no-margin mt-7 league w-100" *ngFor="let league of searchList.academyList">
+          <ion-card-content class="p-0">
+            <ion-item lines="none">
+              <ion-avatar slot="start" class="leauge-logo">
+                <img class="img-size" [src]="ccUtil.RESOURCE_URL + league.logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + league.logo_file_path)'" onerror="this.src='assets/images/logo-CC.png'">
+              </ion-avatar>
+              <ion-label size="9" class="ion-align-items-center">
+                <span class="card-header-font f-14" (click)="goToLeaguePage(league)">
+                  {{league.clubName}}
+                </span>
+                <ng-container>
+                  <p><span *ngIf="league.location">{{league.location}} </span> <span *ngIf="league.followersCount > 0"> Followers - {{league.followersCount}}</span></p>
+                </ng-container>
+              </ion-label>
+              <button slot="end" color="secondary" *ngIf="league.isFollowing == 0" (click)="followUnfollowLeague(league.pageId, 'FOLLOWED', 'academy')">Follow</button>
+              <button slot="end" color="primary" *ngIf="league.isFollowing == 1" class="following"><ion-icon name="checkmark-sharp" class="mr-5"></ion-icon>Following</button>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

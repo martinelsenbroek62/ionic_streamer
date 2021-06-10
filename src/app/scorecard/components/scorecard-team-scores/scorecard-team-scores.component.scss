@@ -1,0 +1,25 @@
+.live-batsman-bowler .header-secondary {
+    background-color: var(--ion-color-secondary);
+    color: #fff;
+    min-height: 44px!important;
+    text-transform: uppercase;
+}
+small{
+    color: var(--ion-color-tertiary);
+    margin-bottom: 5px;
+    font-size: 12px;
+    display: inline-block;
+}
+ion-card-header{
+    color: var(--ion-color-dark);
+    border-bottom: 1px solid #f3f3f3;
+    min-height: 48px;
+    margin: 0px 12px;
+    padding: 0px;
+}
+.extras{
+    color: var(--ion-color-tertiary);
+    b{
+        color: #000!important;
+    }
+}

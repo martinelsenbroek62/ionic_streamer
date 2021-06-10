@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-14"> 
+      Create Team Players
+    </ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="main-card">
+    <ion-col class="text-left align-items border-bottom-grey">
+      <h5>New Players</h5>
+      <div class="add-button" (click)="addNewPlayer()">Add New Player </div>
+    </ion-col>
+    <ion-list id="teamTwoPlayersId" *ngIf="teamNewPlayers && teamNewPlayers.length > 0">
+      <!-- iterate new players added -->
+      <ion-item lines="none" *ngFor="let item of teamNewPlayers; let index = index" class="list-player">
+        <ion-checkbox (ionChange)="selectNewPlayers(index)"></ion-checkbox>
+        <ion-label>{{item.fName}} {{item.lName}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card class="main-card">
+    <ion-card-header style="padding:5px;">
+      <h5>Existing Players</h5>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Player Name :</ion-label>
+        <ion-input [(ngModel)]="searchString" type="search" (ngModelChange)="searchPlayersAPI(searchString)" type="text" placeholder="Enter Player Name"></ion-input>
+      </ion-item>
+      <ion-item lines="none" *ngIf="loadingPlayers">
+        <ion-spinner color="medium" style="margin:0 auto;"></ion-spinner>
+      </ion-item>
+      <ion-list id="teamOnePlayersId" *ngIf="clubPlayers && clubPlayers.length > 0">
+        <!-- iterate new players added -->
+        <ion-item lines="none" *ngFor="let item of clubPlayers; let i = index" class="list-player">
+          <ion-checkbox (ionChange)="selectExistingPlayers(i, item.playerID)" [checked]="(selectedTeamPlayersId.indexOf(item.playerID) > -1) ? true : false"></ion-checkbox>
+          <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-item lines="none" class="submit">    
+    <ion-button shape="round" (click)="saveAndDismissModal()">Save</ion-button>
+    <ion-button shape="round" class="cancel" (click)="dismissModal()">Cancel</ion-button>
+  </ion-item>
+</ion-footer>

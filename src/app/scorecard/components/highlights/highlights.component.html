@@ -1,0 +1,24 @@
+<ng-container *ngIf="ballByBall">
+  <ion-buttons style="margin:8px; zoom:0.8;">
+    <ion-button shape="round" fill="solid" size="small" [color]="filterKey == 'all' ? 'primary' : 'secondary'" (click)="filterKey = 'all'">
+      All
+    </ion-button>
+    <ion-button shape="round" fill="solid" size="small" [color]="filterKey == 'wickets' ? 'primary' : 'secondary'" (click)="filterKey = 'wickets'">
+      Wickets
+    </ion-button>
+    <ion-button shape="round" fill="solid" size="small" [color]="filterKey == 'fours' ? 'primary' : 'secondary'" (click)="filterKey = 'fours'">
+      Fours
+    </ion-button>
+    <ion-button shape="round" fill="solid" size="small" [color]="filterKey == 'sixes' ? 'primary' : 'secondary'" (click)="filterKey = 'sixes'">
+      Sixes
+    </ion-button>
+  </ion-buttons>
+  <!-- Inning one content -->
+  <app-ball-by-ball-innings *ngIf="ballByBall.innings1Balls && ccUtil.getObjectKeys(ballByBall.innings1Balls.oversMap).length > 0" [inningsBalls]="ballByBall.innings1Balls" [activeTeam]="true" [hideHeaders]="true" [filterKey]="filterKey"></app-ball-by-ball-innings>
+  <!-- Inning one content -->
+  <app-ball-by-ball-innings *ngIf="ballByBall.innings2Balls && ccUtil.getObjectKeys(ballByBall.innings2Balls.oversMap).length > 0" [inningsBalls]="ballByBall.innings2Balls" [activeTeam]="false" [hideHeaders]="true" [filterKey]="filterKey"></app-ball-by-ball-innings>
+  <!-- Inning one content -->
+  <app-ball-by-ball-innings *ngIf="ballByBall.innings3Balls && ccUtil.getObjectKeys(ballByBall.innings3Balls.oversMap).length > 0" [inningsBalls]="ballByBall.innings3Balls" [activeTeam]="false" [hideHeaders]="true" [filterKey]="filterKey"></app-ball-by-ball-innings>
+  <!-- Inning one content -->
+  <app-ball-by-ball-innings *ngIf="ballByBall.innings4Balls && ccUtil.getObjectKeys(ballByBall.innings4Balls.oversMap).length > 0" [inningsBalls]="ballByBall.innings4Balls" [activeTeam]="false" [hideHeaders]="true" [filterKey]="filterKey"></app-ball-by-ball-innings>
+</ng-container>

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">{{detailType}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin main-card b-0">
+    <ion-card-header class="bg-white">
+      <ion-card-title class="f-16" [innerHTML]="detailObject ? detailObject.title : ''"></ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content *ngIf="detailObject && detailObject.image">
+      <ion-card-subtitle class="date">{{detailObject ? detailObject.date : ''}}</ion-card-subtitle>
+      <img class="main-img" [src]="ccUtil.RESOURCE_URL + detailObject.image" />
+    </ion-card-content>
+    <ion-card-content>
+    <p class="f-16 content" [innerHTML]="detailObject ? detailObject.news : ''"></p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

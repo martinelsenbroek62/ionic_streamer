@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title>PostDetails</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="errorMessage">
+    <div class="not-found-msg">{{errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+
+  <app-social-feed [postsList]="postInfo" (showPostActions)="showPostActions($event)"></app-social-feed>
+</ion-content>

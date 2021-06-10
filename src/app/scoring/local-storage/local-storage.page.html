@@ -1,0 +1,31 @@
+<ion-header>
+  <!-- Header -->
+  <app-header></app-header>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-item lines="none">
+    <h6 slot="start" class="f-16 mt-6">Local Storage</h6>
+  </ion-item>
+
+  <ion-card *ngIf="!localMatches.length">
+    <ion-card-content>
+      <ion-item>
+        <h2>No Data</h2>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list class="pt-0">
+    <ion-item class="match-item" lines="none" *ngFor="let match of localMatches;let i=index">
+      <!-- <div class="p-4"> -->
+        <p class="f-16" (click)="matchDetails(match)">{{match.teamOneName}} <span>VS</span> {{match.teamTwoName}}</p>
+        <ion-badge (click)="matchDetails(match)" slot="start">{{match.matchDate}}</ion-badge>
+        <ion-icon (click)="deleteLocalMatch(match)" name="trash"  slot="end"></ion-icon>
+      <!-- </div> -->
+    </ion-item>
+  </ion-list>
+  
+</ion-content>

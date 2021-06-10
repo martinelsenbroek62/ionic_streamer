@@ -1,0 +1,164 @@
+
+
+<div class="feed-content">
+  <ion-card class="w-100 main-card" *ngFor="let post of postsList; let i=index">
+    <ion-card-header class="ion-no-padding p-0">
+      <ion-item class="w-100" lines="none">
+        <ion-avatar slot="start" class="header-avatar">
+          <img [src]="ccUtil.RESOURCE_URL + post.profilePicPath" onerror="this.src='assets/images/profile.png'">
+        </ion-avatar>
+        <ion-text>
+          <span class="f-14 card-header-font">{{post.userName}}</span>
+          <br>
+          <span class="f-12" color="tertiary"> {{post.timeDifference}} </span>
+        </ion-text>
+        <ion-icon *ngIf="authToken" name="chevron-down-outline" slot="end" class="f-16" (click)="onPostActions($event, post.postId)"></ion-icon>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none" class="mb-5">
+        <span class="feed-text" *ngIf="!showFullContent[i]">
+          {{ccUtil.trimString(post.content, 100)}}<span class="bolder" *ngIf="post.content.length>50" (click)="showFullContent[i]=!showFullContent[i]">...See More </span>
+          <br>
+          <span class="feed-text color-blue bold" *ngFor="let tag of post.hashTags"> {{tag}} </span>
+        </span>
+        <span class="feed-text" *ngIf="showFullContent[i]">
+          {{post.content}} <span class="bolder" (click)="showFullContent[i]=!showFullContent[i]"> See Less </span>
+          <br>
+          <span class="feed-text color-blue bold" *ngFor="let tag of post.hashTags"> {{tag}} </span>
+        </span>
+      </ion-item>
+      <ion-item lines="none" class="post-images" *ngIf="post.imageUrl">
+        <div class="bg-image">
+          <img class="imgSize" [src]="ccUtil.RESOURCE_URL + post.imageUrl" (click)="showImageVideo()">
+        </div>
+      </ion-item>
+      <ion-item lines="none" class="ion-text-center like-status">
+        <ion-row class="w-100">
+          <ion-col class="like-extra justify-start">
+            <span class="post-extras-circle" (click)="likeOrDislikePost(post.postId, 1)"><ion-icon size="3" color="danger" class="f-18 bold" name="heart"></ion-icon></span> 
+            <span class="f-10 bold">{{post.likedCount}} Likes</span>
+          </ion-col>
+          <ion-col class="like-extra justify-center">
+            <span class="post-extras-circle" (click)="likeOrDislikePost(post.postId, 0)"><ion-icon size="3" class="f-18 bold post-icon" name="heart-dislike"></ion-icon></span>
+            <span class="f-10 bold">{{post.disLikedCount}}</span>
+          </ion-col>
+          <!-- (click)="showPostDetails($event, post.postId)"  -->
+          <ion-col class="like-extra justify-center" (click)="getCommentsForPost(post.postId, i)">
+            <span class="post-extras-circle"><ion-icon size="3" class="f-18 bold post-icon" name="chatbubble-ellipses"></ion-icon></span>
+            <span class="f-10 bold">{{post.commentsCount}}</span>
+          </ion-col>
+          <ion-col class="like-extra justify-end">
+            <span class="post-extras-circle"><ion-icon size="3" class="f-18 bold post-icon" name="arrow-redo"></ion-icon></span>
+            <span class="f-10 bold">{{post.sharesCount}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <div *ngIf="showComments[i] && commentsList[i]" class="show_comments">
+        <ion-item lines="none" class="comment-inputs" *ngIf="authToken">
+          <ion-avatar slot="start" class="header-avatar m-0">
+            <img [src]="ccUtil.RESOURCE_URL + ccUtil.userProfilePic" onerror="this.src='assets/images/profile.png'">
+          </ion-avatar>
+          <ion-input class="comment-input" [(ngModel)]="addComment[i]" type="text"  placeholder="Write a Comment.."></ion-input>
+          <ion-button slot="end" class="send-button" (click)="createComment(post.postId, i)"><ion-icon name="send" aria-label="send"></ion-icon></ion-button>
+        </ion-item>
+        <ion-item lines="none" class="comment-profile" *ngFor="let comment of commentsList[i].comments; let j=index">
+          <ion-avatar slot="start" class="header-avatar m-0">
+            <img [src]="ccUtil.RESOURCE_URL + comment.profilePicPath" onerror="this.src='assets/images/profile.png'">
+          </ion-avatar>
+          <ion-text>
+            <div class="sub-comment">
+              <!-- <ion-avatar slot="start" class="header-avatar m-0">
+                <img src="assets/images/profile-1.png">
+              </ion-avatar> -->
+              <span class="f-14 user-name"><b> {{comment.userName}} </b> </span>
+              <span class="f-14" *ngIf="!showEditComment[j]"> {{comment.content}} </span>
+              <ion-item *ngIf="showEditComment[j]" lines="none" class="comment-inputs b-0 reply-comment">
+                <ion-input class="comment-input" [(ngModel)]="editCommentOrReply[j]" type="text"></ion-input>
+                <ion-button slot="end" class="send-button"(click)="editComment(comment.commentId, post.postId, comment.content, j)"><ion-icon name="send" aria-label="send"></ion-icon></ion-button>
+              </ion-item>
+              <!-- <ion-input *ngIf="showEditComment[j]" class="comment-input" [(ngModel)]="editCommentOrReply[j]" type="text"></ion-input>
+              <ion-button *ngIf="showEditComment[j]" slot="end" class="send-button" (click)="editComment(comment.commentId, post.postId, comment.content, j)"><ion-icon name="send" aria-label="send"></ion-icon></ion-button> -->
+            </div>
+            <div class="reply-status mt-5" *ngIf="authToken">
+              <span (click)="likeDislikeComment(post.postId, comment.commentId, i)"><ion-icon color="danger" class="f-18 bold" name="heart"></ion-icon>like</span> 
+              <span (click)="updateReplyIndex(comment.commentId)"> <ion-icon class="f-18 bold" name="arrow-redo"></ion-icon> Reply </span>
+              <span> {{comment.timeDifference}} </span>
+              <span *ngIf="loggedInUserId==comment.userId && !showEditComment[j]" (click)="showEditComment[j] = true; editCommentOrReply[j] = comment.content"> Edit </span>
+              <span *ngIf="loggedInUserId==comment.userId" (click)="deleteCommentOrReply(comment.commentId, post.postId, i)"> Delete </span>
+            </div>
+            
+            <ion-item lines="none" *ngFor="let reply of commentsList[i].commentReplies | filter:comment.commentId; let index = k;" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+              <ion-avatar slot="start" class="header-avatar m-0">
+                <img [src]="ccUtil.RESOURCE_URL + reply.profilePicPath" onerror="this.src='assets/images/profile.png'">
+              </ion-avatar>
+              <div class="sub-comment"> 
+                <span class="f-14" *ngIf="showEditReplyCommentIndex != reply.replyId"><b>{{reply.userName}}</b> <br> {{reply.replyMessage}} </span>
+                <span>{{reply.timeDifference}}</span>
+                <ion-item *ngIf="showEditReplyCommentIndex == reply.replyId" lines="none" class="comment-inputs b-0 reply-comment">
+                  <ion-input class="comment-input" [(ngModel)]="editReplyComment[k]" type="text"></ion-input>
+                  <ion-button slot="end" class="send-button"(click)="editComment(reply.replyId, post.postId, reply.replyMessage, j)"><ion-icon name="send" aria-label="send"></ion-icon></ion-button>
+                </ion-item>
+                <span *ngIf="loggedInUserId==comment.userId && showEditReplyCommentIndex != reply.replyId" (click)="showEditReply(reply.replyId); editReplyComment[k] = reply.replyMessage"> Edit </span>
+                <span *ngIf="loggedInUserId==comment.userId" (click)="deleteCommentOrReply(reply.replyId, post.postId, i)"> Delete </span>
+              </div>
+            </ion-item>
+            <ion-item *ngIf="showReplyIndex == comment.commentId" lines="none" class="comment-inputs b-0 reply-comment">
+              <ion-avatar slot="start" class="header-avatar m-0">
+                <img [src]="ccUtil.RESOURCE_URL + ccUtil.userProfilePic" onerror="this.src='assets/images/profile.png'">
+              </ion-avatar>
+              <ion-input class="comment-input" [(ngModel)]="addCommentReply[j]" type="text" placeholder="Write a Reply.."></ion-input>
+              <ion-button slot="end" class="send-button" (click)="createCommentReply(post.postId, comment.commentId, i)"><ion-icon name="send" aria-label="send"></ion-icon></ion-button>
+            </ion-item>
+          </ion-text>
+        </ion-item>
+        <!-- <ion-item lines="none" class="comment-profile">
+          <ion-avatar slot="start" class="header-avatar m-0">
+            <img src="assets/images/cricket-pic.jpg">
+          </ion-avatar>
+          <ion-text>
+            <div class="sub-comment">
+            <span class="bold f-14 user-name" >Pavan kumar</span>
+            <span class="f-14" >Columns can also align themselves differently than other columns by adding the alignment class directly to the column.
+            </span>
+          </div>
+          <div class="reply-status mt-5">
+            <span><ion-icon color="" class="f-18 bold" name="heart"></ion-icon>like</span> 
+            <span (click)="showReply1=!showReply1"> <ion-icon class="f-18 bold" name="arrow-redo"></ion-icon> Reply </span>
+            <span> 22h </span>
+          </div>
+          <ion-item lines="none" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+            <ion-avatar slot="start" class="header-avatar m-0">
+              <img src="assets/images/dhoni.png">
+            </ion-avatar>
+            <div class="sub-comment"> 
+              <span class="f-14" ><b>Lakshman</b> Columns can also align themselves differently than other columns.
+              </span>
+            </div>
+          </ion-item>
+          <ion-item lines="none" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+            <ion-avatar slot="start" class="header-avatar m-0">
+              <img src="assets/images/dhoni.png">
+            </ion-avatar>
+            <div class="sub-comment"> 
+              <span class="f-14" ><b>Janvi</b> Columns can also align themselves differently than other columns.
+              </span>
+            </div>
+          </ion-item>
+          <ion-item lines="none" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+            <ion-avatar slot="start" class="header-avatar m-0">
+              <img src="assets/images/dhoni.png">
+            </ion-avatar>
+            <div class="sub-comment"> 
+              <span class="f-14" ><b>Suresh Kumar</b> Columns can also align themselves differently than other columns.
+              </span>
+            </div>
+          </ion-item>
+          </ion-text>
+          
+        </ion-item> -->
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

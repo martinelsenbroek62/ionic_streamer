@@ -1,0 +1,123 @@
+
+// ion-content{
+//     position:absolute;
+//     background: var(--ion-color-medium);
+// } 
+.leauge-logo img{
+    margin-left: 0px!important;
+}
+ion-item{
+    border-bottom: 1px solid #ddd;
+    --inner-border-width: 0px;
+}
+.search-button{
+    background-color: var(--ion-color-secondary)!important;
+    color: var(--ion-color-white)!important;
+    border: 1px solid var(--ion-color-secondary)!important;
+}
+button{
+    padding: 5px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    background-color: var(--ion-color-white);
+    color: var(--ion-color-primary);
+    border: 1px solid var(--ion-color-primary);
+    font-weight: bold;
+  }
+  .following{
+    color: var(--ion-color-secondary)!important;
+    border: 1px solid var(--ion-color-secondary)!important;
+  }
+  .search{
+    background: #f3f3f3;
+    height: 32px;
+    border-radius: 5px;
+    margin-right: 10px;
+    padding-left: 5px !important;
+    ion-icon{
+        padding-right: 5px;
+    }
+  }
+.btn{
+    --border-radius: 50px;
+    border-radius: 50px;
+   line-height: inherit;
+   --line-height: inherit;
+    --padding-end: 10px;
+    --padding-start: 10px;
+}
+ion-slides {
+    height: 100%;
+    ion-slide {
+        min-height: calc(100vh - 200px);
+        align-items: flex-start;
+        background-color: var(--ion-color-medium);
+    }
+}
+ion-segment-button{
+    min-width: 40px !important;
+}
+
+ion-segment {
+    display: flex;
+    white-space: nowrap;
+    font-size: 0;
+    overflow: auto;
+    background-color: var(--ion-color-white);
+    justify-content: space-between;
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+    }
+    ion-segment-button.segment-button {
+        display: inline-block;
+        font-weight: 600;
+        width: auto!important;
+        flex: auto!important;
+    }
+    ion-label {
+        font-weight: bold;
+        font-size: 14px;
+        margin:5px 0px;
+        text-transform: capitalize;
+        @media only screen and (max-width: 320px) {
+            font-size: 10px;
+        } 
+        line-height: 33px;
+        margin-bottom: -4px;
+    }
+}
+// .select-league{
+//     background: var(--ion-color-medium);
+//     padding: 10px 15px;
+// }
+.league-select{
+    background: var(--ion-color-white);
+    font-size: 14px;
+}
+
+.segment-button-checked {
+    color:var(--ion-color-dark) !important;
+    font-weight: bolder !important;
+    --color-checked: none !important;
+}
+.segment-button-checked button{
+  width: max-content!important;
+}
+.segment-button-checked ion-label {
+    border-bottom: 5px solid var(--ion-color-primary) !important;
+}
+::ng-deep .wider-popover
+{
+  --width: 97%;
+  --max-width: 400px;
+}
+
+.league{
+    box-shadow: 0px 6px 15px -15px #ddd;
+}
+ion-card-header p{
+    padding: 0px 5px;
+    color: #000!important;
+}

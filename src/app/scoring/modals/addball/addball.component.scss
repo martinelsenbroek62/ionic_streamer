@@ -1,0 +1,32 @@
+.edits{
+    justify-content: center;
+    display: flex;
+    ion-button{
+        --border-radius: 50px;
+        width: 80px;
+    }
+    .edit{
+        border: 2px solid var(--ion-color-primary);
+        border-radius: 50px;
+        --background: #fff;
+        color: var(--ion-color-primary);
+        }
+}
+
+.submit{
+    border-top: 1px solid var(--ion-color-medium);
+    justify-content: center;
+    display: grid;
+    ion-button{
+        margin: 10px;
+        --border-radius: 50px;
+        width: 80px;
+
+    }
+}
+    .cancel{
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50px;
+    --background: #fff;
+    color: var(--ion-color-primary);
+    }

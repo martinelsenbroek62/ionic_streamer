@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">{{teamsObj ? 'Update Team' : 'Create Team'}}</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate>
+    <ion-item>
+      <ion-select class="f-14 bg-white pr-8" name="seriesId" placeholder="Select Series" formControlName="seriesId" style="display: contents;" [disabled]="seriesId">
+        <!-- for list of series -->
+        <ng-container *ngIf="seriesList">
+          <ion-select-option [value]="series.seriesID" *ngFor="let series of seriesList">
+            {{series.seriesName}}
+          </ion-select-option>
+        </ng-container>
+        <!-- for single series -->
+        <ng-container *ngIf="!seriesList && seriesDetails">
+          <ion-select-option [value]="seriesId">
+            {{seriesDetails.name}}
+          </ion-select-option>
+        </ng-container>
+      </ion-select>
+    </ion-item>
+    <div class="text-danger ion-padding-start" *ngIf="isSubmitted && errorControl.seriesId.errors?.required">
+      Series is required.
+    </div>
+
+    <ion-item lines="full">
+      <ion-label position="floating">* Enter Team Name</ion-label>
+      <ion-input formControlName="teamName" type="text"></ion-input>
+    </ion-item>
+    <div class="text-danger ion-padding-start" *ngIf="isSubmitted && errorControl.teamName.errors?.required">
+      Name is required.
+    </div>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" [disabled]="loadingSpinner">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

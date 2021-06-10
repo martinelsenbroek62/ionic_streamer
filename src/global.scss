@@ -1,0 +1,645 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400;1,500&display=swap');
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+body{
+  font-family: 'Roboto', sans-serif!important;
+}
+ion-segment{
+  border-right: 1px solid var(--ion-color-medium);
+  border-bottom: 1px solid var(--ion-color-medium);
+}
+ion-segment-button{
+  min-width: 105px!important;
+  min-height: auto!important;
+  display: inline-table;
+  --padding-end: 0px;
+  --padding-start: 0px;
+}
+.segment-button-checked ion-label {
+  font-weight: bolder!important;
+  color: #000;
+}
+ion-segment-button ion-label{
+font-weight: 400;
+font-size: 14px;
+color: #9597A1;
+padding: 10px 15px!important;
+margin: 1px 0px!important;
+line-height: inherit!important;
+text-transform: capitalize;
+margin-bottom: 0px!important;
+}
+.font-weight-light{
+  font-weight: 400!important;
+}
+.h-100{
+  height: 100%!important;
+}
+.f-10{
+  font-size: 10px!important;
+}
+.f-11{
+  font-size: 11px!important;
+}
+.f-13{
+  font-size: 13px!important;
+}
+.f-22{
+  font-size: 22px!important;
+}
+.f-18{
+  font-size: 18px!important;
+}
+.f-8{
+  font-size: 8px!important;
+}
+.f-12{
+  font-size: 12px!important;
+}
+.f-14{
+  font-size: 14px!important;
+}
+.b-0{
+  border: 0px!important;
+}
+.f-16{
+  font-size: 16px!important;
+}
+.f-28{
+  font-size: 28px!important;
+}
+.w-100{
+  width: 100%!important;
+}
+.p-30{
+  padding: 30px!important;
+}
+.p-15{
+  padding: 15px!important;
+}
+.pt-0{
+  padding-top: 0px!important;
+}
+.pb-0{
+  padding-bottom: 0px!important;
+}
+.pr-0{
+  padding-right: 0px!important;
+}
+.pl-0{
+  padding-left: 0px!important;
+}
+.pr-8{
+  padding-right: 8px!important;
+}
+.pl-8{
+  padding-left: 8px!important;
+}
+.p-0{
+  padding: 0px!important;
+}
+.bg-transprent{
+  background: transparent!important;
+}
+.form-control {
+  font-size: 16px;
+}
+.mt-15{
+  margin-top: 15px!important;
+}
+.mt-10{
+  margin-top: 10px;
+}
+.mt-5{
+  margin-top: 5px;
+}
+.mr-5{
+  margin-right: 5px;
+}
+.mt-7{
+  margin-top: 7px!important;
+}
+.ml-5{
+  margin-left: 5px!important;
+}
+.ml-10{
+  margin-left: 10px!important;
+}
+.mt-30{
+  margin-top: 30px;
+}
+.text-light{
+  color: var(--ion-color-tertiary)!important;
+}
+.text-white{
+  color: var(--ion-color-white)!important;
+}
+.text-grey {
+  color: #808080;
+}
+
+ion-toast.msg-copied-toast {
+  width: 150px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.plain-button-color{
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  padding: 5px;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--ion-color-primary);
+  border-bottom: 3px solid;
+  background-color: var(--ion-color-white);
+}
+
+.plain-button-black{
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  padding: 5px;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--ion-color-dark);
+  background-color: var(--ion-color-white);
+}
+.feed-text{
+  font-weight: 400;
+  font-size: 14px;
+}
+.bold{
+  font-weight: 500!important;
+}
+.bolder{
+  font-weight: 600!important;
+}
+.matches-list .img-size{
+  float:left;
+  width: 23px!important;
+  height: 23px!important;
+  border-radius:50%;
+  background-size:contain;
+  border: 1px solid var(--ion-color-meduim);
+}
+
+.stick-lable{
+  padding: 2px 10px 2px 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.main-card{
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  border-top: 6px solid var(--ion-color-medium);
+  border-bottom: 1px solid var(--ion-color-medium);
+  box-shadow: none;
+  ion-item{
+    --min-height: 38px!important;
+    --max-height: 48px;
+     min-height: 38px!important;
+  }
+    ion-card-header{
+      background-color: var(--ion-color-light);
+      padding: 0px 10px;
+      min-height: 38px;
+      display: grid;
+      align-items: center;
+      .live-leauge-component {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+    }
+  }
+  ion-card-content {
+    .grid{
+      .row:nth-child(1){
+          .col{
+              font-weight: bolder;
+          }
+      }
+    }
+    padding: 0px;
+    .matches-list {
+      display: flex;
+      align-items: center;
+      height: 30px;
+      ion-avatar {
+        margin-right: 7px;
+        margin: 0px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+    }
+  }
+}
+.commentry {
+  padding: 5px 0px 0px 10px !important;
+}
+}
+.m-auto{
+  margin: 0px auto;
+}
+.slide-content{
+  position: absolute; 
+  width: 100%;
+  --background: var(--ion-color-medium);
+}
+
+.border-bottom{
+  border-bottom: 1px solid var(--ion-color-medium);
+}
+.dropdown-100{
+  background: var(--ion-color-medium);
+  padding: 5px 5px;
+}
+
+.medium-button-secondary{
+  padding: 7px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  background-color: var(--ion-color-secondary);
+  color: var(--ion-color-white);
+  font-weight: bold;
+}
+.border-radius-0{
+  border-radius: 0px!important;
+}
+button:focus{
+  outline: none!important;
+}
+.bs-0{
+  box-shadow: none!important
+}
+.internal-tabs{
+  padding: 7px 15px;
+  .tabs{
+    justify-content: space-around;
+    button{
+      padding: 7px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  background-color: var(--ion-color-white);
+  color: var(--ion-color-dark);
+  font-weight: bold;
+    }
+    .active{
+      padding: 7px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-white);
+  font-weight: bold;
+    }
+  }
+}
+.medium-button-grey{
+  padding: 7px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  background-color: var(--ion-color-medium);
+  color: var(--ion-color-white);
+  font-weight: bold;
+}
+.medium-button-primary{
+  padding: 7px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-white);
+  font-weight: bold;
+}
+.text-center{
+  text-align: center;
+}
+.text-left{
+  text-align: left;
+}
+.justify-center{
+  justify-content: center;
+}
+.justify-end{
+  justify-content: flex-end;
+}
+.justify-start{
+  justify-content: flex-start;
+}
+.mb-5{
+  margin-bottom: 5px;
+}
+.text-right{
+  text-align: right;
+}
+.w-50{
+  width: 50%;
+}
+.bg-image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 200px;
+}
+
+.medium-button-white{
+  padding: 7px 20px;
+  border-radius: 50px;
+  font-size: 15px;
+  background: transparent;
+  border: 1px solid var(--ion-color-white);
+  color: var(--ion-color-white);
+  font-weight: bold;
+}
+
+.background-transparent{
+  background: transparent;
+}
+.mt-0{
+  margin-top: 0px;
+}
+.white-background{
+  background-color: var(--ion-color-white) !important;
+}
+
+.bg-white{
+  background-color: var(--ion-color-white) !important;
+}
+
+.border-bottom-grey{
+  border-bottom: 1px solid #f3f3f3;
+}
+
+.border-light{
+  border: 1px solid var(--ion-color-light);
+}
+
+.icon-size{
+  width:20px;
+  height:20px;
+}
+
+.square-button{
+  height: 40px;
+  width: 40px;
+  background: var(--ion-color-secondary);
+  border-radius: 5px;
+}
+
+.card-header-font{
+  color:var(--ion-color-dark);
+  font-size: 1.1em;
+  font-weight: 500;
+  margin-bottom: 0px!important;
+  margin-top: 0px;
+}
+.color-blue{
+  color:  #0a6fce!important;
+}
+.submit ion-button{
+  --padding-top: 5px!important;
+    --padding-bottom: 5px!important;
+    --padding-start: 15px!important;
+    --padding-end: 15px!important;
+    height: 32px !important;
+    font-size: 14px !important;
+    --box-shadow: none!important;
+    --border-radius: 50px;
+    margin: 20px auto!Important;
+    min-width: 80px;
+}
+.extrasList ion-card-header{
+  padding: 5px 12px!important;
+  min-height: inherit!important;
+}
+.extrasList div{
+  width: 20%;
+}
+ion-radio{
+  left: 0;
+  top: 0;
+  margin: 0;
+  border-radius: 50%;
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-width: 0px;
+  border-style: solid;
+  border-color: #787878;
+  height: 16px;
+}
+.extrasList div .btn{
+  --border-color: #92949c;
+  --background: #f3f3f3;
+  --color: #808289;
+  --border-radius: 5px;
+  padding: 0px 10px;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 10px 0px;
+  width: 100%;
+}
+ .noball div .btn{
+  --border-color: #92949c;
+  --background: #f3f3f3;
+  --color: #808289;
+  --border-radius: 5px;
+  padding: 0px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0px;
+  width: 100%;
+}
+.header-md::after{
+  --background-image: none!important;
+  background-image: none!important;
+  --height: 0px!important;
+}
+.btn{
+  padding: 2px 10px 2px 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 10px;
+}
+.b-btn{
+  padding: 5px 15px 5px 15px;
+  font-weight: bold;
+}
+.live-match{
+  padding: 2px 10px 2px 10px;
+  background-color: var(--ion-color-white)!important;
+  border-radius: 50px;
+  font-weight: bold;
+  color:  var(--ion-color-danger);
+  font-size: 10px;
+}
+.completed-match{
+  padding: 2px 10px 2px 10px;
+  background-color: #fff;
+  border-radius: 50px;
+  font-weight: bold;
+  color:  var(--ion-color-success);
+  font-size: 10px;
+}
+.red-dot{
+  margin-left: 0px !important;
+  display:inline-block;
+  width: 7px;
+  height: 7px;
+  line-height: 7px;
+  border-radius: 100%;
+  text-align: center;
+  background-color: var(--ion-color-primary);
+}
+
+.text-danger {
+  color: var(--ion-color-danger);
+}
+
+.loading-spinner-wrap {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  z-index: 11;
+}
+.loading-spinner-color {
+  color: var(--ion-color-primary);
+}
+
+app-match-list {
+  height: 100%;
+  overflow: auto;
+}
+.justify-center{
+  justify-content: center;
+}
+.not-found-msg {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  color: var(--ion-color-secondary);
+}
+.mb-0{
+  margin-bottom: 0px;
+}
+
+.tab-icon{
+  fill: var(--ion-color-primary);
+}
+ .align-items{
+   display: flex;
+   align-items: center;
+ }
+ .m-0{
+   margin: 0px!important;
+ }
+
+.ion-back-button-display {
+  display: block;
+}
+
+.select-player-modal {
+  padding: 0px;
+  width: 90%;
+  border: 5px solid #fff;
+  margin: 0 auto;
+  box-shadow: 0px 0px 30px #333;
+  position: absolute;
+  background: #fff;
+  border-radius: 10px;
+  z-index: 9999;
+  height: 215px;
+    min-height: 175px !important;
+  top: 30%;
+  bottom: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.justify-center-center{
+  justify-content: center;
+}
+.justify-center-left{
+  justify-content: flex-start;
+}
+.justify-center-right{
+  justify-content: flex-end;
+}
+.sticky-me {
+  position: sticky;
+  z-index: 2;
+  border-radius: 0;
+  top: 0;
+}
+ion-spinner {
+  z-index: 99;
+}
+.full-ion-backdrop {
+  height: 100%;
+  width: 100%;
+  opacity: 0.2;
+  position: fixed;
+  z-index: 11;
+}
+.four{
+  background: #5458F7!important;
+}
+.six{
+  background: #15D211!important;
+}
+.wicket{
+  background: #FF0000!important;
+}
+.wide{
+  background: #f78254!important;
+}
+.overflow-hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

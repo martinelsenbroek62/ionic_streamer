@@ -1,0 +1,224 @@
+<!-- squads -->
+<!-- TEAM ONE CONTENT -->
+<ion-item color="secondary" lines="none" class="score-team">
+  <ion-label>Squads</ion-label>
+</ion-item>
+<ng-container *ngIf="matchInfo">
+  <ion-item class="team-name" (click)="activeTeamOne=!activeTeamOne">
+    <ion-label>{{matchInfo.teamOneName}}</ion-label>
+    <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeTeamOne"></ion-icon>
+    <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeTeamOne"></ion-icon>
+  </ion-item>
+  <div class="" *ngIf="activeTeamOne">
+    <ul>
+      <li *ngFor="let player of matchInfo.team1Players">
+        <div class="media align-items">
+          <img class="imgSize mr-5" [src]="ccUtil.RESOURCE_URL + player.profilepic_file_path">
+          <div class="media-body">
+            <h6 class="f-14 mb-0 mt-0">
+              {{player.playerName}}
+              <span class="badge four" *ngIf="player.capOrViceCapOrWk == 'Captain'">C</span>
+              <span class="badge six" *ngIf="player.capOrViceCapOrWk == 'ViceCaptain'">VC</span>
+              <span class="badge wide" *ngIf="player.capOrViceCapOrWk == 'WicketKeeper'">WK</span>
+            </h6>
+            {{player.role ? player.role : ''}}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- TEAM TWO CONTENT -->
+  <ion-item color="none" lines="none" (click)="activeTeamTwo=!activeTeamTwo">
+    <ion-label>{{matchInfo.teamTwoName}}</ion-label>
+    <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeTeamTwo"></ion-icon>
+    <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeTeamTwo"></ion-icon>
+  </ion-item>
+  <div class="" *ngIf="activeTeamTwo">
+    <ul>
+      <li *ngFor="let player of matchInfo.team2Players">
+        <div class="media align-items">
+          <img class="imgSize mr-5" [src]="ccUtil.RESOURCE_URL + player.profilepic_file_path">
+          <div class="media-body">
+            <h6 class="f-14 mb-0 mt-0">
+              {{player.playerName}}
+              <!-- <span class="badge four">C</span> -->
+              <!-- <span class="badge wide">WK</span> -->
+            </h6>
+            <!-- Batsman -->
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</ng-container>
+
+<!-- match details -->
+<ion-item color="secondary" lines="none" class="score-team">
+  <ion-label>Match details</ion-label>
+</ion-item>
+<div class="score-detail">
+<ion-item color="none" lines="none" *ngIf="matchData.matchId">
+  <ion-label>
+    <ion-text color="tertiary">Match ID</ion-text>
+    <p>{{matchData.matchId}}</p>
+  </ion-label>
+</ion-item>
+<ion-item color="none" lines="none" *ngIf="matchInfoHeaders.tossDetails">
+  <ion-label>
+    <ion-text color="tertiary">Toss</ion-text>
+    <p>{{matchInfoHeaders.tossDetails}}</p>
+  </ion-label>
+</ion-item>
+
+<ion-item color="none" lines="none" *ngIf="matchData.seriesName">
+  <ion-label>
+    <ion-text color="tertiary">Series</ion-text>
+    <p>{{matchData.seriesName}}</p>
+  </ion-label>
+</ion-item>
+<ion-item color="none" lines="none" *ngIf="matchData.matchType">
+  <ion-label>
+    <ion-text color="tertiary">Match Type</ion-text>
+    <p>{{matchData.matchType}}</p>
+  </ion-label>
+</ion-item>
+<ion-item color="none" lines="none" *ngIf="matchData.time">
+  <ion-label>
+    <ion-text color="tertiary">Timings</ion-text>
+    <p>{{matchData.time}}</p>
+  </ion-label>
+</ion-item>
+<ion-item color="none" lines="none" *ngIf="matchInfo.umpires">
+  <ion-label>
+    <ion-text color="tertiary">Umpires</ion-text>
+    <p>{{matchInfo.umpires}}</p>
+  </ion-label>
+</ion-item>
+</div>
+
+<!-- recent form -->
+<ion-item color="secondary" lines="none" class="score-team">
+  <ion-label>Recent form</ion-label>
+</ion-item>
+<ion-card *ngIf="matchInfo" class="w-100 main-card scorecard-header-top b-0">
+  <!-- team 1 card -->
+  <ion-card-content>
+    <ion-item lines="none" class="matches-list">
+      <ion-avatar slot="start">
+        <img class="img-size" [src]="ccUtil.RESOURCE_URL + match.t1_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + match.t1_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+      </ion-avatar>
+      <ion-label class="card-header-font ion-no-margin f-14">{{match.teamOneName}}</ion-label>
+      <ion-label slot="end" *ngIf="recentForms" class="card-header-font ion-text-right recent-form-lw">
+        <ng-container *ngFor="let recentForm of recentForms[matchInfo.teamOneName]">
+          <ion-text class="circle-danger" *ngIf="recentForm == 'L'">L</ion-text>
+          <ion-text class="circle-success" *ngIf="recentForm == 'W'">W</ion-text>
+          <ion-text class="circle-grey" *ngIf="recentForm == 'O'">O</ion-text>
+        </ng-container>
+      </ion-label>
+    </ion-item>
+  </ion-card-content>
+  <!-- team 2 card -->
+  <ion-card-content>
+    <ion-item lines="none" class="matches-list">
+      <ion-avatar slot="start">
+        <img class="img-size" [src]="ccUtil.RESOURCE_URL + match.t2_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + match.t2_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+      </ion-avatar>
+      <ion-label class="card-header-font ion-no-margin f-14">{{match.teamTwoName}}</ion-label>
+      <ion-label slot="end" *ngIf="recentForms" class="card-header-font ion-text-right recent-form-lw">
+        <ng-container *ngFor="let recentForm of recentForms[matchInfo.teamTwoName]">
+          <ion-text class="circle-danger" *ngIf="recentForm == 'L'">L</ion-text>
+          <ion-text class="circle-success" *ngIf="recentForm == 'W'">W</ion-text>
+          <ion-text class="circle-grey" *ngIf="recentForm == 'O'">O</ion-text>
+        </ng-container>
+      </ion-label>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<!-- last three encounters -->
+<ion-item color="secondary" lines="none" class="score-team">
+  <ion-label>Last three encounters</ion-label>
+</ion-item>
+<!-- Start: template to display Matches detail -->
+<app-matches *ngIf="matchList" [matchList]="previousEncounters" class="w-100"></app-matches>
+<!-- End: template to display Matches detail -->
+
+<!-- players to watch out -->
+<ion-item color="secondary" lines="none" class="score-team">
+  <ion-label>Players to watch out</ion-label>
+</ion-item>
+<!-- team 1 details -->
+<ion-row>
+  <ion-col class="ion-text-left commentry">
+    <span class="f-13">{{matchInfo.teamOneName}}</span>
+  </ion-col>
+</ion-row>
+<ng-container *ngIf="playersToWatch">
+  <ion-item color="none" lines="none" *ngFor="let player of playersToWatch['teamOneBattingStats']" class="team-scr">
+    <ion-avatar slot="start">
+      <img class="img-size" [src]="ccUtil.RESOURCE_URL + player.profilepic_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + player.profilepic_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+    </ion-avatar>
+    <ion-label class="names">
+      <ion-text>{{player.firstName}} {{player.lastName}}</ion-text>
+      <p color="tertiary" class="f-12"><span> Match:<b>{{player.matches}}</b></span> |<span class="text-center"> Runs: <b>{{player.runsScored}}</b> </span> | <span class="text-right"> SR: <b>{{ccUtil.formulaSR(player.runsScored, player.ballsFaced)}}</b> </span></p>
+    </ion-label>
+  </ion-item>
+  <ion-item color="none" lines="none" *ngFor="let player of playersToWatch['teamOneBowlingStats']" class="team-scr">
+    <ion-avatar slot="start">
+      <img class="img-size" [src]="ccUtil.RESOURCE_URL + player.profilepic_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + player.profilepic_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+    </ion-avatar>
+    <ion-label class="names">
+      <ion-text>{{player.firstName}} {{player.lastName}}</ion-text>
+      <p color="tertiary" class="f-12"><span> Match:<b>{{player.matches}}</b></span> |<span class="text-center"> Runs: <b>{{player.runs}}</b> </span> | <span class="text-right"> SR: <b>{{ccUtil.formulaSR(player.runs, player.balls)}}</b> </span></p>
+    </ion-label>
+  </ion-item>
+</ng-container>
+<!-- team 2 details -->
+<ion-row>
+  <ion-col class="ion-text-left commentry">
+    <span class="f-13">{{matchInfo.teamTwoName}}</span>
+  </ion-col>
+</ion-row>
+<ng-container *ngIf="playersToWatch">
+  <ion-item color="none" lines="none" *ngFor="let player of playersToWatch['teamTwoBattingStats']" class="team-scr">
+    <ion-avatar slot="start">
+      <img class="img-size" [src]="ccUtil.RESOURCE_URL + player.profilepic_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + player.profilepic_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+    </ion-avatar>
+    <ion-label class="names">
+      <ion-text>{{player.firstName}} {{player.lastName}}</ion-text>
+      <p color="tertiary" class="f-12"><span> Match:<b>{{player.matches}}</b></span> |<span class="text-center"> Runs: <b>{{player.runsScored}}</b> </span> | <span class="text-right"> SR: <b>{{ccUtil.formulaSR(player.runsScored, player.ballsFaced)}}</b> </span></p>
+    </ion-label>
+  </ion-item>
+  <ion-item color="none" lines="none" *ngFor="let player of playersToWatch['teamTwoBowlingStats']" class="team-scr">
+    <ion-avatar slot="start">
+      <img class="img-size" [src]="ccUtil.RESOURCE_URL + player.profilepic_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + player.profilepic_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+    </ion-avatar>
+    <ion-label class="names">
+      <ion-text>{{player.firstName}} {{player.lastName}}</ion-text>
+      <p color="tertiary" class="f-12"><span> Match:<b>{{player.matches}}</b></span> |<span class="text-center"> Runs: <b>{{player.runs}}</b> </span> | <span class="text-right"> SR: <b>{{ccUtil.formulaSR(player.runs, player.balls)}}</b> </span></p>
+    </ion-label>
+  </ion-item>
+</ng-container>
+
+<!-- stadium location -->
+<ng-container *ngIf="matchResultsAtGround && matchResultsAtGround.address && matchResultsAtGround.location">
+  <ion-item color="secondary" lines="none" class="score-team">
+    <ion-label>{{matchResultsAtGround.address}}{{matchResultsAtGround.location ? ',' : ''}} {{matchResultsAtGround.location}}</ion-label>
+  </ion-item>
+  <ion-item color="none" lines="none">
+    <ion-label>Matches Won Batting First</ion-label>
+    <ion-text slot="end">{{matchResultsAtGround.matchesWonBattingFirst}}</ion-text>
+  </ion-item>
+  <ion-item color="light" lines="none">
+    <ion-label>Matches Won Batting Second</ion-label>
+    <ion-text slot="end">{{matchResultsAtGround.matchesWonBattingSecond}}</ion-text>
+  </ion-item>
+  <ion-item color="none" lines="none">
+    <ion-label>Average Score Batting First</ion-label>
+    <ion-text slot="end">{{matchResultsAtGround.avgScoreBattingFirst}}</ion-text>
+  </ion-item>
+  <ion-item color="light" lines="none">
+    <ion-label>Average Score Batting Second</ion-label>
+    <ion-text slot="end">{{matchResultsAtGround.avgScoreBattingSecond}}</ion-text>
+  </ion-item>
+</ng-container>

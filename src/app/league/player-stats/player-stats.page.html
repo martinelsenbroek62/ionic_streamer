@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">{{selectCategoryDropdown}}</ion-title>
+  </ion-toolbar>
+
+  <!-- Series and Team dropdowns -->
+  <div>
+    <ion-row>
+      <ion-col size="6" class="dropdown-100">
+        <ion-select class="f-14 bg-white pr-8" interface="popover" [interfaceOptions]="{'cssClass': 'wider-popover'}" name="selectSeries" placeholder="Select Series" id="selectSeries" [(ngModel)]="selectSeriesDropdown" (ionChange)="getStats()" [disabled]="selectSeriesDropdown">
+          <!-- for list of series -->
+          <ng-container *ngIf="seriesList">
+            <ion-select-option [value]="series.seriesID" *ngFor="let series of seriesList">
+              {{series.seriesName}}
+            </ion-select-option>
+          </ng-container>
+          <!-- for single series -->
+          <ng-container *ngIf="!seriesList && seriesDetails">
+            <ion-select-option [value]="selectSeriesDropdown">
+              {{seriesDetails.name}}
+            </ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-col>
+      <ion-col size="6" class="dropdown-100">
+        <ion-select class="f-14 bg-white pr-8" interface="popover" [interfaceOptions]="{'cssClass': 'wider-popover'}" name="selectSeries" placeholder="Select Series" id="selectSeries" [(ngModel)]="selectCategoryDropdown" (ionChange)="categoryChanged()">
+          <ion-select-option [value]="categ.category" *ngFor="let categ of categoryArr">
+            {{categ.category}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <ion-card class="main-card league w-100" *ngFor="let stats of battingStatsList | orderBy:orderByParam:true; let index = index">
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-chip slot="start" color="primary">{{index+1}}</ion-chip>
+        <ion-avatar slot="start" class="leauge-logo">
+          <img class="img-size" [src]="ccUtil.RESOURCE_URL + stats.steamlogo_file_path">
+        </ion-avatar>
+        <ion-label size="9" class="ion-align-items-center">
+          <span class="card-header-font f-14">
+            {{stats.firstName}} {{stats.lastName}} <ion-text class="f-12 text-light">({{stats.teamName}})</ion-text>
+          </span>
+          <ng-container>
+            <p class="f-12 text-light" *ngIf="selectCategoryDropdown == 'Most Runs'">
+              M: {{stats.matches}} | I: {{stats.innings}} | Ave: {{ccUtil.formulaAve(stats.runsScored, stats.innings, stats.notOuts)}}</p>
+            <p class="f-12 text-light" *ngIf="selectCategoryDropdown == 'Most Fours' || selectCategoryDropdown == 'Most Sixes' || selectCategoryDropdown == 'Most Hundreds'">
+              M: {{stats.matches}} | I: {{stats.innings}} | R: {{stats.runsScored}}</p>
+          </ng-container>
+        </ion-label>
+        <span slot="end" class="f-22 bolder">
+          <ng-container *ngIf="selectCategoryDropdown == 'Most Runs'">
+            {{stats.runsScored}}
+          </ng-container>
+          <ng-container *ngIf="selectCategoryDropdown == 'Most Fours'">
+            {{stats.fours}}
+          </ng-container>
+          <ng-container *ngIf="selectCategoryDropdown == 'Most Sixes'">
+            {{stats.sixers}}
+          </ng-container>
+          <ng-container *ngIf="selectCategoryDropdown == 'Most Hundreds'">
+            {{stats.hundreds}}
+          </ng-container> 
+        </span>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,75 @@
+<ion-header>
+  <!-- <app-header></app-header> -->
+  <ion-toolbar color="primary">
+    <ion-title class="f-16 p-0">Live Streaming</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-item slot="end" color="primary" lines="none">
+      <ion-label>{{channel ? 'Production' : 'Test'}}</ion-label>
+      <ion-toggle [(ngModel)]="channel"></ion-toggle>
+    </ion-item>
+  </ion-toolbar>
+  <!-- Leagues dropdown -->
+  <div>
+    <ion-row>
+      <ion-col size="12" class="dropdown-100">
+        <ion-select class="f-14 bg-white pr-8" interface="popover" [interfaceOptions]="{'cssClass': 'wider-popover'}" name="selectLeagues" placeholder="Select League" (ionChange)="showSelectLeague()" id="selectLeagues" [(ngModel)]="selectLeaguesClubId">
+          <ion-select-option [value]="league.clubId" *ngFor="let league of myLeagues">
+            {{league.clubName}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </div>
+  <!-- header tab buttons -->
+  <div>
+    <div>
+      <ion-segment mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="currentSegmentName">
+        <ion-segment-button value="0">
+          <ion-label>My Stream</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1">
+          <ion-label>Ready To Stream</ion-label>
+        </ion-segment-button>  
+        <ion-segment-button value="2">
+          <ion-label>Other Streams</ion-label>
+        </ion-segment-button>                
+      </ion-segment>
+    </div>            
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="errorMessage">
+    <div class="not-found-msg">{{errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <ion-slides mode="md" #slides (ionSlideDidChange)="slideChanged()" scrollbar="false"> 
+    <ion-slide>
+      <ng-container *ngIf="matchesObject && matchesObject.myStreams && matchesObject.myStreams.length == 0">
+        <div class="not-found-msg">No Matches</div>
+      </ng-container>
+      <app-match-list [matchList]="matchesObject.myStreams" style="width:100%;" (cardClick)="onCardClick($event)" notShowScoringOption="true"></app-match-list>
+    </ion-slide>
+    <ion-slide>
+      <ng-container *ngIf="matchesObject && matchesObject.readyToStream && matchesObject.readyToStream.length == 0">
+        <div class="not-found-msg">No Matches</div>
+      </ng-container>
+      <app-match-list [matchList]="matchesObject.readyToStream" style="width:100%;" (cardClick)="onCardClick($event)" notShowScoringOption="true"></app-match-list>
+    </ion-slide>
+    <ion-slide>
+      <ng-container *ngIf="matchesObject && matchesObject.otherInprogressStreams && matchesObject.otherInprogressStreams.length == 0">
+        <div class="not-found-msg">No Matches</div>
+      </ng-container>
+      <app-match-list [matchList]="matchesObject.otherInprogressStreams" style="width:100%;" (cardClick)="onCardClick($event)" notShowScoringOption="true"></app-match-list>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

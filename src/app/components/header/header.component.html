@@ -1,0 +1,52 @@
+<ion-header #topheader>
+  <ion-toolbar color="primary" class="main-header">
+    <ion-text class="p-0" >
+     <h4 class="ion-no-margin"> CricClubs </h4> </ion-text>
+     <!-- menu button -->
+     <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+     </ion-buttons>
+    <!-- ***ALL ICON BUTTONS OVER HEADER*** -->
+    <!-- icon buttons at start of header -->
+    <!-- <ion-buttons collapse="true" slot="start">
+      <ion-button (click)="logout()">
+        <ion-icon slot="start" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+    <!-- icon buttons at end of header -->
+
+<!-- START: BOTTOM TABS -->
+<ion-tabs class="mainhome">
+  <ion-tab-bar slot="bottom" color="primary">
+    <ion-tab-button tab="homefeed" class="tab-button" (click)="selectedTab='myhome';showBackdrop=false" [ngClass]="{'tab-button-active':selectedTab=='myhome', 'tab-button':selectedTab!='myhome'}">
+      <ion-label class="tab-font f-18">Home</ion-label>           
+    </ion-tab-button>
+    <ion-tab-button tab="mygames" class="tab-button" (click)="selectedTab='mygames';showBackdrop=false" [ngClass]="{'tab-button-active':selectedTab=='mygames', 'tab-button':selectedTab!='mygames'}">
+      <ion-label class="tab-font f-18">My Games</ion-label>           
+    </ion-tab-button>
+    <ion-tab-button class="tab-button" (click)="showBackdrop=!showBackdrop;selectedTab='post'" [ngClass]="{'tab-button-active':selectedTab=='post', 'tab-button':selectedTab!='post'}">
+      <ion-label class="tab-font f-18">Post</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="international" class="tab-button" (click)="selectedTab='international';showBackdrop=false" [ngClass]="{'tab-button-active':selectedTab=='international', 'tab-button':selectedTab!='international'}">
+      <ion-label class="tab-font f-18">International</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="chat" class="tab-button-active" (click)="selectedTab='chat';showBackdrop=false" [ngClass]="{'tab-button-active':selectedTab=='chat', 'tab-button':selectedTab!='chat'}">
+      <ion-label class="tab-font f-18">Chat</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+<!-- END: BOTTOM TABS -->
+
+
+    <ion-buttons collapse="true" slot="end">
+      <!-- search icon button -->
+      <ion-button (click)="searchPage()">
+        <ion-icon slot="start" name="search"></ion-icon>
+      </ion-button>
+      <!-- notification icon button -->
+      <ion-button (click)="notificationsPage()">
+        <ion-icon slot="start" name="notifications"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

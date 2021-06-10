@@ -1,0 +1,117 @@
+.schedule-list{
+    padding: 15px;
+.series-list{
+    border-top: 1px solid #f3f3f3;
+    p{
+        color: var(--ion-color-tertiary);
+    }
+    h4{
+        color: var(--ion-color-dark);
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+}
+.continue-b{
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    button{
+        border-radius: 50px;
+    }
+}
+.match-team{
+    align-items: center;
+    border-bottom: 1px solid #f3f3f3;
+    img{
+        width: 40px;
+        height: 40px;
+        display: block;
+        object-fit: contain;
+        margin: 0px auto;
+    }
+}
+
+.add-buttons{
+    width: fit-content;
+    font-size: 14px;
+    align-items: center;
+    border-radius: 50px;
+    display: flex;
+    ion-icon{
+        font-size: 1.8rem;
+        margin-right: 5px;
+        color: var(--ion-color-secondary);
+        border-radius: 50px;
+    }
+}
+.align-items{
+    justify-content: space-between;
+}
+.message{
+    margin: 15px;
+}
+.add-button{
+    width: max-content;
+    font-size: 14px;
+    align-items: center;
+    border-radius: 50px;
+    display: flex;
+    font-weight: 600;
+    border: 1px solid var(--ion-color-secondary);
+    padding: 3px 15px;
+    margin-right: 10px;
+    justify-content: center;
+    color: #000;
+}
+.main-card h5{
+    margin-bottom: 8px;
+    margin-top: 8px;
+    margin-left: 10px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+.list-player{
+    font-size: 16px;
+    font-weight: 500;
+    ion-checkbox{
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+.select-captain{
+    --background: #f3f3f3;
+    padding: 15px;
+    --padding-start: 5px;
+    --inner-padding-end: 5px;
+    padding-bottom: 0px;
+}
+.per-innings{
+    padding-bottom: 15px!important;
+}
+.team-head{
+    background: #fff!important;
+}
+.create-match{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    }
+
+    ion-footer{
+        h5{
+            margin-top: 0px;
+            margin-bottom: 3px;
+            font-weight: 400;
+            font-size: 16px;
+            b{
+                font-size: 1.5rem!important;
+                color: var(--ion-color-secondary);
+            }
+        }
+        ion-row{
+            padding: 0px 15px;
+        }
+    }

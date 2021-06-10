@@ -1,0 +1,67 @@
+<ion-header>
+  <!-- Header -->
+  <app-header></app-header>
+  <!-- <ion-toolbar>
+    <ion-title>International</ion-title>
+  </ion-toolbar> -->
+
+  <!-- Series List -->
+  <div class="f-16 bold w-100 all-series" >All Series</div>
+  <div class="series-list">
+    <ul>
+      <li *ngFor="let series of seriesList" class="series-name" (click)="selectSeries(series.seriesID)">{{series.seriesName}}</li>
+    </ul>
+  </div>
+  <!-- Series List -->
+  <!-- <div>
+    <ion-row class="series-list">
+      <div style="display: inline-block;" *ngFor="let series of seriesList">
+        <span class="series-name" (click)="selectSeries(series.seriesID)">{{series.seriesName}}</span>
+      </div>
+    </ion-row>
+  </div> -->
+  <!-- header tab buttons -->
+  <div>
+    <ion-segment mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="current_segment_name">
+      <ion-segment-button value="0">
+        <ion-label>Live</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>Upcoming</ion-label>
+      </ion-segment-button>  
+      <ion-segment-button value="2">
+        <ion-label>Completed</ion-label>
+      </ion-segment-button>                 
+    </ion-segment>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <app-matches *ngIf="current_segment_name==0" [matchList]="liveMatches" class="w-100"></app-matches>
+  <app-schedule *ngIf="current_segment_name==1" [sourcePage]="'international'" [scheduleList]="upcomingMatches" class="w-100"></app-schedule>
+  <app-matches *ngIf="current_segment_name==2" [matchList]="completedMatches" class="w-100"></app-matches>
+
+  <ng-container *ngIf="(toNumber(current_segment_name)==0 && !liveMatches) || (toNumber(current_segment_name)==1 && !upcomingMatches) || (toNumber(current_segment_name)==2 && !completedMatches)">
+    <div class="p-15 text-center">
+      <ion-text color="secondary">No Matches to show at this moment</ion-text>
+    </div>
+  </ng-container>
+
+  <ion-item lines="none" class="view-more" *ngIf="(current_segment_name==0 && liveMatches && liveMatches.length > 0) || (toNumber(current_segment_name)==1 && upcomingMatches && upcomingMatches.length > 0) || (toNumber(current_segment_name)==2 && completedMatches && completedMatches.length > 0)">
+    <ion-buttons class="continue-b m-auto">
+      <button block outline class="medium-button-primary" (click)="goToMatchesPage()">View More</button>
+    </ion-buttons>
+  </ion-item>
+
+  <app-international-news *ngIf="newsList" [newsList]="newsList"></app-international-news>
+
+  <app-social-feed [postsList]="leaguePostsList" (showPostActions)="showPostActions($event)"></app-social-feed>
+
+</ion-content>
+
+

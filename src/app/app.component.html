@@ -1,0 +1,81 @@
+<ion-app>
+  <ion-router-outlet id="content1"></ion-router-outlet>
+
+  <ion-menu side="start" menuId="first" contentId="content1">
+    <ion-header>
+      <ion-menu-toggle auto-hide="true">
+        <ion-toolbar>
+          <ion-avatar slot="start" class="header-avatar" *ngIf="ccUtil.getAuthToken()" (click)="redirectToPlayerProfile()">
+            <img [src]="ccUtil.RESOURCE_URL + ccUtil.userProfilePic" onerror="this.src='assets/images/profile.png'">
+          </ion-avatar>
+          <ion-title *ngIf="ccUtil.getAuthToken()" (click)="redirectToPlayerProfile()">
+            {{ccUtil.userFullName}}
+          </ion-title>
+          <ion-text (click)="redirectToPlayerProfile()" *ngIf="ccUtil.getAuthToken()">
+            View Profile
+          </ion-text>
+        </ion-toolbar>
+      </ion-menu-toggle>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="true">
+          <ion-item class="border" lines="none">
+            Test Environment
+            <ion-toggle [(ngModel)]="environmentValue" (ionChange)="changeEnvironment($event)"></ion-toggle>
+            Production
+          </ion-item>
+          <ion-item class="border" (click)="pageRedirect('homefeed')" routerDirection="forward" lines="none">
+            <span> <img class="imgSize" src="assets/images/friends.svg"></span>
+              Friends
+          </ion-item>
+          <ion-item routerLink="/maintabs/mygames" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+            <span><img class="imgSize" src="assets/images/league-menu.svg"></span>
+              My Leagues
+          </ion-item>
+          <ion-item routerLink="/maintabs/chat" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+            <span><img class="imgSize" src="assets/images/cricket-menu.svg"></span>
+              My Matches
+          </ion-item>
+          <ion-item class="border" (click)="logout()" routerDirection="forward" *ngIf="ccUtil.getAuthToken()" lines="none">
+            <span><img class="imgSize" src="assets/images/calendar-menu.svg"></span>
+              My Schedule
+          </ion-item>
+          <ion-item (click)="pageRedirect('homefeed')" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+            <span> <img class="imgSize" src="assets/images/scores-menu.svg"></span>
+              Live Scoring
+          </ion-item>
+          <ion-item class="border" routerLink="/maintabs/mygames" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+           <span> <img class="imgSize" src="assets/images/live-stream-menu.svg"></span>
+             Live Streaming
+          </ion-item>
+          <ion-item routerLink="/maintabs/chat" routerDirection="forward" lines="none">
+            <span><img class="imgSize" src="assets/images/more-menu.svg"></span>
+            More
+          </ion-item>
+          <ion-item  class="border" routerLink="/maintabs/chat" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+          <span> <img class="imgSize" src="assets/images/settings-menu.svg"></span>
+              Account Settings
+          </ion-item>
+          <ion-item  class="border" routerLink="/notifications" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+            <span> <img class="imgSize" src="assets/images/settings-menu.svg"></span>
+            Notifications
+          </ion-item>
+          <ion-item  class="border" routerLink="/local-storage" routerDirection="forward" lines="none" *ngIf="ccUtil.getAuthToken()">
+            <span> <img class="imgSize" src="assets/images/settings-menu.svg"></span>
+            Local Storage
+          </ion-item>
+          
+        <ion-item  (click)="logout()" routerDirection="forward" *ngIf="ccUtil.getAuthToken()" class="logout" lines="none">
+          <span> <img class="imgSize" src="assets/images/logout-menu.svg"></span>
+            Log Out
+        </ion-item>
+        <ion-item  (click)="login()" routerDirection="forward" *ngIf="!ccUtil.getAuthToken()" class="logout" lines="none">
+          <span> <img class="imgSize" src="assets/images/logout-menu.svg"></span>
+            Log In
+        </ion-item>
+      </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+</ion-app>

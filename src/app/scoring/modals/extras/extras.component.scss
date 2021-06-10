@@ -1,0 +1,67 @@
+
+.submit{
+    border-top: 1px solid #ddd;
+    ion-button{
+        margin: 0px auto;
+    }
+}
+
+.wides{
+    ion-grid{
+        padding: 5px 0px;
+        ion-row{
+            justify-content: start;
+            padding: 5px 0px;
+        }
+    }
+    .displayinradio{
+        padding: 10px;
+    }
+}
+
+ion-header{
+    margin-bottom: 1rem;
+}
+
+ion-card{
+    &.noballbtns{
+        .card-content{
+            .grid{
+                .row{
+                    .col{
+                        background-color: transparent;
+                        border:none;
+                        margin: 5px;
+                        padding: 0;
+                        width: 100%;
+                        .button{
+                            background-color: var(--ion-color-light);
+                            color: var(--ion-color-dark);
+                            border:1px var(--ion-color-medium); 
+                            text-align: center;
+                            width: 100%;
+                            border-radius: 6px;
+                            padding: 8px;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    &.radio-btns-card{
+        padding: 10px;
+        .label{
+            color:var(--ion-color-light);
+            font-weight: 600;
+        }
+    }
+}
+
+
+    
+.item .label{
+    text-align: center;
+    color: var(--ion-color-primary);
+    font-size: 1em!important;
+}

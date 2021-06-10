@@ -1,0 +1,128 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Wickets</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="extrasList">
+  <!-- <ion-card> -->
+    <ion-list class="list-wickets">
+      <ion-item lines="none" *ngIf="wicketType=='b' || wicketType==''">
+        <ion-label>Bowled</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='b':wicketType=''" color="dark" [checked]="wicketType=='b'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='ct' || wicketType==''">
+        <ion-label>Catch Fielder</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='ct':wicketType=''" color="dark" [checked]="wicketType=='ct'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='ctw' || wicketType==''">
+        <ion-label>Catch WicketKeeper</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='ctw':wicketType=''" color="dark" [checked]="wicketType=='ctw'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='lbw' || wicketType==''">
+        <ion-label>LBW</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='lbw':wicketType=''" color="dark" [checked]="wicketType=='lbw'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='st' || wicketType==''">
+        <ion-label>Stumped</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='st':wicketType=''" color="dark" [checked]="wicketType=='st'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='ro' || wicketType==''">
+        <ion-label>Run Out</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='ro':wicketType=''" color="dark" [checked]="wicketType=='ro'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='ht' || wicketType==''">
+        <ion-label>Hit Wicket</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='ht':wicketType=''" color="dark" [checked]="wicketType=='ht'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='hdb' || wicketType==''">
+        <ion-label>Handled Ball</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='hdb':wicketType=''" color="dark" [checked]="wicketType=='hdb'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='hbt' || wicketType==''">
+        <ion-label>Hit Ball Twice</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='hbt':wicketType=''" color="dark" [checked]="wicketType=='hbt'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='to' || wicketType==''">
+        <ion-label>Timed Out</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='to':wicketType=''" color="dark" [checked]="wicketType=='to'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='mk' || wicketType==''">
+        <ion-label>Mankading</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='mk':wicketType=''" color="dark" [checked]="wicketType=='mk'"></ion-checkbox>
+      </ion-item>
+      <ion-item lines="none" *ngIf="wicketType=='obf' || wicketType==''">
+        <ion-label>Obstructing The Field</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='obf':wicketType=''" color="dark" [checked]="wicketType=='obf'"></ion-checkbox>
+      </ion-item> 
+      <ion-item lines="none" *ngIf="wicketType=='rto' || wicketType==''">
+        <ion-label>Retired Out</ion-label>
+        <ion-checkbox (ionChange)="wicketType==''?wicketType='rto':wicketType=''" color="dark" [checked]="wicketType=='rto'"></ion-checkbox>
+      </ion-item>     
+    </ion-list>  
+    <ion-item lines="none">
+      <ion-label *ngIf="wicketType=='ro'">Runout Batsman</ion-label>
+      <ion-label *ngIf="wicketType=='obf'">Offending Batsman</ion-label>    
+    </ion-item>
+    <ion-list class="bg-white" *ngIf="wicketType=='ro' || wicketType=='obf'">
+      <ion-radio-group [(ngModel)]="outBatsman">
+        <ion-item lines="none">
+          <ion-label>{{wicketData.batsmanName}}</ion-label>
+          <ion-radio [value]="wicketData.batsmanId" checked="checked"></ion-radio>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>{{wicketData.runnerName}}</ion-label>
+          <ion-radio [value]="wicketData.runnerId"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list> 
+    <ion-item lines="none" class="wicket-card" *ngIf="wicketType=='ct' || wicketType=='ctw' || wicketType=='ro' || wicketType=='st'">
+      <ion-label *ngIf="wicketType=='ct' || wicketType=='ctw'">Caught By</ion-label>
+      <ion-label *ngIf="wicketType=='ro'">Fielder 1</ion-label>
+      <ion-label *ngIf="wicketType=='st'">Fielder</ion-label>
+    </ion-item>  
+    <ion-item lines="none" class="bg-white border-bottom" *ngIf="wicketType=='ct' || wicketType=='ctw' || wicketType=='ro' || wicketType=='st'">
+      <ion-label>{{ (wicketType=='ctw' || wicketType=='st') ? 'Choose Wicket Keeper' : 'Choose Fielder'}}</ion-label>
+      <ion-select name="fielder1BowlerTeam" [(ngModel)]="fielder1" (ionChange)="checkPlayer()" *ngIf="wicketType!='st' && wicketType!='ctw'">
+        <ion-select-option [value]="player.id" *ngFor="let player of bowlingTeam">{{player.name}}</ion-select-option>
+      </ion-select>
+      <ion-select name="fielder1WithoutBowler" [(ngModel)]="fielder1" (ionChange)="checkPlayer()" *ngIf="wicketType=='st' || wicketType=='ctw'">
+        <ion-select-option [value]="player.id" *ngFor="let player of bowlingTeamWithoutBowler; let i=index">{{player.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label *ngIf="wicketType=='st' || wicketType=='ht'">Is the ball wide?</ion-label>
+      <ion-checkbox name="wideBall" [(ngModel)]="wideBall" *ngIf="wicketType=='st' || wicketType=='ht'"></ion-checkbox>
+      <ion-label *ngIf="wicketType=='ro'">Fielder 2</ion-label>
+    </ion-item>  
+    <ion-item lines="none" class="bg-white" *ngIf="wicketType=='ro'">
+      <ion-label>Choose Fielder 2</ion-label>
+      <ion-select name="fielder2" [(ngModel)]="fielder2" (ionChange)="checkPlayer()">
+        <ion-select-option [value]="player.id" *ngFor="let player of bowlingTeam">{{player.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="none" *ngIf="showSubstitute">
+      <ion-label>Substitute Name: </ion-label>
+      <ion-input class="inputBorder" name="substituteName" [(ngModel)]="substituteName" type="text"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="bg-white ion-margin-top" *ngIf="wicketType=='ro' || wicketType=='obf'">
+      <h5 item-start>
+        Runs: {{wicketRunsData.runs}}{{wicketRunsData.ballType ? ',' : ''}} {{wicketRunsData.ballType}}
+      </h5>
+      <ion-badge slot="end" (click)="selectWicketRuns()">Select Runs</ion-badge>
+    </ion-item>
+  <!-- </ion-card> -->
+  <ion-list class="button-list"> 
+    <ion-item lines="none">
+      <ion-buttons text-center>
+        <ion-button shape="round" class="active-btn" [disabled]="wicketType==''" (click)="saveWicket()">Save</ion-button>
+        <ion-button shape="round" (click)="dismissModal()">Cancel</ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>

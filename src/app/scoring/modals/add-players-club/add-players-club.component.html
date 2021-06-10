@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-14"> 
+      Add Players From Club
+    </ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)='ccUtil.showNetworkStatus()'>
+        <span class="networkOnline" *ngIf="ccUtil.isNetworkConnected"></span>
+        <span class="networkOffline" *ngIf="!ccUtil.isNetworkConnected"></span>
+      </ion-button>
+    </ion-buttons> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="main-card">
+    <ion-card-header>
+      <ion-item lines="none" color="light">
+        {{teamsData.teamOneName}}
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+
+      <!-- <ion-list lines="none"> 
+        <ion-item *ngFor="let playerName of selectedClubPlayers1" class="selected-players">
+          <h2>{{playerName}} <button (click)='removePlayerTeam1(playerName)'>X</button></h2>
+        </ion-item>
+      </ion-list> -->
+
+      <ion-item>
+        <ion-label>Player Name :</ion-label>
+        <ion-input [(ngModel)]="searchString1" type="search" (ngModelChange)="searchClubPlayers(teamsData.teamOne, 1)" type="text"></ion-input>
+      </ion-item>
+
+      <!-- <ion-list class="list-dropdown" lines="none">
+        <ion-item *ngFor="let player of clubPlayers1">
+          <ion-icon name="person" item-start></ion-icon>
+          <ion-label (click)="selectedPlayersFromClub(player.playerID, '1',player.firstName +' ' +player.lastName)">{{player.firstName}} {{player.lastName}}</ion-label>
+        </ion-item>
+      </ion-list> -->
+      <ion-list id="teamOnePlayersId">
+        <!-- iterate new players added -->
+        <ion-item lines="none" *ngFor="let item of clubPlayers1; let index = index" class="list-player">
+          <ion-checkbox (ionChange)="selectPlayers(index, item.playerID, 1)" [checked]="(selectedTeam1Players.indexOf(item.playerID) > -1) ? true : false"></ion-checkbox>
+          <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="main-card b-0">
+    <ion-card-header>
+      <ion-item color="light" lines="none">
+        {{teamsData.teamTwoName}}
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+
+      <!-- <ion-list lines="none"> 
+        <ion-item *ngFor="let playerName of selectedClubPlayers2" class="selected-players">
+          <h2>{{playerName}} <button (click)='removePlayerTeam2(playerName)'>X</button></h2>
+        </ion-item>
+      </ion-list> -->
+
+      <ion-item>
+        <ion-label>Player Name : </ion-label>
+        <ion-input [(ngModel)]="searchString2" type="search" (ngModelChange)="searchClubPlayers(teamsData.teamTwo, 2)" type="text"></ion-input>
+      </ion-item>
+
+      <!-- <ion-list class="list-dropdown" lines="none">
+        <ion-item *ngFor="let player of clubPlayers2">
+          <ion-icon name="person" slot="start"></ion-icon>
+          <ion-label (click)="selectedPlayersFromClub(player.playerID, '2',player.firstName +' ' +player.lastName)">{{player.firstName}} {{player.lastName}}</ion-label>
+        </ion-item>
+      </ion-list> -->
+
+      <ion-list id="teamOnePlayersId">
+        <!-- iterate new players added -->
+        <ion-item lines="none" *ngFor="let item of clubPlayers2; let index = index" class="list-player">
+          <ion-checkbox (ionChange)="selectPlayers(index, item.playerID, 2)" [checked]="(selectedTeam2Players.indexOf(item.playerID) > -1) ? true : false"></ion-checkbox>
+          <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+<ion-item lines="none" class="submit">    
+  <ion-button shape="round" (click)="saveAndDismissModal()">Save</ion-button>
+  <ion-button shape="round" class="cancel" (click)="dismissModal()">Cancel</ion-button>
+</ion-item>  
+</ion-content>

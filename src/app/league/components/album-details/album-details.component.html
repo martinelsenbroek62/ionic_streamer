@@ -1,0 +1,29 @@
+
+
+<ion-content class="detail-images">
+  <ng-container *ngFor="let photo of albumObject.photos; let index = index">
+    <ion-row *ngIf="index == 0 || (index % 3 === 0)">
+      <ion-col>
+        <ion-card style="margin: 7px;" *ngIf="albumObject.photos[index]">
+          <div class="img-frame">
+            <img class="main-img" [src]="ccUtil.RESOURCE_URL + albumObject.photos[index].imagePath" />
+          </div>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card style="margin: 7px;" *ngIf="albumObject.photos[index+1]">
+          <div class="img-frame">
+            <img class="main-img" [src]="ccUtil.RESOURCE_URL + albumObject.photos[index+1].imagePath" />
+          </div>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card style="margin: 7px;" *ngIf="albumObject.photos[index+2]">
+          <div class="img-frame">
+            <img class="main-img" [src]="ccUtil.RESOURCE_URL + albumObject.photos[index+2].imagePath" />
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-content>

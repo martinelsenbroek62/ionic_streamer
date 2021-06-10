@@ -1,0 +1,37 @@
+
+.tagged-users{
+    padding-top: 10px;
+    padding-bottom: 8px;
+}
+.tagged-friends{
+    border: 1px solid var(--ion-color-primary)
+}
+.create-post-head{
+    --min-height: 38px;
+    margin-bottom: 15px;
+    --padding-start: 10px;
+    border-radius: 3px;
+    margin-top: 15px;
+    padding: 0px;
+    --box-shadow: none;
+}
+.tagged-friends{
+    border: 1px solid #000;
+    padding: 3px 20px;
+    display: inline-block;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 50px;
+    position: relative;
+    ion-icon{
+        margin-left: 0.4rem;
+        position: absolute;
+        top: -8px;
+        right: 0px;
+        color: #fff!important;
+        background: #000;
+        border-radius: 50px;
+        padding: 2px;
+    }
+}

@@ -1,0 +1,44 @@
+
+ion-content{
+    overflow: scroll!important;
+    pointer-events: all!important;
+    -ms-touch-action: auto!important;
+    touch-action: auto!important;
+}
+.submit{
+    border-top: 1px solid var(--ion-color-medium);
+    justify-content: center;
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    ion-button{
+        margin: 10px;
+        --border-radius: 50px;
+        width: 80px;
+
+    }
+}
+  .cancel{
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50px;
+    --background: #fff;
+    color: var(--ion-color-primary);
+    }
+.scroll-content div{
+    padding: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+}
+ion-card{
+    text-align: center;
+    box-shadow: none;
+    padding-top: 1rem;
+}
+.bottomButtons{
+    height: 55px;
+    .col{
+        button{
+            font-size: 1.3em !important;
+        }
+    }
+}

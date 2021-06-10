@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16"> Edit Balls</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end">
+      <ion-button slot="icon-only" (click)='ccUtil.showNetworkStatus()'>
+        <span class="networkOnline" *ngIf="ccUtil.isNetworkConnected"></span>
+        <span class="networkOffline" *ngIf="!ccUtil.isNetworkConnected"></span>
+      </ion-button>
+    </ion-buttons>  -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="currentBallObj" class="extrasList">
+  <ion-card class="main-card">
+    <ion-item lines="none">
+      {{ccUtil.getObjectKeys(editedBallsCount).length}} Ball(s) Modified
+    </ion-item>
+  </ion-card>
+  <ion-item margin-top class="bg-white">
+    <ion-label>
+     Select Inning
+    </ion-label>
+    <ion-select [(ngModel)]="inningsNumber" (ionChange)="changeInning()">
+      <ion-select-option *ngFor="let i of ccUtil.getNumbersArray(currentBallObj.inningsNumber)" [value]="i">
+        Inning {{i}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item margin-top class="bg-white">
+    <ion-label>
+      Select Over
+    </ion-label>
+    <ion-select [(ngModel)]="currentOverNumber" (ionChange)="changeOver()">
+      <ion-select-option *ngFor="let i of ccUtil.getNumbersArray(currentBallObj.over)" [value]="i">
+        {{i}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+    <ion-item margin-top class="bg-white">
+      <ion-label>
+        Select Bowler 
+      </ion-label>
+      <ion-select [(ngModel)]="selectedBowlerOver" (ionChange)="changeBowlerOver()">
+        <ion-select-option [value]="ccUtil.toNumber(item.key)" *ngFor="let item of bowlingPlayers | keyvalue">
+          {{item.value}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ng-container *ngFor="let ball of selectedOverBallsList; let i = index">
+      <ion-card class="main-card" *ngIf="!nonDisplayBallsArr.includes(ball.ballType)">
+        <ion-card-header (click)="showHideCard(i)" class="p-0 bg-white">
+          <ion-item color="light" lines="none">
+            <span slot="start">Ball - {{ball.over}}.{{ball.ball}}</span>
+            <ion-icon name="chevron-up" *ngIf="showCard[i]" slot="end" class=" f-18"></ion-icon>
+            <ion-icon name="chevron-down" *ngIf="!showCard[i]" slot="end" class=" f-18"></ion-icon>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content *ngIf="showCard[i]">
+          <ion-grid class="p-0">
+            <ion-row align-items-center class="gray-box">
+              <ion-col><ion-item lines="none" end><h1 class="text-center f-22 w-100">{{ccUtil.getRunsText(ball)}} Run(s)</h1></ion-item></ion-col>
+             
+            </ion-row>
+            <ion-row class="gray-box">
+              <ion-col size="5" class="text-left"><h3>Batsman : </h3><h2>{{battingPlayers[ball.batsman]}}</h2></ion-col>
+              <ion-col size="2" class="text-center">
+                <ion-icon name="sync" (click)="swapPlayers(i)" color="primary" style="font-size: 2.5em;"></ion-icon></ion-col>
+              <ion-col size="5" class="text-right"><h3>Runner : </h3><h2>{{battingPlayers[ball.runner]}}</h2></ion-col>
+            </ion-row>
+            <ion-row class="gray-box edit border-bottom">
+             <ion-button color="primary" (click)="editBall(i)">Edit</ion-button>
+             <ion-button class="cancel" (click)="deleteBalls(i)">Delete</ion-button>
+            </ion-row>
+            <ion-row>
+              <ion-col align-items-center class="p-0">
+                <ion-item>
+                  <ion-label>
+                      Bowler :
+                      <!-- assign to selectedBowlerBall[i] to default set bowling player selected -->
+                      <ng-container *ngIf="selectedBowlerBall[i] = ball.bowler"></ng-container>
+                    </ion-label>
+                  <ion-select [(ngModel)]="selectedBowlerBall[i]" (ionChange)="changeBowlerBall(i)">
+                    <ion-select-option [value]="ccUtil.toNumber(item.key)" *ngFor="let item of bowlingPlayers | keyvalue">
+                      {{item.value}}
+                    </ion-select-option>
+                  </ion-select>                        
+                </ion-item>
+              </ion-col>          
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+    <!-- Add Ball -->
+    <ion-item class="text-center" lines="none">
+    <ion-button shape="round" class="cancel" *ngIf="currentInningBalls.length>0" (click)="addNewBallModal()">Add Extra Ball</ion-button>
+  </ion-item>
+    <ion-item lines="none" class="submit">    
+      <ion-button shape="round" (click)="dismissModalOnSave()">Save</ion-button>
+      <ion-button shape="round" class="cancel" (click)="dismissModal()">Cancel</ion-button>
+    </ion-item>  
+  </ion-content>

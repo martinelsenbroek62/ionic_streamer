@@ -1,0 +1,33 @@
+
+ion-content{
+    position:absolute;
+}
+
+.album-list{
+	padding: 5px;
+	ion-row{
+		padding: 7px 7px 0px 7px;
+	}
+	ion-col{
+		padding: 5px;
+	}
+	img{
+		height: 150px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+	}
+}
+
+.gallery-desc{
+	text-align: left;
+	.title{
+		color: #000;
+		font-weight: 600;
+		font-size: 14px!important;
+	}
+	p{
+		margin: 5px 0px 0px 0px;
+		font-size: 12px;
+	}
+}

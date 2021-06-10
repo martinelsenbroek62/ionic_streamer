@@ -1,0 +1,256 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" (click)="dismissModal()">
+      <ion-back-button class="ion-back-button-display"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0"> Create Match</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="errorMessage">
+    <div class="not-found-msg">{{errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <!-- before pressing continue button -->
+  <ion-card class="main-card b-0" *ngIf="!continueToCreateMatch && matchData">
+    <ion-card-content>
+      <ion-row class="text-center match-team">
+        <ion-col col-5>
+          <img class="imgSize" [src]="ccUtil.RESOURCE_URL + matchData.t1_logo_file_path">
+          {{matchData.teamOneName}}
+        </ion-col>
+        <ion-col col-2 class="f-18">
+          v
+        </ion-col>
+        <ion-col col-5>
+          <img class="imgSize" [src]="ccUtil.RESOURCE_URL + matchData.t2_logo_file_path">
+          {{matchData.teamTwoName}}
+        </ion-col>
+      </ion-row>
+      <ion-grid class="schedule-list">
+        <ion-row>
+          <ion-col col-12 class="series-list b-0">
+             <p>Series</p>
+             <h4>{{matchData.leagueName}}</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 class="series-list">
+            <p>Match Type</p> 
+            <h4><span>{{getMatchType(matchData.matchType)}}</span></h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 class="series-list">
+             <p>Match Date</p>
+             <h4>{{matchData.date}}</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 class="series-list">
+             <p>Match Time</p>
+             <h4>{{matchData.time}}</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="matchData.location">
+          <ion-col col-12 class="series-list">
+              <p>Ground</p>
+              <h4><!-- {{matchData.location}} --></h4>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="matchData.umpires">
+          <ion-col col-12 class="series-list">
+             <p>Umpires</p>
+             <h4><!-- {{umpires}} --></h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 class="series-list">
+             <p> Series Type</p>
+             <h4>{{getSeriesType(matchData.seriesType)}}</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 class="series-list">
+              <p>Fixture Id</p>
+              <h4>{{matchData.fixtureId}}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-item lines="none" class="ion-text-center">
+        <ion-buttons class="continue-b">
+          <button block outline class="medium-button-primary" (click)="continueToCreateMatch=true">Continue</button>
+        </ion-buttons>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- after pressing continue button -->
+  <div *ngIf="continueToCreateMatch && liveScoringTeams && matchData">
+    <ion-card class="main-card b-0">
+      <!-- <ion-card-header>
+        <ion-row>
+          <ion-col class="text-right"><div class="add-buttons"> Add Club Players <ion-icon name="add-circle"></ion-icon></div></ion-col>
+          <ion-col text-right *ngIf="global.canAddPlayers && team1PlayingXICount==0" (click)="addNewPlayer('team1')"><i class="far fa-plus-circle"></i> Add New Player</ion-col>
+        </ion-row> 
+      </ion-card-header> -->
+      <ion-row class="text-center match-team">
+        <ion-col class="text-left align-items border-bottom-grey" size="12">
+       <h5>{{matchData.seriesName}}</h5>
+       <div class="add-button" *ngIf="ccUtil.clubStructureEnabled && liveScoringTeams.teamOnePlayingXI && liveScoringTeams.teamOnePlayingXI.length === 0 && liveScoringTeams.teamTwoPlayingXI && liveScoringTeams.teamTwoPlayingXI.length === 0" (click)="actionAddPlayersFromClub()">Add Players From Club </div>
+        </ion-col>
+        <ion-col col-5>
+          <img class="imgSize" [src]="ccUtil.RESOURCE_URL + matchData.t1_logo_file_path">
+          {{matchData.teamOneName}}
+        </ion-col>
+        <ion-col col-2 class="f-18">
+          v
+        </ion-col>
+        <ion-col col-5>
+          <img class="imgSize" [src]="ccUtil.RESOURCE_URL + matchData.t2_logo_file_path">
+          {{matchData.teamTwoName}}
+        </ion-col>
+      </ion-row>
+      
+    </ion-card>
+
+    <!-- Team 1 players list -->
+    <ion-card class="main-card">
+      <!-- <ion-card-header class="team-head">
+        <ion-row>
+          <ion-col class="text-left align-items">
+            {{liveScoringTeams.team1Name}}
+            India
+          </ion-col>
+          <ion-col text-right *ngIf="global.canAddPlayers && team1PlayingXICount==0" (click)="addNewPlayer('team1')"><i class="far fa-plus-circle"></i> Add New Player</ion-col>
+        </ion-row>
+      </ion-card-header> -->
+           <!-- Team 1 captain -->
+   
+      <ion-col class="text-left align-items border-bottom-grey">
+       <h5>{{liveScoringTeams.teamOneName}}</h5>
+       <div class="add-button" (click)="addNewPlayer('team1')" *ngIf="ccUtil.canAddPlayers && liveScoringTeams.teamOnePlayingXI.length == 0">Add New Player </div>
+      </ion-col>
+      <p class="message" *ngIf="liveScoringTeams.teamOnePlayingXI.length > 0">
+        Captain already finalized <span> {{liveScoringTeams.teamOnePlayingXI.length}} </span> Players, continue to Create Match
+      </p>
+      <ng-container *ngIf="liveScoringTeams.teamOnePlayingXI.length === 0">
+        <ion-item lines="none" class="select-captain">
+          <ion-label class="f-14">Select Captain</ion-label>
+          <ion-select interface="popover" [interfaceOptions]="{'cssClass': 'wider-popover'}" class="f-14 pr-8" name="team1Captain" id="team1Captain" [(ngModel)]="teamOneCaptain">
+            <ion-select-option [value]="item.newPlayerId" *ngFor="let item of team1NewPlayers">
+              {{item.firstName}} {{item.lastName}}
+            </ion-select-option>
+            <ion-select-option [value]="item.key" *ngFor="let item of liveScoringTeams.teamOnePlayers | keyvalue">
+              {{item.value}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-list id="teamOnePlayersId">
+          <!-- iterate new players added -->
+          <ion-item lines="none" *ngFor="let item of team1NewPlayers" class="list-player">
+            <ion-checkbox (ionChange)="selectPlayers(item.newPlayerId, 1)" checked="true"></ion-checkbox>
+            <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+            <!-- <ion-checkbox (ionChange)="removeClubPlayer(clubPlayer.playerId, 1)" [checked]="true"></ion-checkbox> -->
+          </ion-item>
+          <!-- iterate exisiting players -->
+          <ion-item lines="none" *ngFor="let item of liveScoringTeams.teamOnePlayers | keyvalue" class="list-player">
+            <ion-checkbox (ionChange)="selectPlayers(item.key, 1)" [checked]="(selectedTeam1Players.indexOf(ccUtil.toNumber(item.key)) > -1) ? true : false"></ion-checkbox>
+            <ion-label>{{item.value}}</ion-label>
+            <!-- <ion-checkbox (ionChange)="removeClubPlayer(clubPlayer.playerId, 1)" [checked]="true"></ion-checkbox> -->
+          </ion-item>
+        </ion-list>
+      </ng-container>
+    </ion-card>
+
+    <!-- Team 2 players list -->
+    <ion-card class="main-card">
+      <!-- <ion-card-header class="team-head">
+        <ion-row>
+          <ion-col class="text-left align-items">
+            {{liveScoringTeams.team1Name}}
+            Pakistan
+          </ion-col>
+          <ion-col text-right *ngIf="global.canAddPlayers && team1PlayingXICount==0" (click)="addNewPlayer('team1')"><i class="far fa-plus-circle"></i> Add New Player</ion-col>
+        </ion-row>
+      </ion-card-header> -->
+           <!-- Team 2 captain -->
+      <ion-col class="text-left align-items border-bottom-grey">
+        <!-- {{liveScoringTeams.teamTwoName}} -->
+        <h5>{{liveScoringTeams.teamTwoName}}</h5>
+        <div class="add-button" (click)="addNewPlayer('team2')" *ngIf="ccUtil.canAddPlayers && liveScoringTeams.teamTwoPlayingXI.length == 0">Add New Player </div>
+      </ion-col>
+      <p class="message" *ngIf="liveScoringTeams.teamTwoPlayingXI.length > 0">
+        Captain already finalized <span> {{liveScoringTeams.teamTwoPlayingXI.length}} </span> Players, continue to Create Match
+      </p>
+      <ng-container *ngIf="liveScoringTeams.teamTwoPlayingXI.length === 0">
+        <ion-item lines="none" class="select-captain" lines="none">
+          <ion-label class="f-14">Select Captain</ion-label>
+          <ion-select class="f-14 pr-0" interface="popover" [interfaceOptions]="{'cssClass': 'wider-popover'}" name="team2Captain" id="team2Captain" [(ngModel)]="teamTwoCaptain">
+            <ion-select-option [value]="item.newPlayerId" *ngFor="let item of team2NewPlayers">
+              {{item.firstName}} {{item.lastName}}
+            </ion-select-option>
+            <ion-select-option [value]="item.key" *ngFor="let item of liveScoringTeams.teamTwoPlayers | keyvalue">
+              {{item.value}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-list id="teamTwoPlayersId">
+          <!-- iterate new players added -->
+          <ion-item lines="none" *ngFor="let item of team2NewPlayers" class="list-player">
+            <ion-checkbox (ionChange)="selectPlayers(item.newPlayerId, 1)" checked="true"></ion-checkbox>
+            <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
+            <!-- <ion-checkbox (ionChange)="removeClubPlayer(clubPlayer.playerId, 1)" [checked]="true"></ion-checkbox> -->
+          </ion-item>
+          <!-- iterate exisiting players -->
+          <ion-item lines="none" *ngFor="let item of liveScoringTeams.teamTwoPlayers | keyvalue" class="list-player">
+            <ion-checkbox (ionChange)="selectPlayers(item.key, 2)" [checked]="(selectedTeam2Players.indexOf(ccUtil.toNumber(item.key)) > -1) ? true : false"></ion-checkbox>
+            <ion-label>{{item.value}}</ion-label>
+            <!-- <ion-checkbox (ionChange)="removeClubPlayer(clubPlayer.playerId, 2)" [checked]="true"></ion-checkbox> -->
+          </ion-item>
+        </ion-list>
+      </ng-container>
+    </ion-card>
+  
+    <!-- Match Overs -->
+    <ion-card class="main-card" *ngIf="matchData.seriesType != 'Test'">
+      <ion-item lines="none" class="select-captain per-innings">
+        <ion-label class="f-14">How many overs per innings?</ion-label>
+        <ion-select class="f-14 pr-0" interface="popover" [interfaceOptions]="{'cssClass': 'wider-popover'}" name="selectOvers" id="selectOvers" [(ngModel)]="gameMaxOvers">
+          <ion-select-option [value]="over" *ngFor="let over of oversArray">{{over}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+
+    <ion-card class="main-card create-match">
+    <ion-item lines="none" class="ion-text-center justify-center">
+      <ion-buttons>
+        <button block outline class="medium-button-primary" (click)="createMatch()" [disabled]="disableCreateMatch">Create Match</button>
+      </ion-buttons>
+    </ion-item>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar *ngIf="continueToCreateMatch">
+    <ion-row>
+      <ion-col size="6">
+        <p class="f-16 mt-5 mb-0">{{liveScoringTeams.teamOneName}}</p>
+        <h5> <b>{{selectedTeam1Players.length}}</b> Selected</h5>
+        </ion-col>
+        <ion-col size="6"  class="ion-text-right">
+        <p class="f-16 mt-5 mb-0">{{liveScoringTeams.teamTwoName}}</p>
+        <h5><b>{{selectedTeam2Players.length}}</b> Selected</h5>
+        </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

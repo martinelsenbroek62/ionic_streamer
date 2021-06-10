@@ -1,0 +1,37 @@
+
+<ion-content class="album-list">
+  <ng-container *ngFor="let album of albumsList; let index = index">
+    <ion-row *ngIf="index == 0 || (index % 2 === 0)">
+      <ion-col *ngIf="albumsList[index]">
+        <ion-card (click)="albumDetailsPage(albumsList[index].albumId)" class="bs-0 m-0">
+          <div class="img-frame">
+            <img class="main-img" [src]="albumsList[index].coverPhoto ? (ccUtil.RESOURCE_URL + albumsList[index].coverPhoto.imagePath) : ''" />
+          </div>
+          <div class="gallery-desc">
+            <p class="title">
+              {{albumsList[index].name}}
+            </p>
+            <p>
+              {{albumsList[index].coverPhoto ? albumsList[index].coverPhoto.date : ''}}
+            </p>
+          </div>
+        </ion-card>
+      </ion-col>
+      <ion-col *ngIf="albumsList[index+1]">
+        <ion-card (click)="albumDetailsPage(albumsList[index+1].albumId)" class="bs-0 m-0">
+          <div class="img-frame">
+            <img class="main-img" [src]="albumsList[index+1].coverPhoto ? (ccUtil.RESOURCE_URL + albumsList[index+1].coverPhoto.imagePath) : ''" />
+          </div>
+          <div class="gallery-desc">
+            <p class="title">
+              {{albumsList[index+1].name}}
+            </p>
+            <p>
+              {{albumsList[index+1].coverPhoto ? albumsList[index+1].coverPhoto.date : ''}}
+            </p>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ion-content>

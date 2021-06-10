@@ -1,0 +1,312 @@
+<ion-header>
+  <!-- importing common header | located in ../../components/header -->
+  <app-header></app-header>
+  <!-- this page toolbar -->
+  <ion-toolbar lines="none" class="chat-header">
+    <!-- initial title -->
+    <!-- <ion-text *ngIf="!showListOfMessages && !isMessageForwarding && createNewGroupActive === 0" class="ion-padding-start">Chat</ion-text> -->
+    <!-- title displaying when message forwarding -->
+    <ion-title *ngIf="isMessageForwarding">Forward to...</ion-title>
+    <!-- new group title -->
+    <ion-title *ngIf="!showListOfMessages && !isMessageForwarding && createNewGroupActive" class="f-14">
+      {{createNewGroupActive == 9 ? userReceiver.groupName : 'New group'}}
+      <br>
+      <ion-text class="text-grey" style="font-size: small;">
+        <ng-container *ngIf="createNewGroupActive === 1 || createNewGroupActive === 9">
+          <ng-container *ngIf="isEmptyObject(pressedUserIdList)">
+            Add participants
+          </ng-container>
+          <ng-container *ngIf="!isEmptyObject(pressedUserIdList)">
+            {{getObjectKeys(pressedUserIdList).length}} of {{getUsersOnlyLength()}} selected
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="createNewGroupActive === 2">
+          Add subject
+        </ng-container>
+      </ion-text>
+    </ion-title>
+
+    <!-- ***ALL ICON BUTTONS OVER HEADER*** -->
+    <ion-buttons collapse="true" slot="start">
+      <!-- back button to go back to list of users from message list -->
+      <ion-button (click)="clearPressedElementsBackground(); showListOfMessages=false"
+      *ngIf="showListOfMessages">
+        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+      <!-- back button and forward text -->
+      <!-- <ion-button (click)="clearForwarding()" *ngIf="isMessageForwarding">
+        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+      </ion-button> -->
+      <!-- back button for group -->
+      <ion-button (click)="clearGroupCreate()" *ngIf="!showListOfMessages && !isMessageForwarding && createNewGroupActive">
+        <ion-icon slot="start" name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- copy and share buttons -->
+    <ion-buttons collapse="true" slot="end" *ngIf="!isEmptyObject(pressedMsgElementList)">
+      <ion-button (click)="deleteMessage()">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="copyMsgToClipboard()">
+        <ion-icon name="copy-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button (click)="copyAndShare()">
+        <ion-icon name="arrow-redo" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- create group buttons -->
+    <ion-buttons collapse="true" slot="start" *ngIf="!showListOfMessages && !isMessageForwarding && createNewGroupActive === 0" class="top-users-circle-list">
+      <ion-button class="add-group" (click)="createGroup(1)">
+        <ion-icon name="people-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <div class="add-icon"><ion-icon name="add-circle"></ion-icon></div>
+      <ion-avatar class="add-group top-header-avatar" *ngFor="let user of friendsList" (click)="userCircleClicked(user)">
+        <img [src]="(user.profileImagePath && user.profileImagePath != 'null') ? ccUtil.RESOURCE_URL + user.profileImagePath : (user.groupName ? 'assets/images/group.png' : 'assets/images/user.jpg')" class="top-users-circle">
+        <ion-icon name="ellipse" class="live-icon" *ngIf="user && user.isLive"></ion-icon>
+      </ion-avatar>
+    </ion-buttons>
+    <ion-buttons collapse="true" slot="end" *ngIf="!showListOfMessages && !isMessageForwarding">
+      <!-- search user icon, this button will toggle search bar -->
+      <!--<ion-button [color]="showUserSearchBar ? 'medium' : ''" (click)="showUserSearchBar=!showUserSearchBar" *ngIf="createNewGroupActive === 0">
+        <ion-icon name="search" slot="icon-only"></ion-icon>
+      </ion-button>-->
+      <!-- create group button - group-step-1 -->
+ 
+       
+      <!-- create group button - group-step-2 -->
+      <ion-button (click)="createGroup(2)" *ngIf="createNewGroupActive === 1" [disabled]="getObjectKeys(pressedUserIdList).length == 0" color="primary">
+        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+      <!-- create group button - group-step-3 (final-step) -->
+      <ion-button (click)="createGroup(3)" *ngIf="createNewGroupActive === 2" [disabled]="getObjectKeys(pressedUserIdList).length == 0" color="primary">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+      <!-- update group button - adding or removing user in/from group -->
+      <ion-button (click)="updateGroup()" *ngIf="createNewGroupActive === 9" [disabled]="getObjectKeys(pressedUserIdList).length == 0" color="primary">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- show firstName and photo of messanger -->
+    <ion-item lines="none" *ngIf="showListOfMessages" class="chat-with-user-header">
+      <ion-avatar slot="start" class="header-avatar profile-chat-image">
+        <img [src]="(userReceiver.profileImagePath && userReceiver.profileImagePath != 'null') ? ccUtil.RESOURCE_URL + userReceiver.profileImagePath : (userReceiver.groupName ? 'assets/images/group.png' : 'assets/images/user.jpg')">
+        <ng-container *ngIf="userReceiver && (userReceiver.index || userReceiver.index === 0) && users && users[userReceiver.index] && users[userReceiver.index].connections">
+          <ion-icon name="ellipse" class="live-icon"></ion-icon>
+        </ng-container>
+      </ion-avatar>
+      <ion-label class="profile-chat-name">
+        {{userReceiver.groupName || userReceiver.userName}}
+        <p *ngIf="!userReceiver.groupName && userReceiver.timestamp">
+          Last seen {{getDateString(userReceiver.timestamp).time}} - {{getDateString(userReceiver.timestamp).date}}
+        </p>
+        <p *ngIf="userReceiver.groupName" (click)="groupInfoModal()">
+          <ng-container *ngFor="let userId of messagesHeader.userArr; let last = last">
+            <ng-container *ngIf="userId != userLoggedIn.userId && messagesHeader.userNamesObj[userId].length > 0">
+              {{messagesHeader.userNamesObj[userId]}}
+              <ng-container *ngIf="!last">, </ng-container>
+            </ng-container>
+          </ng-container>
+        </p>
+      </ion-label>
+      <ion-buttons collapse="true" slot="end" *ngIf="userReceiver.groupName">
+        <!-- create group button - group-step-1 -->
+        <ion-button (click)="addUserInGroup()">
+          <ion-icon name="person-add" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>
+
+  <ion-list *ngIf="createNewGroupActive === 2" class="chat-userlist">
+    <ion-text class="ion-padding-start text-grey">
+      Provide a group subject and optional group icon
+    </ion-text>
+    <ion-item lines="none">
+      <ion-avatar slot="start" class="header-avatar">
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+      <ion-input #groupName [(ngModel)]="newGroupName" placeholder="Type group subject here..."></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- search input to allow user search for group create -->
+  <ion-searchbar class="search-user" placeholder="Search..." *ngIf="!showListOfMessages && !isMessageForwarding && (createNewGroupActive || showUserSearchBar)" [(ngModel)]="searchFilterTerm" animated="true"></ion-searchbar>
+  <!-- show list of name of selected user to whom message need to forward -->
+  <ng-container *ngIf="isMessageForwarding && getObjectKeys(msgForwardUserList).length > 0">
+    <ion-item lines="none" color="light">
+      <ion-label color="success">
+        <ion-text *ngFor="let key of getObjectKeys(msgForwardUserList); let last = last">
+          {{msgForwardUserList[key].firstName}}<ng-container *ngIf="!last">, </ng-container></ion-text>
+      </ion-label>
+      <!-- back button to go back to list of users from message list -->
+      <ion-buttons collapse="true" slot="end">
+        <ion-button (click)="sendForwardMessages();" slot="end">
+          <ion-icon name="paper-plane" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ng-container>
+</ion-header>
+
+<ion-content class="content-stable">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="!showListOfMessages">
+    <!-- List of Text Items -->
+    <ion-list class="user-list-view">
+      <!-- display skeleton while loading data -->
+      <ng-container *ngIf="!users">
+        <ion-item *ngFor="let num of [0,1]">
+          <ion-avatar slot="start">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+      <!-- displayed users list to chat with -->
+      <ng-container *ngIf="!createNewGroupActive">
+        <ng-container *ngFor="let user of users | filter:searchFilterTerm; let last = last">
+          <ng-container *ngIf="setUserId(user)"></ng-container>
+          <ion-item *ngIf="(user.userId != userLoggedIn.userId)" class="user-wrap" [id]="user.userId" (click)="showMessagesOfUser($event, user)">
+            <ion-avatar slot="start" class="header-avatar profile-chat-image">
+              <img [src]="(user.profileImagePath && user.profileImagePath != 'null') ? ccUtil.RESOURCE_URL + user.profileImagePath : (user.groupName ? 'assets/images/group.png' : 'assets/images/user.jpg')">
+              <ng-container *ngIf="user && user.isLive && !msgForwardUserList[user.userId]">
+                <ion-icon name="ellipse" class="live-icon"></ion-icon>
+              </ng-container>
+              <ng-container *ngIf="msgForwardUserList[user.userId] || pressedUserIdList[user.userId]">
+                <ion-icon name="checkmark-circle" color="success" class="fwd-select-icon"></ion-icon>
+              </ng-container>
+            </ion-avatar>
+            <ion-label class="chatuser-name">
+              {{user.groupName || user.userName}}
+              <p>{{user.lastMessage}}</p>
+            </ion-label>
+            <ion-text slot="end" color="tertiary f-14" class="ion-text-end chat-user-right-item">
+              {{user.dayDate}} <br>
+              <ion-chip *ngIf="user.readUnread && !['yes', 'no'].includes(user.readUnread)">
+                {{user.readUnread}}</ion-chip>
+              <ion-icon name="checkmark-outline" *ngIf="user.readUnread == 'no'"></ion-icon>
+              <ion-icon name="checkmark-done-outline" *ngIf="user.readUnread == 'yes'" color="success"></ion-icon>
+            </ion-text>
+          </ion-item>
+          <ng-container *ngIf="user.type=='match'">
+            <ion-item lines="none" color="light">
+              <ion-avatar slot="start" style="margin-right: 5px;">
+                <img [src]="ccUtil.RESOURCE_URL + user.t1_logo_file_path">
+              </ion-avatar>
+              <ion-row class="f-14 w-100">
+                <ion-col>{{user.teamOneName}}</ion-col>
+                <ion-col size="6" class="f-12 starts-in">Starts in 25m:45sec</ion-col>
+                <ion-col class="ion-text-right" style="float: right;">{{user.teamTwoName}}</ion-col>
+              </ion-row>
+              <ion-avatar slot="end" style="margin-left: 5px;">
+                <img [src]="ccUtil.RESOURCE_URL + user.t2_logo_file_path">
+              </ion-avatar>
+            </ion-item>
+          </ng-container>
+          <ng-container *ngIf="user.type=='store'">
+            <ion-item lines="none" color="light">
+              <ion-avatar slot="start" style="margin-right: 5px;">
+                <img [src]="ccUtil.RESOURCE_URL + user.imagePath">
+              </ion-avatar>
+              <ion-label>
+                {{user.title}}
+                <p>{{user.description}}</p>
+              </ion-label>
+            </ion-item>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <!-- displayed when to add users in group -->
+      <ng-container *ngIf="createNewGroupActive">
+        <ng-container *ngFor="let user of usersToAddInGroup | filter:searchFilterTerm; let last = last">
+          <ng-container *ngIf="!user.groupName">
+            <ng-container *ngIf="setUserId(user)"></ng-container>
+            <ng-container *ngIf="(editGroupTo == 'add' && messagesHeader) ? checkUserContainsInGroup(user.userId) : true">
+              <ion-item *ngIf="(user.userId != userLoggedIn.userId)" class="user-wrap" [id]="user.userId" (click)="selectUserToAddInGroup($event, user)">
+                <ion-avatar slot="start" class="header-avatar profile-chat-image">
+                  <img [src]="(user.profileImagePath && user.profileImagePath != 'null') ? ccUtil.RESOURCE_URL + user.profileImagePath : (user.groupName ? 'assets/images/group.png' : 'assets/images/user.jpg')">
+                  <ng-container *ngIf="user && user.isLive">
+                    <ion-icon name="ellipse" class="live-icon"></ion-icon>
+                  </ng-container>
+                  <ng-container *ngIf="pressedUserIdList[user.userId]">
+                    <ion-icon name="checkmark-circle" color="success" class="fwd-select-icon"></ion-icon>
+                  </ng-container>
+                </ion-avatar>
+                <ion-label class="chatuser-name">
+                  {{user.userName}}
+                  <p>{{user.lastMessage}}</p>
+                </ion-label>
+                <ion-text slot="end" color="tertiary f-14" class="ion-text-end chat-user-right-item">
+                  {{user.dayDate}} <br>
+                  <ion-chip *ngIf="user.readUnread && !['yes', 'no'].includes(user.readUnread)">
+                    {{user.readUnread}}</ion-chip>
+                  <ion-icon name="checkmark-outline" *ngIf="user.readUnread == 'no'"></ion-icon>
+                  <ion-icon name="checkmark-done-outline" *ngIf="user.readUnread == 'yes'" color="success"></ion-icon>
+                </ion-text>
+              </ion-item>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ion-list>
+  </ng-container>
+
+  <!-- show list of messages -->
+  <ng-container *ngIf="showListOfMessages">
+    <!-- display skeleton while loading data -->
+    <div *ngIf="!messages" class="ion-text-center">
+      <ion-spinner name="lines-small" class="ion-margin-top"></ion-spinner>
+    </div>
+    <div *ngIf="messages && messages.length === 0" class="ion-text-center ion-margin-top">
+      <ion-text color="primary">No chat found</ion-text>
+    </div>
+    <!-- displayed when data loads -->
+    <ng-container *ngFor="let message of messages; let last = last">
+      <ion-text [ngClass]="{'other': message.userIdSender == userLoggedIn.userId}" class="messages msg-wrap" *ngIf="!message.isDeletedUserIds || (message.isDeletedUserIds && !message.isDeletedUserIds[userLoggedIn.userId])">
+        <div class="message" [id]="message.key" [ngClass]="{'slide-right': message.userIdSender != userLoggedIn.userId}">
+          <div *ngIf="message.messageType==='TEXT'" class="value-time">
+            <span class="msgTxt" [id]="message.key">
+              {{message.text}}
+              <ion-text class="time text-grey">
+                {{getDateString(message.timestamp).time}}
+                <ng-container *ngIf="message.userIdSender === userLoggedIn.userId">
+                  <!-- sent tick mark -->
+                  <ion-icon name="checkmark-outline" *ngIf="!message.isRead && !userReceiver.connections"></ion-icon>
+                  <!-- delievered double tick mark -->
+                  <ion-icon name="checkmark-done-outline" *ngIf="!message.isRead && userReceiver.connections"></ion-icon>
+                  <!-- read double green tick mark -->
+                  <ion-icon name="checkmark-done-outline" color="success" *ngIf="message.isRead"></ion-icon>
+                </ng-container>
+              </ion-text>
+            </span>
+          </div>
+          <span *ngIf="message.messageType==='LOCATION'">
+            <div style="height: 200px; width: 220px;" [id]="'map_' + message.messageId">
+            </div>
+            <!-- initialize map only if already not initialized for this message, when we initialize we add an entry to loadMapList and here we check to avoid duplicate initialization -->
+            {{!loadMapList['map_' + message.messageId] ? loadMap('map_' + message.messageId) : ''}}
+          </span>
+        </div>
+      </ion-text>
+      {{last ? scrollToBottom() : ''}}
+      {{(!message.isRead && (message.userIdSender != userLoggedIn.userId)) ? markAsRead(message) : ''}}
+    </ng-container>
+  </ng-container>
+</ion-content>
+
+<ng-container *ngIf="showListOfMessages">
+  <ion-footer keyboard-attach class="bar-stable item-input-inset bar bar-footer">
+    <ion-item lines="none" class="item-input-wrapper text-message">
+      <div class="send-message">
+      <input placeholder="Type your message" [(ngModel)]="data.message" (focus)="inputUp()" (keydown)="onKeydown($event)" />
+      <ion-icon name="add-outline" (click)="messageActions()" class="attachment-icon"></ion-icon>
+      <ion-button class="send-button" fill="clear" slot="end" (click)="sendMessage('TEXT')"><ion-icon name="send"></ion-icon></ion-button>
+    </div>
+    </ion-item>
+  </ion-footer>
+</ng-container>

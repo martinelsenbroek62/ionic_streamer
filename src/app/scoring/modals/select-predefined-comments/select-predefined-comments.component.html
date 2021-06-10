@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Select Comment</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let comment of predefinedComments">
+    <ion-card-content (click)="saveData(comment.desc)">     
+      <span>
+        {{comment.desc}}
+      </span>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

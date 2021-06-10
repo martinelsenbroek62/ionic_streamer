@@ -1,0 +1,31 @@
+
+.extrasList{ 
+    padding:0px;
+    .col{
+        background-color: var(--ion-color-light);
+        color: var(--ion-color-dark);
+        border:1px var(--ion-color-medium);
+        text-align: center;
+        margin: 5px;
+        border-radius: 6px;
+        padding: 8px;
+        font-weight: 500;
+    }
+    
+}
+
+.submit{
+    border-top: 1px solid #ddd;
+    ion-button{
+        margin: 0px auto;
+    }
+}
+.wides{
+    ion-row{
+        padding: 5px 0px;
+        justify-content: start;
+    }
+}
+ion-header{
+    margin-bottom: 1rem;
+}

@@ -1,0 +1,129 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16"> Toss</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end">
+      <ion-text slot="end" class="ion-padding" (click)='ccUtil.showNetworkStatus()'>
+        <ion-icon name="ellipse" [color]="ccUtil.isNetworkConnected ? 'success' : 'medium'" style="font-size:smaller;"></ion-icon>
+      </ion-text>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- teams display cards -->
+  <p class="f-16 bolder pl-8 pr-8 ion-text-center">Decision to choose batting or bowling</p>
+  <ion-grid class="toss-card-wrap">
+   
+    <div class="toss-stage">
+    
+    <ion-row>
+      <ion-col class="ion-no-padding teams">
+        <ion-card class="ion-no-margin" [color]="tossWonTeam == teams[0].id?'primary':'white'" (click)="tossWonTeam = teams[0].id">
+         
+            <img class="imgSize ml-1" src="assets/images/logo-CC.png">
+       
+          <ion-item [color]="tossWonTeam == teams[0].id?'primary':'white'" class="ion-text-left team-name">
+            <ion-label class="m-0">
+              {{matchData.teamOneName}}
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    <ion-col class="select-teams">
+          <ion-card class="selecting ion-no-margin" [color]="tossSelected == 'batting'?'primary':'light'" (click)="tossSelected = 'batting'">
+            <ion-item [color]="tossSelected == 'batting'?'primary':'light'" class="ion-text-center">
+              <ion-label>
+                Batting
+              </ion-label>
+            </ion-item>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  <ion-row>
+      <ion-col class="ion-no-padding teams">
+
+        <ion-card class="ion-no-margin" [color]="tossWonTeam == teams[1].id?'primary':'white'" (click)="tossWonTeam = teams[1].id" (click)="tossWonTeam = teams[1].id">
+         
+            <img class="imgSize ml-1" src="assets/images/logo-CC.png">
+      
+          <ion-item [color]="tossWonTeam == teams[1].id?'primary':'white'" class="ion-text-left team-name">
+            <ion-label class="m-0">
+              {{matchData.teamTwoName}}
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    <ion-col class="select-teams">
+        <ion-card class="selecting ion-no-margin ion-margin-start" [color]="tossSelected == 'bowling'?'primary':'light'" (click)="tossSelected = 'bowling'">
+          <ion-item [color]="tossSelected == 'bowling'?'primary':'light'" class="ion-text-center">
+            <ion-label>
+              Bowling
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+  </ion-grid>
+  <!-- batting-bowling display cards -->
+  <!-- <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col class="ion-no-padding">
+        <ion-card class="selecting ion-no-margin" [color]="tossSelected == 'batting'?'primary':'light'" (click)="tossSelected = 'batting'">
+          <ion-item [color]="tossSelected == 'batting'?'primary':'light'" class="ion-text-center">
+            <ion-label>
+              Batting
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-card class="selecting ion-no-margin ion-margin-start" [color]="tossSelected == 'bowling'?'primary':'light'" (click)="tossSelected = 'bowling'">
+          <ion-item [color]="tossSelected == 'bowling'?'primary':'light'" class="ion-text-center">
+            <ion-label>
+              Bowling
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+</ion-content>
+
+<ion-content class="ion-no-border ion-padding-top">
+  <ion-toolbar>
+    <ion-title>
+      <div (click)="tossCoin()" [ngClass]="coinClass" id="coin">
+        <div class="side-a">
+          <h3 *ngIf="coinClass">
+              {{teams[0].name}}
+          </h3>
+          <h3 *ngIf="!coinClass">
+              TOSS
+          </h3>
+        </div>
+        <div class="side-b">
+            <h3>
+              {{teams[1].name}}
+            </h3>
+        </div>
+      </div>
+      <h2>Tap N Flip!</h2>
+    </ion-title>
+    <ion-grid class="tapandflip submit">
+      <ion-row>
+        <ion-col>
+          <ion-button [disabled]="tossWonTeam === undefined || tossSelected === undefined" (click)="setToss()" expand="block" shape="round">Save</ion-button>
+        </ion-col>
+        <ion-col (click)="dismissModal()">
+          <ion-button expand="block" shape="round" class="cancel">Cancel</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-content>

@@ -1,0 +1,231 @@
+<ion-header>
+  <!-- Header -->
+  <app-header></app-header>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="loadingSpinner">
+    <ion-backdrop class="full-ion-backdrop"></ion-backdrop>
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <div class="club-info-header" *ngIf="playerDetails">
+    <div class="bg-club">
+      <img class="b-club" [src]="playerDetails && playerDetails.backGroundImagePath ? (ccUtil.RESOURCE_URL + playerDetails.backGroundImagePath) : '/assets/images/cricket-pic.jpg'">
+      <div class="bg-img">
+      </div>
+      <img class="profile-img" [src]="playerDetails && playerDetails.profilepic_file_path ? (ccUtil.RESOURCE_URL + playerDetails.profilepic_file_path) : '/assets/images/background.jpeg'">
+    </div>
+    <div class="name-club">
+      <h1 class="mt-0">{{playerDetails.firstName}} {{playerDetails.lastName}}</h1>
+      <p class="m-0 bold"><span>{{playerDetails.address}}</span></p>
+      <p><span class="bold"> {{playerDetails.followedByCount}} </span>Followers <span> | </span><span class="bold"> {{playerDetails.followedCount}} </span>Following </p>
+    </div>
+  </div>
+  <!-- header tab buttons -->
+  <div>
+    <ion-segment class="sticky-me" mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="currentSegmentName">
+      <ion-segment-button value="0">
+        <ion-label>About</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-label>Matches</ion-label>
+      </ion-segment-button>  
+      <ion-segment-button value="2">
+        <ion-label>Statistics</ion-label>
+      </ion-segment-button>    
+      <ion-segment-button value="3">
+        <ion-label>Analytics</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="4">
+        <ion-label>Gallery</ion-label>
+      </ion-segment-button>          
+    </ion-segment>
+    <ion-slides mode="md" #slides (ionSlideDidChange)="slideChanged()" scrollbar="false"> 
+      <!-- About Player Tab -->
+      <ion-slide *ngIf="currentSegmentName == 0">
+        <div class="slide-content w-100">
+          <div class="w-100">
+            <ion-card class="ion-no-margin mt-7 league-des w-100">
+              <ion-card-content>
+                <ion-grid class="club-info ion-text-left p-0" *ngIf="playerDetails">
+                  <ion-row>
+                    <ion-col class="ion-text-center border-light" style="margin: 5px; border-radius: 10px;">
+                      <p class="bold">Matches</p>
+                      <h4><ion-text color="primary">235</ion-text></h4>
+                    </ion-col>
+                    <ion-col class="ion-text-center border-light" style="margin: 5px; border-radius: 10px;">
+                      <p class="bold">Runs</p>
+                      <h4><ion-text color="primary">235</ion-text></h4>
+                    </ion-col>
+                    <ion-col class="ion-text-center border-light" style="margin: 5px; border-radius: 10px;">
+                      <p class="bold">Wickets</p>
+                      <h4 color="primary"><ion-text color="primary">15</ion-text></h4>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="border-bottom-grey">
+                    <ion-col size="12">
+                      <p>Player Id</p>
+                      <h4>{{playerDetails.playerID}}</h4>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="border-bottom-grey">
+                    <ion-col size="12">
+                      <p>Playing Role</p>
+                      <h4>{{playerDetails.playingRole}}</h4>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="border-bottom-grey">
+                    <ion-col size="12">
+                      <p>Batting Style</p>
+                      <h4>{{playerDetails.battingStyle}}</h4>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="border-bottom-grey">
+                    <ion-col size="12">
+                      <p>Bowling Style</p>
+                      <h4>{{playerDetails.bowlingStyle}}</h4>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+
+            <!-- Friends Section -->
+            <div class="friends mt-5" *ngIf="playerDetails && friendsList">
+              <ion-row>
+                <ion-col class="ion-text-left">Friends</ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col *ngFor="let user of friendsList">
+                  <ion-avatar class="header-avatar m-0">
+                    <img [src]="(user.profileImagePath && user.profileImagePath != 'null') ? ccUtil.RESOURCE_URL + user.profileImagePath : 'assets/images/user.jpg'">
+                  </ion-avatar>
+                  <p class="f-12">{{user.firstName}} {{user.lastName}}</p>
+                </ion-col>
+                <!-- <ion-col>
+                  <span>&</span> <span class="f-18">42</span>
+                  <p>friends</p>
+                </ion-col> -->
+              </ion-row>
+            </div>
+
+            <app-social-feed [postsList]="postsList" (showPostActions)="showPostActions($event)"></app-social-feed>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Matches Tab -->
+      <ion-slide *ngIf="currentSegmentName == 1">
+        <div class="slide-content w-100">
+          <div class="w-100">
+            {{errorMessage}}
+            <app-matches *ngIf="myGames" [matchList]="myGames" class="w-100"></app-matches>
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Statistics Tab -->
+      <ion-slide *ngIf="currentSegmentName == 2">
+        <div class="slide-content w-100">
+          <ion-card class="ion-no-margin mt-7 league w-100 border-radius-0 bs-0">
+            <ion-card-content class="internal-tabs">
+              <ion-row>
+                <ion-col size="12" class="text-center p-0">
+                  <ion-buttons class="continue-b tabs">
+                    <button block outline [class]="showBatting ? 'active' : ''" (click)="showBatting=!showBatting;showBowling=!showBowling">Batting</button>
+                    <button block outline [class]="showBowling ? 'active' : ''" (click)="showBowling=!showBowling;showBatting=!showBatting">Bowling</button>
+                  </ion-buttons>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+          <ion-card class="ion-no-margin mt-7 league w-100 border-radius-0 bs-0" *ngIf="showBatting">
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <p class="bold">Runs</p>
+                <h4><ion-text color="primary">235</ion-text></h4>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <p class="bold">Average</p>
+                <h4 color="primary"><ion-text color="primary">15.2</ion-text></h4>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left bold">Series Type</ion-col>
+              <ion-col class="bold">One Day</ion-col>
+              <ion-col class="bold">T20</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left">Matches</ion-col>
+              <ion-col>20</ion-col>
+              <ion-col>13</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left">Innings</ion-col>
+              <ion-col>167</ion-col>
+              <ion-col>287</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left">Points</ion-col>
+              <ion-col>200</ion-col>
+              <ion-col>153</ion-col>
+            </ion-row>
+          </ion-card>
+          <ion-card class="ion-no-margin mt-7 league w-100 border-radius-0 bs-0" *ngIf="showBowling">
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <p class="bold">Wickets</p>
+                <h4><ion-text color="primary">235</ion-text></h4>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <p class="bold">Econ</p>
+                <h4 color="primary"><ion-text color="primary">15.2</ion-text></h4>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left bold">Series Type</ion-col>
+              <ion-col class="bold">One Day</ion-col>
+              <ion-col class="bold">T20</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left">Matches</ion-col>
+              <ion-col>20</ion-col>
+              <ion-col>13</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left">Innings</ion-col>
+              <ion-col>167</ion-col>
+              <ion-col>287</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-left">Points</ion-col>
+              <ion-col>200</ion-col>
+              <ion-col>153</ion-col>
+            </ion-row>
+          </ion-card>
+        </div>
+      </ion-slide>
+
+      <!-- Analytics Tab -->
+      <ion-slide *ngIf="currentSegmentName == 3">
+        <div class="slide-content w-100">
+          <div class="w-100">
+            Analytics content
+          </div>
+        </div>
+      </ion-slide>
+
+      <!-- Gallery Tab -->
+      <ion-slide *ngIf="currentSegmentName == 4">
+        <div class="slide-content w-100">
+          <app-albums *ngIf="albumsList" [albumsList]="albumsList" [clubId]=""></app-albums>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-content>

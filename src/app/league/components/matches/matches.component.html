@@ -1,0 +1,63 @@
+
+<!-- <ion-content> -->
+  <!-- Start: template to display Matches detail -->
+  <ion-card class="w-100 main-card" *ngFor="let match of matchList" (click)="onCardClick($event, match)">  
+    <ion-card-header class="ion-text-left">
+      <ion-row>
+        <ion-col size="9">
+          <span class="f-14 card-header-font">{{ccUtil.trimString(match.clubName, 30)}}<span *ngIf="match.clubName && match.clubName.length>30">...</span></span>
+          <br>
+          <span class="f-10">{{ccUtil.getMatchType(match.matchType)}} | {{match.matchDate}} </span> <span *ngIf="match.location"> | {{match.location}}</span>   
+        </ion-col>
+        <ion-col size="3" class="live-leauge-component">
+          <span class="live-match" *ngIf="match.isComplete==0"><span class="red-dot"></span> Live</span>  
+          <span class="completed-match" *ngIf="match.isComplete==1">Completed</span> 
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-item lines="none" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="ccUtil.RESOURCE_URL + match.t1_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + match.t1_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+          </ion-avatar>
+          <ion-label class="card-header-font ion-no-margin f-14">{{match.teamOneName}}</ion-label>
+          <ion-label slot="end" class="card-header-font ion-text-right ion-no-margin f-14" *ngIf="match.seriesType !='Test'">
+            {{match.t1total}}/{{match.t1wickets}} 
+            <span class="f-11 font-weight-light">({{ccUtil.formulaOver(match.t1balls)}}/{{match.overs}} Ov)</span>
+          </ion-label>
+          <ion-label slot="end" class="card-header-font ion-text-right" *ngIf="match.seriesType =='Test'">
+            I1-{{match.t1_1total}}/{{match.t1_1wickets}},
+            <span *ngIf="match.isFollowon =='0'">I3-</span>
+            <span *ngIf="match.isFollowon =='1'">I4-</span>{{match.t1_2total}}/{{match.t1_2wickets}}
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="ccUtil.RESOURCE_URL + match.t2_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + match.t2_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+          </ion-avatar>
+          <ion-label class="card-header-font ion-no-margin f-14">{{match.teamTwoName}}</ion-label>
+          <ion-label slot="end" class="card-header-font ion-text-right ion-no-margin f-14" *ngIf="match.seriesType !='Test'">
+            {{match.t2total}}/{{match.t2wickets}} 
+            <span class="f-11 font-weight-light">({{ccUtil.formulaOver(match.t2balls)}}/{{match.overs}} Ov)</span>
+          </ion-label>
+          <ion-label slot="end" class="card-header-font ion-text-right" *ngIf="match.seriesType =='Test'">
+            I2-{{match.t2_1total}}/{{match.t2_1wickets}},
+              <span *ngIf="match.isFollowon =='1'">I3-</span>
+              <span *ngIf="match.isFollowon =='0'">I4-</span>{{match.t2_2total}}/{{match.t2_2wickets}}
+          </ion-label>
+        </ion-item>
+        <ion-row>
+          <ion-col class="ion-text-left pb-0 commentry" size="10">
+            <span *ngIf="match.isComplete==0" class="f-13">Last Updated: {{match.lastUpdatedDate}}</span>
+            <span *ngIf="match.isComplete==1" class="f-13">{{match.result}}</span>
+          </ion-col>
+          <ion-col size="2">
+            <ion-icon class="f-16" name="logo-youtube" *ngIf="match.liveStreamLink" (click)="openYoutubeLink(match.liveStreamLink)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <!-- End: template to display Matches detail -->
+<!-- </ion-content> -->

@@ -1,0 +1,44 @@
+
+.unread{
+    background-color: rgb(221 87 39 / 10%);
+    width: 100%;
+    display: flex;
+}
+.notification{
+    background: var(--ion-color-medium);
+}
+.p-4{
+    padding: 4px 0px !important;
+}
+.notification-item{
+    --background: var(--ion-color-white);
+    background: var(--ion-color-white);
+    display: flex;
+    align-items: flex-start;
+    --padding-start: 0px;
+    --inner-padding-end: 0px;
+    img{
+        margin: 7px;
+        height: 45px;
+        width: 45px;
+        border-radius: 50px;
+    }
+    p{
+        margin: 0px 0px 5px;
+    }
+}
+.mt-6{
+    margin-top: 6px;
+}
+.notify{
+    width: 83%;
+    margin-left: 0%;
+}
+ion-avatar{
+    width: 16%;
+}
+.total{
+    display: flex;
+    padding: 1px 5px;
+    border-top: 1px solid  var(--ion-color-medium);
+}

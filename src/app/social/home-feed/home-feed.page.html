@@ -1,0 +1,185 @@
+<ion-header class="border-bottom-grey">
+  <!-- Header -->
+  <app-header></app-header>
+  <!-- Create Post -->
+  <div class="ion-padding pb-0">
+    <ion-item lines="none" class="border-light create-post-head" (click)="createPost()">
+      <ion-avatar slot="start" class="header-avatar">
+        <img [src]="ccUtil.RESOURCE_URL + ccUtil.userProfilePic" onerror="this.src='assets/images/profile.png'">
+      </ion-avatar>
+      <ion-text color="tertiary" class="ml-5 f-14">What's on your mind, {{ccUtil.userFullName}} ?</ion-text>
+    </ion-item>
+    <ion-item lines="none" class="upload-post">
+      <div class="text-left">
+      <ion-icon color="primary" class="f-18 bold" name="images-outline"></ion-icon> 
+      <ion-label class="ion-no-margin f-14">Add Photos</ion-label>
+    </div>
+      <span class="divider"> | </span>
+      <div class="text-center">
+      <ion-icon color="primary" class="f-18 bold" name="videocam-outline"></ion-icon> 
+      <ion-label class="ion-no-margin f-14">Add Video</ion-label>
+    </div>
+      <span class="divider"> | </span>
+      <div class="text-right">
+      <ion-icon color="primary" class="f-18 bold" name="newspaper-outline"></ion-icon>
+      <ion-label class="ion-no-margin f-14">Scorecard</ion-label>
+    </div>
+    </ion-item>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="errorMessage">
+    <div class="not-found-msg">{{errorMessage}}</div>
+  </ng-container>
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <!-- <ng-container *ngIf="postsList && postsList.length == 0">
+    <div class="not-found-msg">No Feeds</div>
+  </ng-container> -->
+
+  <app-social-feed [postsList]="postsList" (showPostActions)="showPostActions($event)"></app-social-feed>
+
+  <!-- <div class="feed-content">
+      <ion-card class="w-100 main-card" *ngFor="let post of postsList; let i=index">
+        <ion-card-header class="ion-no-padding p-0">
+          <ion-item class="w-100" lines="none">
+            <ion-avatar slot="start" class="header-avatar">
+              <img [src]="ccUtil.RESOURCE_URL + ccUtil.userProfilePic" onerror="this.src='assets/images/profile.png'">
+            </ion-avatar>
+            <ion-text>
+              <span class="f-14 card-header-font">{{ccUtil.userFullName}}</span>
+              <br>
+              <span class="f-12" color="tertiary"> {{post.timeDifference}} </span>
+            </ion-text>
+            <ion-icon name="chevron-down-outline" slot="end" class="f-16" (click)="showPostActions($event, post.postId)"></ion-icon>
+          </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none" class="mb-5">
+            <span class="feed-text" *ngIf="!showFullContent[i]">
+              {{ccUtil.trimString(post.content, 100)}}<span class="bolder" *ngIf="post.content.length>50" (click)="showFullContent[i]=!showFullContent[i]">...See More </span>
+              <br>
+              <span class="feed-text color-blue bold" *ngFor="let tag of post.hashTags"> {{tag}} </span>
+            </span>
+            <span class="feed-text" *ngIf="showFullContent[i]">
+              {{post.content}} <span class="bolder" (click)="showFullContent[i]=!showFullContent[i]"> See Less </span>
+              <br>
+              <span class="feed-text color-blue bold" *ngFor="let tag of post.hashTags"> {{tag}} </span>
+            </span>
+          </ion-item>
+          <ion-item lines="none" class="post-images" *ngIf="post.imageUrl">
+            <div class="bg-image">
+              <img class="imgSize" [src]="ccUtil.RESOURCE_URL + post.imageUrl" (click)="showImageVideo()">
+            </div>
+          </ion-item>
+          <ion-item lines="none" class="ion-text-center like-status">
+            <ion-row class="w-100">
+              <ion-col class="like-extra justify-start">
+                <span class="post-extras-circle" (click)="likeOrDislikePost(post.postId, 1)"><ion-icon size="3" color="danger" class="f-18 bold" name="heart"></ion-icon></span> 
+                <span class="f-10 bold">{{post.likedCount}} Likes</span>
+              </ion-col>
+              <ion-col class="like-extra justify-center">
+                <span class="post-extras-circle" (click)="likeOrDislikePost(post.postId, 0)"><ion-icon size="3" class="f-18 bold post-icon" name="heart-dislike"></ion-icon></span>
+                <span class="f-10 bold">{{post.disLikedCount}}</span>
+              </ion-col>
+              <ion-col class="like-extra justify-center" (click)="showComments=!showComments">
+                <span class="post-extras-circle"><ion-icon size="3" (click)="showPostDetails(post.postId)" class="f-18 bold post-icon" name="chatbubble-ellipses"></ion-icon></span>
+                <span class="f-10 bold">{{post.commentsCount}}</span>
+              </ion-col>
+              <ion-col class="like-extra justify-end">
+                <span class="post-extras-circle"><ion-icon size="3" class="f-18 bold post-icon" name="arrow-redo"></ion-icon></span>
+                <span class="f-10 bold">{{post.sharesCount}}</span>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <div *ngIf="showComments" class="show_comments">
+            <ion-item lines="none" class="comment-inputs">
+              <ion-avatar slot="start" class="header-avatar m-0">
+                <img src="assets/images/dhoni.png">
+              </ion-avatar>
+              <ion-input class="comment-input" type="text" placeholder="Write a Comment.."></ion-input>
+              <ion-button slot="end" class="send-button" ><ion-icon name="send" aria-label="send"></ion-icon></ion-button>
+            </ion-item>
+            <ion-item lines="none" class="comment-profile">
+              <ion-avatar slot="start" class="header-avatar m-0">
+                <img src="assets/images/profile-1.png">
+              </ion-avatar>
+              <ion-text>
+                <div class="sub-comment">
+                <span class="bold f-14 user-name">Lakshman chandu</span>
+                <span class="f-14" >All columns can be horizontally aligned inside to the row.
+                </span>
+              </div>
+              <div class="reply-status mt-5">
+                <span><ion-icon color="danger" class="f-18 bold" name="heart"></ion-icon>like</span> 
+                <span (click)="showReply1=!showReply1"> <ion-icon class="f-18 bold" name="arrow-redo"></ion-icon> Reply </span>
+                <span> 22h </span>
+              </div>
+              <ion-item lines="none" class="comment-inputs b-0 reply-comment">
+                <ion-avatar slot="start" class="header-avatar m-0">
+                  <img src="assets/images/member.jpg">
+                </ion-avatar>
+                <ion-input class="comment-input" type="text" placeholder="Write a Comment.."></ion-input>
+                <ion-button slot="end" class="send-button" ><ion-icon name="send" aria-label="send"></ion-icon></ion-button>
+              </ion-item>
+              </ion-text>
+              
+            </ion-item>
+            <ion-item lines="none" class="comment-profile">
+              <ion-avatar slot="start" class="header-avatar m-0">
+                <img src="assets/images/cricket-pic.jpg">
+              </ion-avatar>
+              <ion-text>
+                <div class="sub-comment">
+                <span class="bold f-14 user-name" >Pavan kumar</span>
+                <span class="f-14" >Columns can also align themselves differently than other columns by adding the alignment class directly to the column.
+                </span>
+              </div>
+              <div class="reply-status mt-5">
+                <span><ion-icon color="" class="f-18 bold" name="heart"></ion-icon>like</span> 
+                <span (click)="showReply1=!showReply1"> <ion-icon class="f-18 bold" name="arrow-redo"></ion-icon> Reply </span>
+                <span> 22h </span>
+              </div>
+              <ion-item lines="none" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+                <ion-avatar slot="start" class="header-avatar m-0">
+                  <img src="assets/images/dhoni.png">
+                </ion-avatar>
+                <div class="sub-comment"> 
+                  <span class="f-14" ><b>Lakshman</b> Columns can also align themselves differently than other columns.
+                  </span>
+                </div>
+              </ion-item>
+              <ion-item lines="none" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+                <ion-avatar slot="start" class="header-avatar m-0">
+                  <img src="assets/images/dhoni.png">
+                </ion-avatar>
+                <div class="sub-comment"> 
+                  <span class="f-14" ><b>Janvi</b> Columns can also align themselves differently than other columns.
+                  </span>
+                </div>
+              </ion-item>
+              <ion-item lines="none" class="comment-inputs m-0 b-0 reply-comment inside-comments">
+                <ion-avatar slot="start" class="header-avatar m-0">
+                  <img src="assets/images/dhoni.png">
+                </ion-avatar>
+                <div class="sub-comment"> 
+                  <span class="f-14" ><b>Suresh Kumar</b> Columns can also align themselves differently than other columns.
+                  </span>
+                </div>
+              </ion-item>
+              </ion-text>
+              
+            </ion-item>
+          </div>
+        </ion-card-content>
+      </ion-card>
+  </div> -->
+</ion-content>

@@ -1,0 +1,31 @@
+.menulist {
+    border-bottom: 3px solid #e6e5e5;
+      h6 {
+        margin-left: 10px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      ion-icon {
+        margin-top: 15px;
+        font-size: 23px;
+        font-weight: 600;
+      }
+}
+
+ul li {
+    font-weight: 600;
+    color: #296cac;
+    list-style: none;
+    font-size: 15px;
+    padding: 4px;
+}
+.innermenu {
+    margin-right: 35px;
+    float: right;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.menu-sharp:hover{
+  outline:none;
+}

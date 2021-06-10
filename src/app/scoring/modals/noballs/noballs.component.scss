@@ -1,0 +1,40 @@
+
+.extrasList{ 
+    padding:0px;
+    .col{
+        margin: 5px;
+    }
+}
+ion-card{
+    .card-header{
+        background-color: var(--ion-color-primary);
+        color:white;
+    }
+}
+.noball{
+    ion-row{
+        justify-content: start;
+        padding: 5px 0px;
+    }
+}
+ion-header{
+    margin-bottom: 1rem;
+}
+.item .label{
+    text-align: center;
+    color:  var(--ion-color-primary);
+    font-size: 1em!important;
+}
+.submit{
+    border-top: 1px solid #ddd;
+    ion-button{
+        margin: 0px auto;
+    }
+}
+.displayinradio{
+    padding: 10px 8px;
+    .label{
+        display:inline-block;
+        margin:0px!important;
+    }
+}

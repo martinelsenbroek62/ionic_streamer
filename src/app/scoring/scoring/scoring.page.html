@@ -1,0 +1,402 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title class="f-16 p-0">
+     {{matchData.teamOneName}} Vs {{matchData.teamTwoName}}
+    </ion-title>
+    <ion-text slot="end" class="ion-padding" (click)='ccUtil.showNetworkStatus()'>
+     <ion-icon name="ellipse" [color]="ccUtil.isNetworkConnected ? 'success' : 'medium'" style="font-size:smaller;"></ion-icon>
+   </ion-text>
+    <ion-buttons slot="end">
+      <!-- close button to close current session -->
+      <ion-button fill="clear" (click)="endScorerSession()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+      <!-- indicator -->
+     
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="loadingSpinner">
+    <ion-backdrop class="full-ion-backdrop"></ion-backdrop>
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <ion-grid class="total-runs-wrap p-0">
+    <ion-row>
+      <!-- <ion-item lines="none" class="w-100">
+        for inning 1, 2, 3, 4 
+        <h4 [slot]="'start'" class="ion-text-center m-0">
+          <ng-container *ngIf="currentStats['battingTeamScore']">
+            <span *ngIf="testMatch">I{{ballConfig.inningsNumber}}: </span>
+            {{currentStats['battingTeamScore'].runs}}/{{currentStats['battingTeamScore'].wickets}}({{currentStats['battingTeamScore'].overs}}{{!testMatch ? ('/' + liveScoringTeamsData.overs) : ''}})
+          </ng-container>
+        </h4>
+        <h4 [slot]="'end'" class="ion-text-center m-0">
+          <ng-container *ngIf="currentStats['inning1Scores'] && !testMatch && ballConfig.inningsNumber == 2">
+            {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}}({{currentStats['inning1Scores'].overs}}{{!testMatch ? ('/' + liveScoringTeamsData.overs) : ''}})
+          </ng-container>
+          <ng-container *ngIf="currentStats['inning1Scores'] && testMatch && (ballConfig.inningsNumber == 2 || (followOnMatch != 1 && ballConfig.inningsNumber == 4) || (followOnMatch == 1 && ballConfig.inningsNumber == 3))">
+            <span>I1: </span>
+            {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}}({{currentStats['inning1Scores'].overs}}{{!testMatch ? ('/' + liveScoringTeamsData.overs) : ''}})
+          </ng-container>
+          <ng-container *ngIf="currentStats['inning2Scores'] && testMatch && ballConfig.inningsNumber == 3 && followOnMatch != 1">
+            <span>I2: </span>
+            {{currentStats['inning2Scores'].runs}}/{{currentStats['inning2Scores'].wickets}}({{currentStats['inning2Scores'].overs}})
+          </ng-container>
+          <ng-container *ngIf="followOnMatch == 1 && currentStats['inning3Scores'] && ballConfig.inningsNumber == 4">
+            <span>I3: </span>
+            {{currentStats['inning3Scores'].runs}}/{{currentStats['inning3Scores'].wickets}}({{currentStats['inning3Scores'].overs}})
+          </ng-container>
+        </h4>
+      </ion-item> -->
+      <ion-item class="w-100 team-names" lines="none">
+        <div class="w-50">
+        <ion-label [slot]="'start'">
+          <span class="team-name">{{liveScoringTeamsData.battingTeamName}}</span>
+        </ion-label>
+        <h4 [slot]="'start'" class="ion-text-left m-0">
+          <ng-container *ngIf="currentStats['battingTeamScore']">
+            <span class="inn" *ngIf="testMatch">I{{ballConfig.inningsNumber}} : </span>
+            {{currentStats['battingTeamScore'].runs}}/{{currentStats['battingTeamScore'].wickets}} <small class="f-14">({{currentStats['battingTeamScore'].overs}}{{!testMatch ? ('/' + liveScoringTeamsData.overs) : ''}})</small>
+          </ng-container>
+        </h4>
+      </div>
+      <div class="w-50">
+        <ion-label class="ion-text-right">
+          <span class="team-name">{{liveScoringTeamsData.bowlingTeamName}}</span>
+        </ion-label>
+        <h4 [slot]="'end'" class="ion-text-right m-0">
+          <ng-container *ngIf="currentStats['inning1Scores'] && !testMatch && ballConfig.inningsNumber == 2">
+            {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}} <small class="f-14">({{currentStats['inning1Scores'].overs}}{{!testMatch ? ('/' + liveScoringTeamsData.overs) : ''}})</small>
+          </ng-container>
+          <ng-container *ngIf="currentStats['inning1Scores'] && testMatch && (ballConfig.inningsNumber == 2 || (followOnMatch != 1 && ballConfig.inningsNumber == 4) || (followOnMatch == 1 && ballConfig.inningsNumber == 3))">
+            <span class="inn">I1 : </span>
+            {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}} <small class="f-14">({{currentStats['inning1Scores'].overs}}{{!testMatch ? ('/' + liveScoringTeamsData.overs) : ''}})</small>
+          </ng-container>
+          <ng-container *ngIf="currentStats['inning2Scores'] && testMatch && ballConfig.inningsNumber == 3 && followOnMatch != 1">
+            <span class="inn">I2 : </span>
+            {{currentStats['inning2Scores'].runs}}/{{currentStats['inning2Scores'].wickets}} <small class="f-14">({{currentStats['inning2Scores'].overs}})</small>
+          </ng-container>
+          <ng-container *ngIf="followOnMatch == 1 && currentStats['inning3Scores'] && ballConfig.inningsNumber == 4">
+            <span class="inn">I3 : </span>
+            {{currentStats['inning3Scores'].runs}}/{{currentStats['inning3Scores'].wickets}} <small class="f-14">({{currentStats['inning3Scores'].overs}})</small>
+          </ng-container>
+        </h4>
+      </div>
+      </ion-item>
+      <ion-item lines="none" class="w-100" *ngIf="testMatch && ballConfig.inningsNumber > 2">
+        <div class="w-50">
+        <h4 [slot]="'start'" class="ion-text-left m-0">
+          <ng-container *ngIf="currentStats['inning1Scores'] && ((followOnMatch != 1 && ballConfig.inningsNumber == 3) || (followOnMatch == 1 && ballConfig.inningsNumber == 4))">
+            <span class="inn">I1 : </span>
+            {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}} <small class="f-14">({{currentStats['inning1Scores'].overs}})</small>
+          </ng-container>
+          <ng-container *ngIf="currentStats['inning2Scores'] && ((ballConfig.inningsNumber == 4 && followOnMatch != 1) || (ballConfig.inningsNumber == 3 && followOnMatch == 1))">
+            <span class="inn">I2 : </span>
+            {{currentStats['inning2Scores'].runs}}/{{currentStats['inning2Scores'].wickets}} <small class="f-14">({{currentStats['inning2Scores'].overs}})</small>
+          </ng-container>
+        </h4>
+        </div>
+        <div class="w-50">
+        <h4 [slot]="'end'" class="ion-text-right m-0" *ngIf="currentStats['inning3Scores'] && ballConfig.inningsNumber == 4">
+          <ng-container *ngIf="followOnMatch != 1">
+            <span class="inn">I3 : </span>
+            {{currentStats['inning3Scores'].runs}}/{{currentStats['inning3Scores'].wickets}} <small class="f-14">({{currentStats['inning3Scores'].overs}})</small>
+          </ng-container>
+          <ng-container *ngIf="followOnMatch == 1 && currentStats['inning2Scores'] && ballConfig.inningsNumber == 4">
+            <span class="inn">I2 : </span>
+            {{currentStats['inning2Scores'].runs}}/{{currentStats['inning2Scores'].wickets}} <small class="f-14">({{currentStats['inning2Scores'].overs}})</small>
+          </ng-container>
+        </h4>
+        </div>
+      </ion-item>
+      <ion-item lines="none" class="w-100" *ngIf="liveScoringTeamsData.isDls && ballConfig.inningsNumber == 2">
+        <div class="w-100">
+          <h4 [slot]="'end'" class="ion-text-right" *ngIf="liveScoringTeamsData.isDls && liveScoringTeamsData.t2Target > 0">
+            <span>Target : {{liveScoringTeamsData.t2Target}}</span>
+          </h4>
+        </div>
+      </ion-item>
+      <!-- <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin">
+          <h4 class="ion-text-center">
+            <ng-container *ngIf="currentStats['battingTeamScore']">
+              <span *ngIf="testMatch">I{{ballConfig.inningsNumber}}: </span>
+              {{currentStats['battingTeamScore'].runs}}/{{currentStats['battingTeamScore'].wickets}}({{currentStats['battingTeamScore'].overs}}/{{liveScoringTeamsData.overs}})
+            </ng-container>
+          </h4>
+          
+          <ion-item color="primary" class="ion-text-center">
+            <ion-label>
+              {{liveScoringTeamsData.battingTeamName}}
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-card class="ion-no-margin ion-margin-start">
+          <h4 class="ion-text-center">
+            <ng-container *ngIf="currentStats['inning1Scores']">
+              {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}}({{currentStats['inning1Scores'].overs}}/{{liveScoringTeamsData.overs}})
+            </ng-container>
+          </h4>
+          <h4 class="ion-text-center" *ngIf="testMatch">
+            <ng-container *ngIf="currentStats['inning1Scores']">
+              {{currentStats['inning1Scores'].runs}}/{{currentStats['inning1Scores'].wickets}}({{currentStats['inning1Scores'].overs}}/{{liveScoringTeamsData.overs}})
+            </ng-container>
+          </h4>
+          <ion-item color="primary" class="ion-text-center">
+            <ion-label>
+              {{liveScoringTeamsData.bowlingTeamName}}
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
+  <!-- Start: display Batting team detail -->
+  <ion-card class="w-100 main-card scoreing-lists">  
+    <ion-card-header class="ion-text-left">
+      <ion-row class="align-items">
+        <ion-col size="6">
+          <span class="f-14 card-header-font">
+            Batting
+          </span> 
+        </ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">R</ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">B</ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">4s</ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">6s</ion-col>
+        <ion-col size="2" class="text-left pl-0 pr-0">SR</ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="scoreing-bat">
+        <ion-row *ngIf="currentStats['batsmanName']" class="align-items">
+          <ion-col size="6">
+          <span class="mr-10">
+            <ion-icon name="pencil" (click)="openSelectPlayerModal('Batsman', true)" class="f-14"></ion-icon>
+          </span>
+            <ion-label class="card-header-font ion-no-margin f-14">
+              {{currentStats['batsmanName']}}</ion-label> 
+              <span class="ml-10" (click)="swapPlayers()" *ngIf="currentStats['runnerName']">
+              <ion-icon name="swap-vertical"></ion-icon>
+            </span>
+            </ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['batsmanObj'].runs}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['batsmanObj'].balls}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['batsmanObj'].fours}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['batsmanObj'].sixes}}</ion-col>
+          <ion-col size="2" class="text-left pl-0 pr-0">{{currentStats['batsmanObj'].sr}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="currentStats['runnerName']" class="align-items">
+          <ion-col size="6">
+            <span class="mr-10">
+            <ion-icon name="pencil" (click)="openSelectPlayerModal('Runner', true)"></ion-icon>
+            </span>
+            <ion-label class="card-header-font ion-no-margin f-14">
+              {{currentStats['runnerName']}}</ion-label>
+          </ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['runnerObj'].runs}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['runnerObj'].balls}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['runnerObj'].fours}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['runnerObj'].sixes}}</ion-col>
+          <ion-col size="2" class="text-left pl-0 pr-0">{{currentStats['runnerObj'].sr}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <!-- End: display Batting team detail -->
+
+  <!-- Start: display Bowling team detail -->
+  <ion-card class="w-100 main-card scoreing-lists">  
+    <ion-card-header class="ion-text-left">
+      <ion-row class="align-items">
+        <ion-col size="6">
+          <div class="f-14 card-header-font">
+            Bowling
+          </div> 
+        </ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">O</ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">M</ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">R</ion-col>
+        <ion-col size="1" class="text-left pl-0 pr-0">W</ion-col>
+        <ion-col size="2" class="text-left pl-0 pr-0">Econ</ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="scoreing-bat">
+        <ion-row *ngIf="currentStats['bowlerName']" class="align-items">
+          <ion-col size="6">
+            <span class="mr-10">
+            <ion-icon name="pencil" (click)="openSelectPlayerModal('Bowler', true)"></ion-icon>
+            </span>
+            <ion-label class="card-header-font ion-no-margin f-14">
+              {{currentStats['bowlerName']}}</ion-label>
+          </ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['bowlerObj'].overs}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['bowlerObj'].maidens}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['bowlerObj'].runs}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['bowlerObj'].wickets}}</ion-col>
+          <ion-col size="2" class="text-left pl-0 pr-0">{{currentStats['bowlerObj'].econ}}</ion-col>
+        </ion-row>
+        <ion-row *ngIf="currentStats['prevBowlerName']" class="align-items">
+          <ion-col size="6">
+            <span class="mr-10">
+            <ion-icon name="pencil" (click)="openSelectPlayerModal('prevBowler', true)"></ion-icon>
+            </span>
+            <ion-label class="card-header-font ion-no-margin f-14">
+              {{currentStats['prevBowlerName']}}</ion-label>
+          </ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['prevBowlerObj'].overs}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['prevBowlerObj'].maidens}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['prevBowlerObj'].runs}}</ion-col>
+          <ion-col size="1" class="text-left pl-0 pr-0">{{currentStats['prevBowlerObj'].wickets}}</ion-col>
+          <ion-col size="2" class="text-left pl-0 pr-0">{{currentStats['prevBowlerObj'].econ}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <!-- End: display Bowling team detail -->
+</ion-content>
+
+<ion-footer>
+  <!-- Display Target Runs in second innings -->
+  <ion-item color="medium parscore-chart  extrasList" *ngIf="ballConfig.inningsNumber == 2 && !testMatch">
+    <span class="f-14" *ngIf="!liveScoringTeamsData.isDls">{{(currentStats['inning1Scores'].runs + 1) - currentStats['battingTeamScore'].runs}} more run(s) {{getRemainingText()}}</span>
+    <span class="f-14" *ngIf="liveScoringTeamsData.isDls">{{getDLTarget()}} - ParScore {{currentStats.parScore>0?currentStats.parScore:'Not Available'}}</span>
+    <ion-button slot="end" *ngIf="!liveScoringTeamsData.isDls" class="parScore btn" (click)="openDLChartModal()">
+      ParScore Chart
+    </ion-button>
+    <ion-button slot="end" class="parScore btn" *ngIf="liveScoringTeamsData.isDls" (click)="getParScore()">
+      Get Par Score
+    </ion-button>
+  </ion-item>
+  <!-- Start: display balls and undo ball button-->
+  <ion-item lines="none" class="balls-round">
+    <ion-text *ngFor="let ball of currentOver" class="over-score ion-text-center">
+      {{ball.over}}.{{ball.ball}} <br>
+      <ion-chip [color]="ball.isSaved? 'primary' : 'secondary'">{{ccUtil.getRunsText(ball)}}</ion-chip>
+    </ion-text>
+  </ion-item>
+  <ion-item lines="none" class="undo-item">
+    <!-- undo icon -->
+    <!-- <ion-text slot="end" class="ion-no-margin">
+      <ion-icon name="arrow-undo" color="primary"></ion-icon>
+    </ion-text> -->
+    <ion-button *ngIf="!deletingBallInProgress" fill="clear" slot="end" shape="round" class="ion-no-margin" [disabled]="!currentInningBalls || currentInningBalls.length == 0" (click)="deleteBalls()">
+      <ion-icon name="arrow-undo" class="f-28"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="deletingBallInProgress" fill="clear" slot="end" shape="round" class="ion-no-margin">
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-button>
+    <ion-text slot="end" tappable="true" style="display:contents;">
+      {{currentStats['currentOverTotalRuns']}}
+    </ion-text>
+  </ion-item>
+  <!-- End: display balls and undo ball button-->
+  <!-- Start: score keypad -->
+  <ion-label color="primary">
+    <ion-row class="ion-align-items-center">
+      <ion-col *ngIf="currentStats['actionType'] == 'startSecondInning'" class="ion-text-center select-column" (click)="startInning(2)">
+        <span class="add-select">Start Second Inning</span>
+      </ion-col>
+      <ion-col *ngIf="currentStats['actionType'] == 'startThirdInning'" class="ion-text-center select-column" (click)="startInning(3)">
+        <span class="add-select">Start Third Inning</span>
+      </ion-col>
+      <ion-col *ngIf="currentStats['actionType'] == 'startFourthInning'" class="ion-text-center select-column" (click)="startInning(4)">
+        <span class="add-select">Start Fourth Inning</span>
+      </ion-col>
+      <ion-col size="6" *ngIf="currentStats['actionType'] == 'startSecondInning' || currentStats['actionType'] == 'startThirdInning' || currentStats['actionType'] == 'startFourthInning'" class="ion-text-center select-column" (click)="startInning(2)">
+        <span class="add-select">End Scoring Session</span>
+      </ion-col>
+      <ion-col size="6" *ngIf="currentStats['superOver']" class="ion-text-center select-column" (click)="superOver()">
+        <span class="add-select">Super Over</span>
+      </ion-col>
+      <ion-col *ngIf="currentStats['actionType'] == 'endMatch'" class="ion-text-center select-column" (click)="endMatch()">
+        <span class="add-select">End Match</span>
+      </ion-col>
+    </ion-row>
+
+    <ng-container *ngIf="currentStats['actionType'] == 'inningRunning'">
+      <ion-row *ngIf="!currentStats['runnerName'] || !currentStats['batsmanName'] || !currentStats['bowlerName'] || currentStats['showSelectBowler']" class="ion-align-items-center select-player-row">
+        <ion-col *ngIf="!currentStats['batsmanName']" class="ion-text-center select-column" (click)="openSelectPlayerModal('Batsman')">
+        <span class="add-select">Select Batsman</span>  
+        </ion-col>
+        <ion-col *ngIf="currentStats['batsmanName'] && !currentStats['runnerName']" class="ion-text-center select-column" (click)="openSelectPlayerModal('Runner')">
+          <span class="add-select">  Select Runner</span>
+        </ion-col>
+        <ion-col *ngIf="currentStats['batsmanName'] && currentStats['runnerName'] && (!currentStats['bowlerName'] || currentStats['showSelectBowler'])" class="ion-text-center select-column" (click)="openSelectPlayerModal('Bowler')">
+          <span class="add-select"> Select Bowler</span>
+        </ion-col>
+        <ion-col size="4" *ngIf="currentStats['batsmanName'] && currentStats['runnerName'] && (!currentStats['bowlerName'] || currentStats['showSelectBowler']) && currentInningBalls && currentInningBalls.length > 3" class="ion-text-center border-left-card select-column" (click)="currentStats['showSelectBowler']=false;disableScoreKeypad=false;plusOneBall=true">
+          <span class="add-select">  +1 Ball</span>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngIf="currentStats['runnerName'] && currentStats['batsmanName'] && currentStats['bowlerName'] && !currentStats['showSelectBowler']">
+        <ion-row class="score-keypad ion-text-center ion-align-items-center">
+          <ion-col size="2">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="createBall(0, 'Good Ball')">0</ion-button>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="createBall(1, 'Good Ball')">1</ion-button>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="createBall(2, 'Good Ball')">2</ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="openWidesModal()">WD</ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="openWikcketsModal()">Wicket</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="score-keypad ion-text-center ion-align-items-center">
+          <ion-col size="2">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="createBall(3, 'Good Ball')">3</ion-button>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="createBall(4, 'Good Ball', true)">4</ion-button>
+          </ion-col>
+          <ion-col size="2">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="createBall(6, 'Good Ball', true)">6</ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="openNoBallsModal()">NB</ion-button>
+          </ion-col>
+          <ion-col size="3">
+            <ion-button fill="clear" [disabled]="disableScoreKeypad" (click)="openExtrasModal()">Extras</ion-button>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+    </ng-container>
+  </ion-label>
+  <!-- End: score keypad -->
+  <!-- Start: fixed content footer to display action buttons -->
+  <ion-item color="primary" class="ion-text-center">
+    <ion-label>
+      <ion-row class="ion-text-center f-14">
+        <ion-col (click)="openAddCommentModal()" class="text-left">
+         Comment
+        </ion-col>
+        <ion-col class="text-center" (click)="redirectToScorecard()">
+          Scorecard
+        </ion-col>
+        <ion-col class="text-center" (click)="openEditBallsModal()">
+          Edit
+        </ion-col>
+        <ion-col (click)="openActionsModal()" class="text-right">
+          Actions
+        </ion-col>
+      </ion-row>
+    </ion-label>
+  </ion-item>
+  <!-- End: fixed content footer to display action buttons -->
+</ion-footer>

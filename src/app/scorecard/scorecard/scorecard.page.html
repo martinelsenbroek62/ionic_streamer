@@ -1,0 +1,133 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="!scoringEndMatch"></ion-back-button>
+      <ion-menu-button *ngIf="scoringEndMatch"></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">
+      Scorecard
+    </ion-title>
+    <ion-buttons slot="end">
+      <!-- close button to close current session -->
+      <ion-button fill="clear">
+        <ion-icon slot="icon-only" name="arrow-redo"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-card class="w-100 main-card scorecard-header-top">  
+    <ion-card-header class="ion-text-left">
+      <ion-row *ngIf="matchInfoHeaders">
+        <ion-col size="9">
+          <span class="f-12">{{matchInfoHeaders.matchDate}} {{matchInfoHeaders.address ? '|' : ''}} {{matchInfoHeaders.address}} {{matchInfoHeaders.address}}{{matchInfoHeaders.location ? ',' : ''}} {{matchInfoHeaders.location}}</span>   
+        </ion-col>
+        <ion-col size="3" class="live-leauge-component">
+          <!-- <span class="live-match" *ngIf="matchInfoHeaders.isComplete==0"><span class="red-dot"></span> Live</span>   -->
+          <span class="completed-match" *ngIf="matchInfoHeaders.isComplete==1">Completed</span> 
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="ion-no-padding" *ngIf="matchInfoHeaders">
+        <ion-item lines="none" color="light" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="matchInfoHeaders.t1_logo_file_path ? (ccUtil.RESOURCE_URL + matchInfoHeaders.t1_logo_file_path) : './assets/images/noTeam.png'" onError="this.src='./assets/images/noTeam.png'"/>
+          </ion-avatar>
+          <ion-label class="card-header-font ion-no-margin f-14">{{matchInfoHeaders.teamOneName}}</ion-label>
+          <ion-label slot="end" class="card-header-font ion-text-right ion-no-margin f-14">
+            {{matchInfoHeaders.innings1Total.runs}}/{{matchInfoHeaders.innings1Total.overs}} 
+            <span class="f-11 font-weight-light">({{matchInfoHeaders.innings1Total.overs}}/{{matchInfoHeaders.matchOvers}} Ov)</span>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" color="light" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="matchInfoHeaders.t2_logo_file_path ? (ccUtil.RESOURCE_URL + matchInfoHeaders.t2_logo_file_path) : './assets/images/noTeam.png'" onError="this.src='./assets/images/noTeam.png'"/>
+          </ion-avatar>
+          <ion-label class="card-header-font ion-no-margin f-14">{{matchInfoHeaders.teamTwoName}}</ion-label>
+          <ion-label slot="end" class="card-header-font ion-text-right ion-no-margin f-14">
+            {{matchInfoHeaders.innings2Total.runs}}/{{matchInfoHeaders.innings2Total.overs}} 
+            <span class="f-11 font-weight-light">({{matchInfoHeaders.innings2Total.overs}}/{{matchInfoHeaders.matchOvers}} Ov)</span>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" color="light" size="12" class="commentry-match" *ngIf="matchInfoHeaders.isComplete">
+          <span class="f-13">{{matchInfoHeaders.result}}</span>
+        </ion-item>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-col lines="none" class="like-comments-views-tab">
+    <ion-button fill="clear">
+      <span>
+      <ion-icon slot="start" name="heart"></ion-icon>
+    </span>
+      {{matchInfoHeaders ? matchInfoHeaders.likesCount : ''}} Likes
+    </ion-button>
+    <ion-button fill="clear">
+      <span>
+      <ion-icon slot="start" name="chatbubble-ellipses"></ion-icon>
+    </span>
+      {{matchInfoHeaders ? matchInfoHeaders.commentsCount : ''}} Comments
+    </ion-button>
+    <ion-button fill="clear">
+      <span>
+      <ion-icon slot="start" name="eye"></ion-icon>
+    </span>
+      {{matchInfoHeaders ? matchInfoHeaders.viewsCount : ''}} Views
+    </ion-button>
+    <ion-button fill="clear" class="ion-no-margin">
+    <span>
+      <ion-icon slot="icon-only" name="chatbubbles"></ion-icon>
+    </span>
+    </ion-button>
+  </ion-col>
+  <span class="grade"></span>
+  <div>
+    <div>
+      <ion-segment mode="md" #mySegment (ionChange)="segmentChanged()" [(ngModel)]="currentSegmentName">
+        <ion-segment-button value="0">
+          <ion-label>Info</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="1">
+          <ion-label>{{(matchInfoHeaders && matchInfoHeaders.isComplete) == 1 ? 'Commentary' : 'Live'}}</ion-label>
+        </ion-segment-button>  
+        <ion-segment-button value="2">
+          <ion-label>Scorecard</ion-label>
+        </ion-segment-button>    
+        <ion-segment-button value="3">
+          <ion-label>Analysis</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="4">
+          <ion-label>Highlights</ion-label>
+        </ion-segment-button>                
+      </ion-segment>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content class="score-card-info">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content color="primary"></ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="loadingSpinner">
+    <ion-backdrop class="full-ion-backdrop"></ion-backdrop>
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+  <ion-slides mode="md" #slides (ionSlideDidChange)="slideChanged()" scrollbar="false"> 
+    <!-- League Home Tab -->
+    <ion-slide *ngIf="currentSegmentName == 0 && matchData && matchInfo && matchInfoHeaders">
+      <app-info class="w-100" [matchData]="matchData" [matchInfo]="matchInfo" [matchInfoHeaders]="matchInfoHeaders" [recentForms]="recentForms" [previousEncounters]="previousEncounters" [matchResultsAtGround]="matchResultsAtGround" [playersToWatch]="playersToWatch"></app-info>
+    </ion-slide>
+    <ion-slide *ngIf="currentSegmentName == 1 && matchInfo && ballByBall">
+      <app-live class="w-100" [matchInfo]="matchInfo" [ballByBall]="ballByBall"></app-live>
+    </ion-slide>
+    <ion-slide *ngIf="currentSegmentName == 2 && matchInfo && scorecard">
+      <app-scorecard-component class="w-100" [matchInfo]="matchInfo" [scorecard]="scorecard"></app-scorecard-component>
+    </ion-slide>
+    <ion-slide *ngIf="currentSegmentName == 3">
+    </ion-slide>
+    <ion-slide *ngIf="currentSegmentName == 4">
+      <app-highlights class="w-100" [matchInfo]="matchInfo" [ballByBall]="ballByBall" [hideHeaders]="true"></app-highlights>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

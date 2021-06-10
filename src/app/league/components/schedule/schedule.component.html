@@ -1,0 +1,59 @@
+
+<!-- <ion-content> -->
+  <!-- Start: template to display Schedule detail -->
+  <ion-card class="main-card w-100" *ngFor="let schedule of scheduleList">  
+    <ion-card-header class="ion-text-left">
+      <ion-row>
+        <ion-col size="8">
+          <span class="card-header-font f-14"> <b class="mr-5">{{schedule.time}}</b>  {{schedule.date}}{{schedule.day? ',' : ''}} {{schedule.day}}</span>
+          <br>
+        
+          <span class="f-10" *ngIf="schedule.location"> <ion-icon class="mr-5 f-13" name="location" *ngIf="schedule.location"></ion-icon>{{schedule.location}}</span>   
+        </ion-col>
+        <ion-col size="4" class="live-leauge-component">
+          <span class="completed-match mr-5" *ngIf="sourcePage=='mySchedule'">Playing</span>
+          <div class="circle-round"> 
+            <ion-icon class="notify" name="notifications-outline"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- <ion-grid> -->
+        <!-- <ion-row>
+          <ion-col class="ion-text-left ml-5 f-13" size="10">
+            League Name
+          </ion-col>
+          <ion-col *ngIf="sourcePage=='mySchedule'" size="2">
+            <ion-icon class="notify" name="notifications-outline"></ion-icon>
+          </ion-col>
+        </ion-row> -->
+        <ion-item lines="none">
+          <span slot="start" class="ion-text-left ml-5 f-13">{{schedule.seriesName}}</span>
+          <span class="status-button" slot="end" *ngIf="sourcePage=='mySchedule'" (click)="openTeamAvailabilityModal(schedule)">View Team</span>
+        </ion-item>
+        <ion-item lines="none" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="ccUtil.RESOURCE_URL + schedule.t1_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + schedule.t1_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+          </ion-avatar>
+          <ion-label class="card-header-font ion-no-margin f-14">{{schedule.teamOneName}}</ion-label>
+        </ion-item>
+        <ion-item lines="none" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="ccUtil.RESOURCE_URL + schedule.t1_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + schedule.t1_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+          </ion-avatar>
+          <ion-label class="card-header-font ion-no-margin f-14">{{schedule.teamTwoName}}</ion-label>
+          <ion-label *ngIf="sourcePage=='mySchedule'" slot="end" class="card-header-font select-available ion-text-right">
+            <span class="f-12 ml-5">{{schedule.countOfPlayerStatus.countOfAvailablePlayers}}</span>
+            <span class="status ml-5" [ngClass]="{'availabe': schedule.statusDesc == 'Available'}" (click)="onAvailabilityClick($event, schedule, 'A')"><ion-icon name="checkmark-sharp"></ion-icon></span>
+            <span class="f-12 ml-5">{{schedule.countOfPlayerStatus.countOfNotAvailablePlayers}}</span>
+            <span class="status ml-5" [ngClass]="{'not-availabe': schedule.statusDesc == 'Not Available'}" (click)="onAvailabilityClick($event, schedule, 'NA')"><ion-icon name="close"></ion-icon></span>
+            <span class="f-12 ml-5">{{schedule.countOfPlayerStatus.countOfNotSurePlayers}}</span>
+            <span class="status ml-5" [ngClass]="{'not-sure': schedule.statusDesc == 'Not Sure'}" (click)="onAvailabilityClick($event, schedule, 'NS')"><ion-icon name="help"></ion-icon></span>
+          </ion-label>
+        </ion-item>
+      <!-- </ion-grid> -->
+    </ion-card-content>
+  </ion-card>
+  <!-- End: template to display Schedule detail -->
+<!-- </ion-content> -->

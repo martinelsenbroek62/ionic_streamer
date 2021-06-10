@@ -1,0 +1,19 @@
+
+
+.chart{
+    padding: 10px;
+    margin: 0;
+    overflow: hidden;
+    font-size: 12px;   
+    ion-col{
+        padding:3px;
+        display:flex;
+        align-items: center;
+        justify-content:center;
+        border:1px solid var(--ion-color-medium);
+        font-size: 1em;
+        ion-grid{
+            padding: 0px !important;
+        }
+    }
+}

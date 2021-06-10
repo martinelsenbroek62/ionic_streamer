@@ -1,0 +1,167 @@
+ion-content{
+    background: var(--ion-color-inner);
+    --background: var(--ion-color-light);
+}
+.score-keypad {
+    ion-col {
+        // padding: 20px 0px;
+        height: 64px;
+        border: 1px solid var(--ion-color-light);
+        align-items: center;
+    display: flex;
+    }
+    ion-button {
+        height: 100%;
+        width: 100%;
+    }
+}
+h4{
+    margin-bottom: 8px;
+}
+.scoreing-bat{
+    padding: 3px 3px;
+    ion-col{
+        padding: 5px;
+    }
+}
+.team-names{
+    justify-content: space-between;
+    padding: 0px;
+    align-items: baseline;
+    background: #fff;
+    --inner-border-width: 0px;
+}
+.team-names ion-label{
+    margin-top: 5px;
+}
+
+.team-names ion-item{
+    align-items: baseline;
+}
+
+.team-name{
+    color: #fff;
+    margin-bottom: 3px;
+    display: inline-block;
+    font-size: 15px;
+    text-align: center;
+    min-width: 55%;
+    font-weight: bold;
+    background: var(--ion-color-secondary);
+    border-radius: 5px;
+    padding: 3px 5px;
+}
+
+.over-score {
+    padding-top: 10px;
+    font-size: 12px;
+}
+.over-score ion-chip{
+    margin-top: 5px;
+    font-weight: bold;
+}
+.total-runs-wrap {
+    background: var(--ion-color-medium);
+}
+.total-runs-wrap ion-item{
+ --min-height: 30px;
+}
+.inn{
+    color: var(--ion-color-primary);
+    font-size: 14px;
+}
+.scoreing-lists{
+    font-weight: 500;
+    color: #000;
+}
+.scoreing-lists ion-card-header{
+    color: #000;
+}
+.total-runs-wrap ion-card {
+    margin: 0 2px;
+    zoom: 0.7;
+}
+.balls-round {
+    display: inline-block;
+    width: calc(100% - 90px);
+    overflow: auto;
+    --padding-start: 12px;
+    height: 65px;
+}
+.undo-item {
+    float:right;
+    width:90px;
+   padding-top: 12px;
+}
+.select-player-row {
+    border-top: 1px solid var(--ion-color-medium);
+}
+.parscore-chart{
+    --min-height: 32px;
+    --inner-padding-end: 5px;
+    --padding-start: 5px;
+}
+.parScore{
+    height: 25px;
+    --border-radius: 50px;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0.7rem;
+    --padding-end: 0.7rem;
+    padding: 0px;
+    margin: 0px;
+    font-size: 12px !important;
+}
+.select-column {
+    padding: 4rem 13px;
+}
+.select-column span{
+background: #fff;
+padding: 5px 14px;
+border-radius: 50px;
+border: 2px solid var(--ion-color-primary);
+}
+.border{
+    border-right: 2px solid #fff;
+    border-left: 2px solid #fff;
+}
+.border-left{
+    border-left: 0px!important;
+}
+.stast-card{
+    margin-left: 0px;
+    margin-right: 0px;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border-bottom: 1px solid var(--ion-color-medium);
+    box-shadow: none;
+    ion-item{
+      --min-height: 32px!important;
+      --max-height: 48px;
+       min-height: 38px!important;
+    }
+      ion-card-header{
+        background-color: var(--ion-color-light);
+        padding: 0px 2px;
+        min-height: 28px!important;
+        display: grid;
+        align-items: center;
+    }
+    ion-card-content {
+      
+      padding: 0px;
+  }
+}
+.border-left-card{
+    border-left: 1px solid var(--ion-color-medium);
+}
+.main-card{ 
+    ion-card-header{
+        background-color: var(--ion-color-light);
+        padding: 0px 2px;
+        min-height: 28px!important;
+        display: grid;
+        align-items: center;
+    }
+}

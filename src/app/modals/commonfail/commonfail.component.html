@@ -1,0 +1,18 @@
+<ion-content style="--background: #00000070">        
+  <div class="modalbox1">
+    <!-- <div (click)="modalClose()">
+      <i class="fa fa-times modelclose" aria-hidden="true"></i>
+    </div>     -->
+    <ion-grid style="padding: 0;">
+      <ion-row>             
+        <ion-col size="12" style="padding: 16px 4px 1px 0px;">
+          <div style="text-align: center;">
+            <i class="fa fa-times-circle-o fail" aria-hidden="true"></i>
+          </div>                
+          <h5 class="success ion-padding">{{message}}</h5> 
+        </ion-col>      
+      </ion-row>
+      <ion-button (click)="ok()" style="margin-top:-26px"> Ok </ion-button>
+    </ion-grid>
+  </div>  
+</ion-content>

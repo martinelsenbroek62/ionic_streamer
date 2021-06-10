@@ -1,0 +1,7 @@
+{
+  "name": "ccfantasy",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

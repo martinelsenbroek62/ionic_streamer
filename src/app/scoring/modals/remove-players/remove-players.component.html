@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16"> Remove Players</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- after pressing continue button -->
+  <div>
+    <!-- Team 1 players list -->
+    <ion-card class="main-card" style="border-top: none;">
+      <ion-col class="text-left align-items border-bottom-grey">
+       <h5>{{teamOneName}}</h5>
+      </ion-col>
+      <ng-container>
+        <ion-list id="teamOnePlayersId">
+          <!-- iterate new players added -->
+          <ion-item lines="none" *ngFor="let item of players1 | keyvalue" class="list-player">
+            <ion-checkbox (ionChange)="selectPlayers(item.key, 1)"></ion-checkbox>
+            <ion-label>{{item.value}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+    </ion-card>
+
+    <!-- Team 2 players list -->
+    <ion-card class="main-card">
+      <ion-col class="text-left align-items border-bottom-grey">
+        <h5>{{teamTwoName}}</h5>
+      </ion-col>
+      <ng-container>
+        <ion-list id="teamTwoPlayersId">
+          <!-- iterate new players added -->
+          <ion-item lines="none" *ngFor="let item of players2 | keyvalue" class="list-player">
+            <ion-checkbox (ionChange)="selectPlayers(item.key, 2)"></ion-checkbox>
+            <ion-label>{{item.value}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" (click)="dismissModal()">Cancel</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="block" (click)="saveAndDismissModal()">Done</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

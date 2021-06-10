@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16 p-0">Friends List</ion-title>
+    <ion-buttons collapse="true" slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="tagFriends()">
+        Tag
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-item lines="none" class="card-header-font">
+  <ion-searchbar placeholder="Search..." class="create-post-head border-light" [(ngModel)]="searchFilterTerm" animated="true"></ion-searchbar>
+</ion-item>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding pb-0 pt-0 f-14">TAGGED</div>
+  <div class="ion-padding pb-0 tagged-users">
+      <span class="f-14 tagged-friends" *ngFor="let taggedFriend of taggedFriendsList"> 
+        {{taggedFriend.name}} <ion-icon class="f-12" name="close" (click)="removeTag(taggedFriend)"></ion-icon>
+      </span>
+  </div>
+  
+  <ng-container *ngFor="let friend of friendsList | filter:searchFilterTerm; let last = last">
+    <ion-item class="user-wrap" lines="none" (click)="tagFriends(friend)">
+      <ion-avatar slot="start" class="header-avatar">
+        <img src="assets/images/dhoni.png">
+      </ion-avatar>
+      <ion-label>
+        {{friend.name}}
+      </ion-label>
+    </ion-item>
+  </ng-container>
+</ion-content>

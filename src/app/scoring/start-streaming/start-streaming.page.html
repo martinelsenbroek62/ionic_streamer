@@ -1,0 +1,141 @@
+<ng-container *ngIf="false">
+<ion-header *ngIf="!streamBegin">
+  <ion-toolbar>
+    <ion-title>Start Streaming</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+</ng-container>
+
+<ion-content id="recordCanvas" style="--background: transparent;">
+  <div class="videocam-status">
+    <!-- show/hide node server logs -->
+    <ion-icon name="code-working" [color]="showServerLogMessages ? 'medium' : 'success'" (click)="toggleShowServerLogMessages()" class="ion-margin-end"></ion-icon>
+    <!-- video streaming or not streaming status -->
+    <ion-icon name="videocam" [color]="startSendingStreamingNow ? 'success' : 'medium'"></ion-icon>
+  </div>
+  <div id="timer">00:00:00</div>
+
+  <ng-container *ngIf="loadingSpinner">
+    <div class="loading-spinner-wrap">
+      <ion-spinner class="loading-spinner-color"></ion-spinner>
+    </div>
+  </ng-container>
+
+  <div style="text-align: center;">
+    <!-- <br> -->
+    <div class="left">
+      <ng-container *ngIf="false">
+        <ng-container *ngIf="!streamBegin">
+          <!-- <ion-item>
+            <ion-input [(ngModel)]="youtubeKey" placeholder="Enter Youtube Key"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input [(ngModel)]="matchId" placeholder="Enter Match Id"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input [(ngModel)]="clubId" placeholder="Enter Club Id"></ion-input>
+          </ion-item> -->
+          <ion-list>
+            <ion-radio-group value="facingMode" [(ngModel)]="facingMode">
+              <ion-list-header style="text-align: left; color:#dd5832;">
+                <ion-label>Facing Mode</ion-label>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>Environment</ion-label>
+                <ion-radio slot="start" value="environment"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>User</ion-label>
+                <ion-radio slot="start" value="user"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ng-container>
+        <!-- <br> -->
+      </ng-container>
+      <video id="preview" autoplay muted [style.display]="streamBegin?'':'none'"
+        class="video-preview"></video>
+      <!-- <br> -->
+
+      <ng-container *ngIf="false">
+      <ion-button *ngIf="!streamBegin" (click)="streamBeginFunc()">
+        Start
+      </ion-button>
+      </ng-container>
+
+      <ng-container *ngIf="streamBegin">
+        <ng-container *ngIf="false">
+        <ion-item>
+          <ion-label>
+            {{liveStreamDetails ? liveStreamDetails.youtubePublicUrl : ''}}
+          </ion-label>
+        </ion-item>
+        <ion-button id="startButton" class="buttonCircle" *ngIf="!started" (click)="startStreaming()">
+          <!-- <ion-icon name="radio-button-on-outline" slot="icon-only"></ion-icon> -->
+          Start Streaming
+        </ion-button>
+        <ion-button id="stopButton" class="buttonCircle" *ngIf="started" (click)="stopStreaming(true)">
+          <!-- <ion-icon name="stop-circle-outline"></ion-icon> -->
+          Stop Streaming
+        </ion-button>
+        </ng-container>
+      </ng-container>
+    </div>
+    <!-- <h2>Record Preview</h2> -->
+    <canvas id="c1"></canvas>
+    <!-- 
+    <div class="right">
+      <h2>Recording</h2>
+      <video id="recording" controls controlsList="nodownload" muted></video>
+    </div>
+    <div class="bottom">
+      <pre id="log"></pre>
+    </div> -->
+
+    <!-- <ion-fab vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="startCamera()" color="primary"><ion-icon name="videocam"></ion-icon></ion-fab-button>
+    </ion-fab> -->
+
+    <input type="range" id="zoom-range" name="zoom-range" min="0" max="10" value="0" *ngIf="startSendingStreamingNow">
+
+    <ion-fab vertical="top" horizontal="start">
+      <ion-fab-button (click)="stopStreaming(true)" color="light" size="small">
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+    <!-- list of buttons (after stream begins) - Stop, Youtube -->
+    <ion-fab vertical="bottom" horizontal="center" color="light" *ngIf="startSendingStreamingNow">
+      <ion-fab-button color="light">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-list side="top">
+
+        <!-- stop streaming button -->
+        <ion-fab-button (click)="stopStreaming()" color="danger">
+          <ion-icon name="stop"></ion-icon>
+        </ion-fab-button>
+        
+        <ion-fab-button color="secondary" (click)="openYoutubeLink(liveStreamDetails.youtubePublicUrl)" *ngIf="liveStreamDetails && liveStreamDetails.youtubePublicUrl">
+          <!-- stream Youtube URL button - to open stream in Youtube -->
+          <ion-icon name="logo-youtube"></ion-icon>
+        </ion-fab-button>
+
+      </ion-fab-list>
+    </ion-fab>
+
+    <!-- start streaming button -->
+    <ion-fab vertical="bottom" horizontal="center" *ngIf="!startSendingStreamingNow && !streamEnds">
+      <ion-fab-button (click)="startSendingStreaming()" color="secondary">
+        <ion-icon name="play"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  </div>
+  <!-- div with messages reciving from Node server -->
+  <div id="server-log-messages" [style.display]="showServerLogMessages ? 'block' : 'none'"></div>
+</ion-content>

@@ -1,0 +1,73 @@
+.close-btn{
+    width: 38px!important;
+    height: 38px!important;
+    --min-height: 38px!important;
+    --padding-top: 0px!important;
+    --padding-end: 0px!important;
+    --padding-bottom: 0px!important;
+    --padding-start: 0px!important;
+}
+ion-title{
+--min-height: 38px!important;
+}
+.submit{
+    justify-content: center;
+    display: grid;
+    width: 100%;
+    ion-button{
+        margin: 10px 20px!important;
+        --border-radius: 50px;
+        min-width: 80px;
+    }
+  }
+  .cancel{
+    --padding-top: 5px!important;
+    --padding-bottom: 5px!important;
+    --padding-start: 15px!important;
+    --padding-end: 15px!important;
+border: 2px solid var(--ion-color-primary);
+border-radius: 50px;
+--background: #fff;
+height: 32px;
+font-size: 14px;
+color: var(--ion-color-primary);
+--box-shadow: none;
+}
+.add-pay{
+    border: 2px solid var(--ion-color-primary);
+    --border-radius: 50px;
+    --background: #fff;
+    color: var(--ion-color-primary);
+    --color: var(--ion-color-primary);
+    }
+ion-toolbar{
+--min-height: 48px;
+}
+.select-captain{
+    border-bottom: 1px solid var(--ion-color-medium);
+    margin-bottom: 10px;
+}
+.displayinradio ion-col{
+    justify-content: center;
+}
+.addPlayerButton {
+    --background: #fff;
+    color: var(--ion-color-primary);
+    height: 30px;
+    font-size: 14px;
+    text-transform: capitalize;
+    --border-radius: 50px;
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50px;
+}
+.done{
+    width: fit-content;
+    margin: 5px auto;
+    --border-radius: 50px;
+}
+button{
+    border-radius: 50px;
+    font-size: 14px;
+    background: #fff;
+    color: #000;
+}

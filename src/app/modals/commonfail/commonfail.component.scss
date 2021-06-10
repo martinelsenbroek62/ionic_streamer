@@ -1,0 +1,90 @@
+.modalbox1 {  
+    margin: 60% 7%;
+    background: #fff;
+    border-radius: 30px;
+    padding: 0px;
+  }
+  
+  .modelboxinput {
+    color: #fff;
+  }
+  .emailmodal {
+    border-bottom: 1px solid grey;
+    border-radius: 30px 30px 3px 2px;
+    padding: 3px;
+    background: #fff;
+  }
+  .emailmodal h4 {
+    color: #d9340f;
+    text-align: center;
+    font-size: 17px;
+    line-height: 24px;
+    letter-spacing: 1px;
+  }
+
+  ion-button {
+    position: relative;
+    height: 45px;
+    text-transform: initial;
+    --border-radius: 10px;
+    text-align: center;
+    margin: auto;
+    display: block;
+    width: 40%;
+    --background: #d9340f;
+    font-weight: 600;
+    top: 25px;
+}
+
+    .label {
+        font-size: 18px;
+        margin-left: 12px;
+    } 
+    ion-label {
+      font-weight: 600;
+      font-size: 14px;
+     }
+    ion-input {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #dd5727;
+    }
+    ion-select {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #dd5727;
+    }
+    .close {
+      top: 33%;
+      color: #fff;
+      position: absolute;
+      background: #d9340f;
+      font-size: 19px;
+      padding: 6px;
+      border-radius: 50%;
+      line-height: 14px;
+      right: 6%;
+      z-index: 99;
+    }
+
+    .fail {
+          font-size: 50px;
+          color: red;
+    }
+    .success {
+        font-weight: 600;
+      color: #d9340f;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modelclose {
+      font-size: 19px;
+      float: right;
+      margin-top: -4px;
+      margin-right: -6px;
+      color: #fff;
+      background: #d9340f;
+      border-radius: 50%;
+      line-height: 14px;
+      z-index: 99;
+      padding: 6px;
+  }

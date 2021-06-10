@@ -1,0 +1,54 @@
+<!-- team scores -->
+<ion-card class="w-100 main-card live-batsman-bowler">
+  <!-- INNING ONE CONTENT -->
+  <ng-container *ngIf="scorecard && scorecard.innings1 && toNumber(scorecard.innings1.overs) > 0">
+    <ion-item class="team-name" lines="none" (click)="activeInningOne=!activeInningOne">
+      <ion-label>{{scorecard.innings1.teamName}}</ion-label>
+      <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeInningOne"></ion-icon>
+      <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeInningOne"></ion-icon>
+    </ion-item>
+    <!-- teamOne scores content -->
+    <ng-container *ngIf="activeInningOne">
+      <app-scorecard-team-scores [inningsScore]="scorecard.innings1"></app-scorecard-team-scores>
+    </ng-container>
+  </ng-container>
+  
+  <!-- INNING TWO CONTENT -->
+  <ng-container *ngIf="scorecard && scorecard.innings2 && toNumber(scorecard.innings2.overs) > 0">
+    <ion-item color="none" lines="none" (click)="activeInningTwo=!activeInningTwo">
+      <ion-label>{{scorecard.innings2.teamName}}</ion-label>
+      <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeInningTwo"></ion-icon>
+      <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeInningTwo"></ion-icon>
+    </ion-item>
+    <!-- teamTwo scores content -->
+    <ng-container *ngIf="activeInningTwo">
+      <app-scorecard-team-scores [inningsScore]="scorecard.innings2"></app-scorecard-team-scores>
+    </ng-container>
+  </ng-container>
+  
+  <!-- INNING THIRD CONTENT -->
+  <ng-container *ngIf="scorecard && scorecard.innings3 && toNumber(scorecard.innings3.overs) > 0">
+    <ion-item color="none" lines="none" (click)="activeInningThird=!activeInningThird">
+      <ion-label>{{scorecard.innings3.teamName}}</ion-label>
+      <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeInningThird"></ion-icon>
+      <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeInningThird"></ion-icon>
+    </ion-item>
+    <!-- teamTwo scores content -->
+    <ng-container *ngIf="activeInningThird">
+      <app-scorecard-team-scores [inningsScore]="scorecard.innings3"></app-scorecard-team-scores>
+    </ng-container>
+  </ng-container>
+  
+  <!-- INNING FOURTH CONTENT -->
+  <ng-container *ngIf="scorecard && scorecard.innings4 && toNumber(scorecard.innings4.overs) > 0">
+    <ion-item color="none" lines="none" (click)="activeInningFourth=!activeInningFourth">
+      <ion-label>{{scorecard.innings4.teamName}}</ion-label>
+      <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeInningFourth"></ion-icon>
+      <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeInningFourth"></ion-icon>
+    </ion-item>
+    <!-- teamTwo scores content -->
+    <ng-container *ngIf="activeInningFourth">
+      <app-scorecard-team-scores [inningsScore]="scorecard.innings4"></app-scorecard-team-scores>
+    </ng-container>
+  </ng-container>
+</ion-card>

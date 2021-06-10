@@ -1,0 +1,44 @@
+
+
+ <!-- News Section -->
+ <ion-card class="ion-no-margin w-100 bs-0" *ngIf="newsList && newsList.length > 0">
+  <ion-card-header class="ion-no-padding">
+    <ion-item lines="none" class="news-card w-100">
+      <span slot="start">News</span>
+      <span slot="end" class="align-items"><ion-icon name="chevron-forward"></ion-icon></span>
+    </ion-item>
+  </ion-card-header>
+  <ion-card-content class="ion-no-padding">
+    <div class="img-frame" (click)="detailNews(newsList[0])">
+      <img class="main-img" [src]="ccUtil.RESOURCE_URL + newsList[0].image" onerror="this.src='assets/images/news.png'" />
+    </div>
+    <div class="gallery-desc">
+      <p class="title f-16" [innerHTML]="newsList[0].title">
+      </p>
+      <p (click)="detailNews(newsList[0])" [class]="(newsList[0].news.length > 100 && !showMore) ? 'overflow-hidden f-14' : 'f-14'" [innerHTML]="newsList[0].news"></p>
+      <span class="bold" *ngIf="newsList[0].news.length > 100 && !showMore" (click)="showMore=!showMore">View More</span>
+      <span class="bold" *ngIf="showMore" (click)="showMore=!showMore">View Less</span>
+    </div>
+  </ion-card-content>
+</ion-card>
+<ng-container *ngIf="newsList && newsList.length > 1">
+  <ion-row class="border-bottom recent-new-list" *ngFor="let news of newsList.slice(1)">
+    <ion-col size="4" (click)="detailNews(news)">
+      <ion-item>
+        <img slot="start" class="eventImage" [src]="ccUtil.RESOURCE_URL + news.image" onerror="this.src='assets/images/news.png'" />
+      </ion-item>
+    </ion-col>
+    <ion-col size="8" class="ion-text-left" (click)="detailNews(news)">
+      <span class="title f-16" [innerHTML]="news.title"></span>
+      <!-- <span class="f-14" *ngIf="news.news.length <= 100" [innerHTML]="news.news"></span>
+      <span class="f-14" *ngIf="news.news.length > 100" [innerHTML]="ccUtil.trimString(news.news, 100)"></span> -->
+      <p [class]="'f-14 overflow-hidden'" [innerHTML]="news.news"></p>
+      <span class="f-12 name">{{news.userName}}</span>
+      <span class="f-12">{{news.date}}</span>
+      <span class="text-right f-22 share" (click)="shareNews(news.news, news.title)"><ion-icon name="arrow-redo-circle-outline"></ion-icon></span>
+    </ion-col>
+  </ion-row>
+  <ion-col class="view-more">
+    <button block outline class="medium-button-primary mr-5" (click)="moreNews(newsList)">View More</button>
+  </ion-col>
+</ng-container>

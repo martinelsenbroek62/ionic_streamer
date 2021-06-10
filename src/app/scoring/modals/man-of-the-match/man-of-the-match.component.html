@@ -1,0 +1,64 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Player of The Match</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card class="w-100 ion-no-margin">
+    <ion-card-content style="padding: 5px; padding-top: 16px; padding-right: 16px;">
+      <ion-radio-group [(ngModel)]="selectedPlayer" *ngIf="limit == false && players && players.length > 3">
+        <ion-item *ngFor="let i of [0,1,2];">
+          <ion-radio class="radio-button" item-left [value]="players[i].playerId" checked="i==0" mode="md"></ion-radio>
+          <ion-label>
+            {{players[i].fName + ' ' + players[i].lName}}
+            <p class="f-12">(RS:{{players[i].runsScored}}, RG:{{players[i].runsGiven}}, BF:{{players[i].ballsFaced}}, BB:{{players[i].ballsBowled}}, W:{{players[i].wickets}}, TP:{{players[i].totalPoints}})</p>
+          </ion-label>
+      </ion-item>
+      </ion-radio-group>
+      <!-- <ion-list [(ngModel)]="selectedPlayer" *ngIf="limit === false && players.length > 3">
+          <ion-item *ngFor="let i of [0,1,2];">
+              <ion-radio item-left [value]="players[i].playerId" checked="i==0"></ion-radio>
+              <ion-label>
+                {{players[i].fName + ' ' + players[i].lName}}
+                <p>(RS:{{players[i].runsScored}}, RG:{{players[i].runsGiven}}, BF:{{players[i].ballsFaced}}, BB:{{players[i].ballsBowled}}, W:{{players[i].wickets}}, TP:{{players[i].totalPoints}})</p>
+              </ion-label>
+          </ion-item>
+      </ion-list> -->
+      <ion-radio-group [(ngModel)]="selectedPlayer" *ngIf="limit==true">
+        <ion-item *ngFor="let player of players;let i = index">
+            <ion-radio class="radio-button" item-left [value]="player.playerId" checked="i==0" mode="md"></ion-radio>
+            <ion-label>
+              {{player.fName + ' ' + player.lName}}
+              <p class="f-12">(RS:{{player.runsScored}}, RG:{{player.runsGiven}}, BF:{{player.ballsFaced}}, BB:{{player.ballsBowled}}, W:{{player.wickets}}, TP:{{player.totalPoints}})</p>
+            </ion-label>
+        </ion-item>
+      </ion-radio-group>
+      <ion-item lines="none" *ngIf="players && players.length > 3">
+          <ion-label>Others</ion-label>
+          <ion-checkbox color="dark" (click)="limit=!limit"  style="margin-right: 1px;"></ion-checkbox>
+      </ion-item>
+      <!-- <ion-item>
+        <ion-buttons>
+            <button ion-button round (click)="setManOfTheMatchInfo()"><ion-icon item-start name="cloud-upload"></ion-icon> Save</button>
+            <button ion-button round (click)="dismiss()"><ion-icon item-start name="close"></ion-icon> Cancel</button>
+        </ion-buttons>
+        <p>RS:Runs Scored, RG:Runs Given, BF:Balls Faced, BB:Balls Bowled, W:Wickets, TP:Total Points</p>
+      </ion-item> -->
+    </ion-card-content>
+  </ion-card>
+  <ion-item lines="none" class="submit ion-margin-top">    
+    <ion-button shape="round" (click)="setManOfTheMatchInfo()">Save</ion-button>
+    <ion-button shape="round" class="cancel" (click)="dismissModal()">Cancel</ion-button>
+  </ion-item>
+  <ion-item lines="none">
+    <span class="f-12">RS:Runs Scored, RG:Runs Given, BF:Balls Faced, BB:Balls Bowled, W:Wickets, TP:Total Points</span>
+  </ion-item>
+</ion-content>

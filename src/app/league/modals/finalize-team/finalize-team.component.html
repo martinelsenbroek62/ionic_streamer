@@ -1,0 +1,32 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Finalize Team</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="ion-no-margin league-des w-100">
+    <ion-card-content class="p-0">
+      <ion-list>
+        <ion-item lines="none" *ngFor="let player of availablePlayers" class="list-player">
+          <ion-checkbox (ionChange)="addRemovePlayers(player.playerId)" [value]="player.playerId" checked="true"></ion-checkbox>
+          <ion-label class="ml-8">{{player.fName}} {{player.lName}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-list class="p-0"> 
+    <ion-item lines="none" class="ion-text-center">
+      <ion-buttons class="continue-b m-auto">
+        <button class="medium-button-primary mr-5" (click)="finalizePlayingXI()">Finalize</button>
+        <button class="medium-button-secondary ml-5" (click)="dismissModal()">Cancel</button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>

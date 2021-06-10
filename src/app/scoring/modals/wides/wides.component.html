@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Extras - Wides</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="extrasList">
+  <ion-card class="m-0 main-card" *ngIf="extrasAsGoodBall">
+    <ion-card-header>
+      <span class="f-14 bold">  Wide As Good Ball</span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="extrasList wides">
+        <ion-row>
+          <div (click)="addExtras('Good Wide',1)">
+            <ion-button class="btn" fill="outline">WD</ion-button></div>
+          <div (click)="addExtras('Good Wide',2)">
+            <ion-button class="btn" fill="outline">WD+1</ion-button></div>
+          <div (click)="addExtras('Good Wide',3)">
+            <ion-button class="btn" fill="outline">WD+2</ion-button></div>
+          <div (click)="addExtras('Good Wide',4)">
+            <ion-button class="btn" fill="outline">WD+3</ion-button></div>
+          <div (click)="addExtras('Good Wide',5)">
+            <ion-button class="btn" fill="outline">WD+4</ion-button></div>
+            <div (click)="addExtras('Good Wide',6)">
+              <ion-button class="btn" fill="outline">WD+5</ion-button></div>
+            <div (click)="addExtras('Good Wide',7)">
+              <ion-button class="btn" fill="outline">WD+6</ion-button></div>
+            <div (click)="addExtras('Good Wide',8)">
+              <ion-button class="btn" fill="outline">WD+7</ion-button></div>
+            <div (click)="addExtras('Good Wide',9)">
+              <ion-button class="btn" fill="outline">WD+8</ion-button></div>
+            <div (click)="addExtras('Good Wide',10)">
+              <ion-button class="btn" fill="outline">WD+9</ion-button></div>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col (click)="addExtras('Good Wide',6)">
+            <ion-button fill="outline">WD+5</ion-button></ion-col>
+          <ion-col (click)="addExtras('Good Wide',7)">
+            <ion-button fill="outline">WD+6</ion-button></ion-col>
+          <ion-col (click)="addExtras('Good Wide',8)">
+            <ion-button fill="outline">WD+7</ion-button></ion-col>
+          <ion-col (click)="addExtras('Good Wide',9)">
+            <ion-button fill="outline">WD+8</ion-button></ion-col>
+          <ion-col (click)="addExtras('Good Wide',10)">
+            <ion-button fill="outline">WD+9</ion-button></ion-col>
+        </ion-row> -->
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="m-0 main-card">
+    <ion-card-header>
+    <span class="f-14 bold">Wide</span>  
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid class="extrasList wides">
+        <ion-row>
+          <div (click)="addExtras('Wide',1)">
+            <ion-button class="btn" fill="outline">WD</ion-button></div>
+          <div (click)="addExtras('Wide',2)" >
+            <ion-button class="btn" fill="outline">WD+1</ion-button></div>
+          <div (click)="addExtras('Wide',3)" >
+            <ion-button class="btn" fill="outline">WD+2</ion-button></div>
+          <div (click)="addExtras('Wide',4)" >
+            <ion-button class="btn" fill="outline" >WD+3</ion-button></div>
+          <div (click)="addExtras('Wide',5)" >
+            <ion-button  class="btn" fill="outline">WD+4</ion-button></div>
+            <div (click)="addExtras('Wide',6)">
+              <ion-button  class="btn" fill="outline">WD+5</ion-button></div>
+            <div (click)="addExtras('Wide',7)">
+              <ion-button  class="btn" fill="outline">WD+6</ion-button></div>
+            <div (click)="addExtras('Wide',8)">
+              <ion-button  class="btn" fill="outline">WD+7</ion-button></div>
+            <div (click)="addExtras('Wide',9)">
+              <ion-button  class="btn" fill="outline">WD+8</ion-button></div>
+            <div (click)="addExtras('Wide',10)">
+              <ion-button  class="btn" fill="outline">WD+9</ion-button></div>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col (click)="addExtras('Wide',6)">
+            <ion-button  class="btn" fill="outline">WD+5</ion-button></ion-col>
+          <ion-col (click)="addExtras('Wide',7)">
+            <ion-button  class="btn" fill="outline">WD+6</ion-button></ion-col>
+          <ion-col (click)="addExtras('Wide',8)">
+            <ion-button  class="btn" fill="outline">WD+7</ion-button></ion-col>
+          <ion-col (click)="addExtras('Wide',9)">
+            <ion-button  class="btn" fill="outline">WD+8</ion-button></ion-col>
+          <ion-col (click)="addExtras('Wide',10)">
+            <ion-button  class="btn" fill="outline">WD+9</ion-button></ion-col>
+        </ion-row> -->
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item lines="none" class="submit">
+    <ion-button shape="round" (click)="dismissModal()">Cancel</ion-button>
+  </ion-item>
+</ion-content>

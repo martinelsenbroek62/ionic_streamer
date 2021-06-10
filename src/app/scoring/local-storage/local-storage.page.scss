@@ -1,0 +1,20 @@
+
+ion-content{
+    background-color: orange;
+}
+.match-item{
+    margin: 7px 10px 7px;
+    --background: var(--ion-color-light);
+    display: flex;
+    --padding-start: 5px;
+    border-radius: 5px;
+    --inner-padding-end: 0px;
+    img{
+        margin: 7px;
+        height: 45px;
+        width: 45px;
+    }
+    p{
+        margin: 2px 0px 2px;
+    }
+}

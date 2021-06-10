@@ -1,0 +1,110 @@
+.list-player{
+    font-size: 16px;
+    font-weight: 500;
+    ion-checkbox{
+        margin-right: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+app-add-players-club {
+   
+    .card{
+        margin-bottom: 10px;
+        .item .label{
+            text-align: left;
+        }
+        
+        margin-top: 8px;
+        .card-header{
+            background-color: var(--ion-color-primary);
+            color: white;
+            font-weight: bolder;
+        }
+        span{
+            color: white;
+        }
+        .button{
+            color: white;
+        }
+        .card-content{
+            background-color: var(--ion-color-light);
+            color: var(--ion-color-fontcolor);
+            font-weight: bolder;
+            .text-input{
+                border-bottom: 1px solid var(--ion-color-color4);
+                color: var(--ion-color-fontcolor);
+            }
+            .icon{
+                color: var(--ion-color-light);
+            }
+            h2{
+                color: var(--ion-color-fontcolor);
+            }
+            .list-dropdown{
+                background-color: var(--ion-color-primary);
+               
+                .label{
+                    color: var(--ion-color-light);
+                   
+                }
+                .item{
+                   
+                    border-bottom: 1px solid var(--ion-color-color5);
+                    padding: 5px;
+                }
+                
+            }
+        }
+    }
+    .item .label{
+        text-align: center;
+        color: var(--ion-color-fontcolor);
+    }
+    .button{
+        height: 38px;
+        margin: 5px 0 10px;
+        font-size: 16px;
+        &:nth-child(2){
+            background-color: var(--ion-color-secondary);
+        }
+    }
+
+    .selected-players h2{
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        background-color: var(--ion-color-bgcolor);
+        font-size: 1em;
+        padding: 5px;
+        margin: 0px 0px 5px 0;
+        margin-top: 0!important;
+        border-radius: 3px;
+        button{
+            background-color: var(--ion-color-secondary);
+            color: var(--ion-color-light);
+            border-radius: 3px;
+            line-height: inherit;
+            padding: 3px 6px;
+        }
+
+    }
+}
+
+.submit{
+    border-top: 0px!important;
+    justify-content: center;
+    display: grid;
+    padding: 10px 0px;
+    ion-button{
+        margin: 10px!important;
+    }
+
+    .cancel{
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 50px;
+    --background: #fff;
+    color: var(--ion-color-primary);
+    }
+
+}

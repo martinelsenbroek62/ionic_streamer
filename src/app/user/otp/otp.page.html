@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+       <ion-title>OTP Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+         <ion-row>
+             <ion-col size="12">
+                  <div class="verify">
+                      <h4>Verify  Your Phone Number </h4>
+                      <h5 *ngIf="mobileCode && phone"> +{{ mobileCode }} {{ phone }} </h5>
+                      <p>OTP has been sent to your mobile number. Please Verify</p>
+                  </div>
+                  <div style="width: 80%; margin: auto; display: block; text-align: center;">
+                       <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{ length: 6, placeholder: '*', allowNumbersOnly: true, inputClass: 'otp-input-class' }"></ng-otp-input>
+                   </div>
+                  <div style="margin-top: 40px; text-align: center;">
+                       <ion-button (click)="verify_now()" style="width: 60%;">Verify Now</ion-button> 
+                       <p style="text-align: center;">Did not get OTP? <b (click)="resend_otp()">Resend OTP</b></p>
+                  </div> 
+             </ion-col>
+         </ion-row>
+    </ion-grid>
+      
+</ion-content>

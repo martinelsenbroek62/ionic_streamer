@@ -1,0 +1,53 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Team Availability</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-buttons class="finalize" *ngIf="playersList.isCaptian && schedule.matchId <= 0">
+    <button block outline class="medium-button-secondary mr-5" (click)="openFinalizeTeamModal()">{{schedule.countOfPlayerStatus.isTeamFinalized? 'Edit Finalized Players':'Finalize Players'}}</button>
+  </ion-buttons>
+  <ion-card class="ion-no-margin main-card w-100">
+    <ion-card-header>
+      <ion-row>
+        <ion-col size="6" class="ion-text-left">Player Name</ion-col>
+        <ion-col size="2" class="ion-text-right"><span class="availabe"><ion-icon name="checkmark-sharp"></ion-icon></span></ion-col>
+        <ion-col size="2" class="ion-text-right"><span class="not-availabe"><ion-icon name="close"></ion-icon></span></ion-col>
+        <ion-col size="2" class="ion-text-right"><span class="not-sure"><ion-icon name="help"></ion-icon></span></ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content class="players-list">
+      <ng-container *ngFor="let player of playersList.fixturePlayerStatus; let i = index;">
+        <ion-radio-group [value]="playerRadio[i]" mode="md">
+          <ion-row>
+            <ion-col size="6" class="ion-text-left bold" color="dark">{{player.fName}} {{player.lName}}</ion-col>
+            <ion-col size="2" class="ion-text-center">
+              <ion-radio [disabled]="!playersList.isCaptian || schedule.matchId > 0" value="A" (click)="updatePlayerAvailability(player.playerId, 'A')"></ion-radio>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center">
+              <ion-radio [disabled]="!playersList.isCaptian || schedule.matchId > 0" value="NA" (click)="updatePlayerAvailability(player.playerId, 'NA')"></ion-radio>
+            </ion-col>
+            <ion-col size="2" class="ion-text-center">
+              <ion-radio [disabled]="!playersList.isCaptian || schedule.matchId > 0" value="NS" (click)="updatePlayerAvailability(player.playerId, 'NS')"></ion-radio>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+      </ng-container>
+    </ion-card-content>
+  </ion-card>
+  <!-- <ion-list> 
+    <ion-item lines="none" class="ion-margin-top ion-text-center">
+      <ion-buttons class="continue-b mt-5">
+        <button block outline class="medium-button-primary mr-5">Save</button>
+        <button block outline class="medium-button-secondary ml-5" (click)="dismissModal()">Cancel</button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list> -->
+</ion-content>

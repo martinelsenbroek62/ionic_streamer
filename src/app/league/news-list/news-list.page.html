@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="f-16 p-0">News</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let news of newsList" class="m-0">
+    <ion-row class="main-card" (click)="detailNews(news)">
+      <ion-col size="3">
+        <div class="img-frame">
+          <img class="main-img" [src]="ccUtil.RESOURCE_URL + news.image" onerror="this.src='assets/images/news.png'" />
+        </div>
+      </ion-col>
+      <ion-col size="9">
+        <div class="gallery-desc">
+          <p class="title-text bold f-16 m-0" [innerHTML]="news.title"></p>
+          <p class="title f-14 overflow-hidden" [innerHTML]="news.news"></p>
+          <p class="f-14 m-0"> {{news.date}} </p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

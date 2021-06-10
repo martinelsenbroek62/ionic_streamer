@@ -1,0 +1,211 @@
+// ion-content{
+//     background: var(--ion-color-inner);
+//     --background: var(--ion-color-light);
+// }
+// .toss-card-wrap {
+//     background: var(--ion-color-light);
+// }
+.submit{
+  justify-content: center;
+  display: grid;
+  ion-button{
+      margin: 10px;
+      --border-radius: 50px;
+      width: 80px;
+
+  }
+}
+  .cancel{
+  border: 2px solid var(--ion-color-primary);
+  border-radius: 50px;
+  --background: #fff;
+  color: var(--ion-color-primary);
+  --color: var(--ion-color-primary);
+  }
+.toss-card-wrap ion-card {
+  margin-right: 0px;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  border-radius: 50px;
+  padding-left: 5px;
+  height: 35px;
+  background: var(--ion-color-light);
+}
+.toss-card-wrap ion-icon {
+    font-size: 1rem;
+}
+.toss-stage{
+  border-left: 6px solid var(--ion-color-secondary);
+  border-right: 6px solid var(--ion-color-secondary);
+  padding-left: 10px;
+}
+.teams{
+  display: flex;
+  align-self: center;
+}
+.toss-card-wrap{
+  padding: 10px 0px;
+    background: #f3f3f3;
+    margin: 12px;
+    border-radius: 10px;
+}
+.toss-card-wrap img{
+  border-radius: 50%;
+  margin: 0.1rem 0px;
+  height: 35px;
+}
+.select-teams{
+  justify-content: flex-end;
+  display: flex;
+}
+.selecting{
+  box-shadow: none;
+  margin-right: 0px!important;
+  border-radius: 25px;
+  width: 95px;
+  padding-left: 0px!important;
+  justify-content: center;
+}
+.selecting ion-item {
+    font-size: 1.1rem;
+    margin: 0px;
+    height: 35px;
+    --min-height: 20px;
+    line-height: 26px;
+    --inner-border-width: 0px;
+}
+.selecting ion-item ion-label{
+  margin: 0px;
+  padding-top: 3px;
+  height: 35px;
+}
+
+.padding-top-0 {
+    padding-top: 0;
+}
+
+// Start: toss coin related CSS
+#coin {
+    position: relative;
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
+  #coin div {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #dd5727 40%, #1e2023 calc(66% + 1px));
+    border: 5px solid #fff!important;
+    border-radius: 50%;
+    box-shadow: inset 0 0 45px rgb(255 255 255 / 30%), 0 12px 20px -10px rgb(0 0 0 / 40%);
+  }
+  .side-a {
+    background-color: var(--ion-color-primary);
+  }
+  .side-b {
+    background-color: var(--ion-color-secondary);
+  }
+  #coin {
+    transition: -webkit-transform 1s ease-in;
+    transform-style: preserve-3d;
+    h3{
+      top: 22px;
+      color: #fff;
+      font-size: 16px;
+      position: relative;
+      text-align: center;
+    }
+  }
+  .team-name{
+    --inner-border-width: 0px;
+    ion-label{
+      width: 130px;
+    }
+  }
+  #coin div {
+    position: absolute;
+    backface-visibility: hidden;
+  }
+  .side-a {
+    z-index: 100;
+  }
+  .side-b {
+    transform: rotateY(-180deg);
+  }
+  #coin.heads {
+    -webkit-animation: flipHeads 3s ease-out forwards;
+    -moz-animation: flipHeads 3s ease-out forwards;
+    -o-animation: flipHeads 3s ease-out forwards;
+    animation: flipHeads 3s ease-out forwards;
+  }
+  #coin.tails {
+    -webkit-animation: flipTails 3s ease-out forwards;
+    -moz-animation: flipTails 3s ease-out forwards;
+    -o-animation: flipTails 3s ease-out forwards;
+    animation: flipTails 3s ease-out forwards;
+  }
+  @keyframes flipHeads {
+    from {
+      -webkit-transform: rotateY(0);
+      -moz-transform: rotateY(0);
+      transform: rotateY(0);
+    }
+    to {
+      -webkit-transform: rotateY(1800deg);
+      -moz-transform: rotateY(1800deg);
+      transform: rotateY(1800deg);
+    }
+  }
+  @keyframes flipTails {
+    from {
+      -webkit-transform: rotateY(0);
+      -moz-transform: rotateY(0);
+      transform: rotateY(0);
+    }
+    to {
+      -webkit-transform: rotateY(1980deg);
+      -moz-transform: rotateY(1980deg);
+      transform: rotateY(1980deg);
+    }
+  }
+  .toolbar-background {
+    background-color: white;
+  }
+  h2{
+    color: var(--ion-color-primary);
+    text-align: center;
+    font-size: 16px;
+  }
+
+  #coin div span {
+      position: relative;
+      top: 40px;
+      padding: 0;
+      left: 15px;
+      text-align: center;
+      font-size: 25px;
+      line-height: 25px;
+      font-weight: bolder;
+  }
+  ion-card.card-header{
+      text-align: center;
+      .icon{
+          font-size: 3em;
+          color: white;
+      }
+  }
+//   ion-card.selected{
+//     background-color: var(--ion-color-primary);
+//   }
+//   ion-card {
+//     background-color: var(--ion-color-light);
+//     .card-content{
+//         color: white;
+//         font-size: 2em;
+//         text-align: center; 
+//     }
+//   }
+// End: toss coin related CSS

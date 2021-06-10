@@ -1,0 +1,15 @@
+
+ion-content{
+    position:absolute;
+}
+.detail-images{
+    ion-card{
+        box-shadow: none;
+        img{
+            border-radius: 5px;
+            height: 100px;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+}

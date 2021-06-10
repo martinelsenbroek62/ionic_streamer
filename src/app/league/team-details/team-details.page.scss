@@ -1,0 +1,294 @@
+
+
+ion-content{
+    background: var(--ion-color-inner);
+}
+
+ion-slides {
+    height: 100%;
+    ion-slide {
+        min-height: calc(100vh - 200px);
+        align-items: flex-start;
+        background-color: var(--ion-color-medium);
+    }
+    display: contents; // this style is required to get full height of contents height
+}
+ion-segment {
+    display: flex;
+    white-space: nowrap;
+    font-size: 0;
+    overflow: auto;
+    background: var(--ion-color-white);
+    justify-content: space-between;
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+    }
+    ion-segment-button.segment-button {
+        display: inline-block;
+        font-weight: 600;
+        width: auto!important;
+        flex: auto!important;
+    }
+    ion-label {
+        font-size: 14px;
+        margin:5px;
+        text-transform: capitalize;
+        @media only screen and (max-width: 320px) {
+            font-size: 10px;
+        } 
+        line-height: 33px;
+        margin-bottom: -4px;
+    }
+}
+
+.segment-button-checked {
+    color:var(--ion-color-dark) !important;
+    font-weight: bolder !important;
+    --color-checked: none !important;
+    border-bottom: 5px solid var(--ion-color-primary) !important;
+}
+// .segment-button-checked ion-label {
+//   border-bottom: 5px solid var(--ion-color-primary) !important;
+// }
+
+::ng-deep .wider-popover
+{
+  --width: 97%;
+  --max-width: 400px;
+}
+.league-des{
+  box-shadow: none;
+  border-bottom: 6px solid var(--ion-color-medium);
+  border-radius: 0px;
+  ion-card-content{
+    padding: 5px 15px;
+  }
+}
+.news-card {
+  ion-card{
+    margin: 0px 10px;
+  }
+  .gallery-desc{
+    position: absolute;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.04), #000);
+    bottom: 0px;
+    width: 100%;
+    color: #fff;
+    text-align: left;
+    padding: 30px 10px 0px;
+    p{
+      margin-bottom: 10px;
+      margin-top: 0px;
+    }
+  }
+}
+.news{
+      display: flex;
+    justify-content: space-between;
+    padding: 15px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    button{
+      padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 14px;
+    color: var(--ion-color-secondary);
+    font-weight: bold;
+    background: #fff;
+    border: 2px solid var(--ion-color-secondary);
+    }
+}
+
+.club-info{
+    ion-row{
+        &:nth-child(1){
+            border-bottom: 1px solid #f3f3f3;
+        }
+        ion-col{
+            
+            p{
+                color: var(--ion-color-tertiary);
+            }
+            h4{
+                color: var(--ion-color-dark);
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 27px;
+            }
+        }
+    }
+}
+
+.club-info-header{
+  position: relative;
+   .b-club{
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    background-position: center;
+    background-size: cover;
+   }
+   .bg-img{
+    position: absolute;
+    width: 100%;
+    background-image: linear-gradient(rgb(255 255 255 / 4%), #000);
+    top: 0px;
+    height: 110px;
+   }
+   .name-club{
+     padding: 5px 15px;
+     ion-item{
+      --padding-start: 0px;
+     }
+   }
+  .profile-img{
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+    margin-top: -40px;
+    margin-left: 15px;
+    box-shadow: 0px 4px 4px var(--ion-color-medium);
+    position: relative;
+    z-index: 99999999999;
+   }
+}
+.select-series-teams{
+  margin-top: 7px;
+  ion-select{
+    text-align: left;
+    border-right: 1px solid var(--ion-color-medium);
+  }
+}
+
+
+.img-frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
+
+    .main-img {
+      min-width: 100%;
+      object-fit: cover;
+      min-height: 100%;
+    }
+  }
+
+.sponsors{
+    background-color: #fff;
+    padding: 0 5px;
+ h5{
+  padding: 10px 10px;
+ }
+ ion-chip:nth-child(3n+3) {  
+  color:green;
+}
+    ion-row {
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+
+      ion-col {
+        flex: 0 0 auto;
+        width: 25%;
+        margin: 6px 10px 8px 0;
+
+        // .img-div {
+        //   .newsBgImage {
+        //     background-size: cover;
+        //     background-position: center;
+        //     background-repeat: no-repeat;
+        //     width: 100%;
+        //     height: 130px;
+        //   }
+
+        //   .news-desc {
+        //     padding: 10px;
+        //     min-height: 67px;
+
+        //     .title {
+        //       color: #26578b;
+        //       font-weight: 500;
+        //     }
+
+        //     .newsDesc {
+        //       span {
+        //         white-space: normal;
+        //       }
+        //     }
+        //   }
+        // }
+      }
+    }
+}
+
+.newsFeeds {
+    background-color: #fff;
+    ion-row {
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      border-bottom: 6px solid var(--ion-color-medium);
+      ion-col {
+        flex: 0 0 auto;
+        width: 80%;
+        margin-bottom: 10px;
+        padding-top: 0px;
+
+        ion-card {
+          .newsBgImage {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 130px;
+          }
+
+          .news-desc {
+            padding: 10px;
+            min-height: 67px;
+
+            .title {
+              color: #26578b;
+              font-weight: 500;
+            }
+
+            .newsDesc {
+              span {
+                white-space: normal;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+.league-table{
+  font-size: 12px;
+  color: #000;
+  box-shadow: none;
+    border-radius: 0px;
+    .head{
+      font-weight: 600;
+    }
+  ion-col{
+    padding: 15px 0px;
+  }
+  .team-name{
+    font-weight: 600;
+  }
+}
+.captain{
+  display: flex;
+    p{
+      color: #9597A1;
+      font-size: 12px;
+    }
+    b{
+      color: #000;
+    }
+  }

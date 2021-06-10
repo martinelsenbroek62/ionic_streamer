@@ -1,0 +1,83 @@
+<ion-card class="w-100 main-card live-batsman-bowler">
+  <!-- Innings CONTENT -->
+  <ion-item class="team-name" (click)="activeTeam=!activeTeam">
+    <ion-label>{{inningsBalls.teamName}}</ion-label>
+    <ion-icon name="chevron-forward-circle" color="tertiary" *ngIf="!activeTeam"></ion-icon>
+    <ion-icon name="chevron-up-circle" color="tertiary" *ngIf="activeTeam"></ion-icon>
+  </ion-item>
+  <!-- teamOne scores content -->
+  <ng-container *ngIf="activeTeam">
+    <ng-container *ngIf="inningsBalls">
+      <!-- reverse an arry to show latest first -->
+      <ng-container *ngFor="let overMap of ccUtil.objectToArray(inningsBalls.oversMap).slice().reverse()">
+        <!-- overMap iterations - details of each over displayed here -->
+        <ng-container *ngIf="!hideHeaders">
+          <ion-item color="secondary">
+            <ion-text slot="start">
+              Over {{overMap.overNum + 1}} ({{overMap.runs }} Runs)
+            </ion-text>
+            <ion-text slot="end">
+              RCB: {{overMap.rcb}}
+            </ion-text>
+          </ion-item>
+          <ion-row lines="none" color="light" class="f-14 bg-light pl-8 pr-8 over-end">
+            <ion-col size="6" class="p-0">
+              <ion-row class="border-right">
+                <ion-col size="6" class="ion-text-start">
+                  {{overMap.batsmanName}}
+                </ion-col>
+                <ion-col size="6" class="ion-text-end" >
+                <b> {{overMap.batsmanRuns}}({{overMap.batsmanBalls}})</b>
+                </ion-col>
+                <ion-col size="6" class="ion-text-start">
+                  {{overMap.bowlerName}}
+                </ion-col>
+                <ion-col size="6" class="ion-text-end">
+                  <b> {{ccUtil.formulaOver(overMap.bowlerBalls)}}-{{overMap.bowlerMaidens}}-{{overMap.bowlerRuns}}-{{overMap.bowlerWickets}}</b>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6" class="p-0">
+              <ion-row class="border-left">
+                <ion-col size="6" class="ion-text-start pr-0">
+                  {{overMap.runnerName}}
+                </ion-col>
+                <ion-col size="6" class="ion-text-end pl-0">
+                  <b> {{overMap.runnerRuns}}({{overMap.runnerBalls}})</b>
+                </ion-col>
+                <ion-col size="6" class="ion-text-start">
+                  Run Rate: 
+                </ion-col>
+                <ion-col size="6" class="ion-text-end">
+                  <b> {{overMap.runRate}}</b>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+        <!-- reverse an arry to show latest first -->
+        <ng-container *ngFor="let ballMap of ccUtil.objectToArray(overMap.ballsMap).slice().reverse()">
+          <ion-item lines="none" class="f-14" *ngIf="filterKey == 'all' || (filterKey == 'wickets' && ballMap.outPerson) || (filterKey == 'fours' && ballMap.isFour) || (filterKey == 'sixes' && ballMap.isSix)">
+            <!-- filterKey value could be 'all', 'wickets', 'fours' and 'sixes' -->
+            <ion-col size="2" class="ion-text-start">
+              <ion-text class="ion-text-center">
+                <strong>{{ballMap.over}}.{{ballMap.ball}}</strong>
+                <!-- display fours -->
+                <h6 class="four" *ngIf="ballMap.isFour">4</h6>
+                <h6 class="six" *ngIf="ballMap.isSix">6</h6>
+                <!-- display runs -->
+                <h6 *ngIf="!ballMap.isFour && !ballMap.isSix && !ballMap.outPerson">{{ballMap.runs}}</h6>
+                <!-- display wickets -->
+                <h6 class="wicket" *ngIf="ballMap.outPerson">W</h6>
+              </ion-text>
+            </ion-col>
+            <ion-col size="10" class="ion-text-start">
+              <!-- display commentry -->
+              <ion-text [innerHTML]="ballMap.commentary"></ion-text>
+            </ion-col>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ion-card>

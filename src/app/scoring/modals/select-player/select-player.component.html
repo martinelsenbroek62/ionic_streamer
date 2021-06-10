@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-14">
+      {{isEdit ? 'Replace the' : 'Select'}} {{playerRole}}
+    </ion-title>
+    <ion-button slot="end" class="add-pay" (click)="addPlayer()" icon-end clear item-end>
+      Add Player
+    </ion-button>
+    <!-- <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()" class="close-btn">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="text-center">
+  <!-- iterate playerList -->
+  <ng-container *ngIf="playerList">
+    <ion-item lines="none" class="select-captain">
+      <ion-label class="f-14">Select {{playerRole}}</ion-label>
+      <ion-select class="f-14" name="selectedPlayerList" id="selectedPlayerList" [(ngModel)]="selectedPlayer">
+        <ion-select-option [value]="item.key" *ngFor="let item of playerList | keyvalue">
+          {{item.value}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+
+    <ion-grid class="list-select-radiobox" *ngIf="isEdit && (playerRole=='Bowler' || playerRole=='Previous Bowler')">
+      <ion-radio-group value="currentOver" [(ngModel)]="selectedOvers">
+        <ion-row class="displayinradio">
+          <ion-col class="align-items">
+            <ion-radio value="currentOver" checked="checked"></ion-radio>
+            <ion-label class="ml-5">Current Over</ion-label>
+          </ion-col>
+          <ion-col class="align-items">
+            <ion-radio value="allOvers"></ion-radio>
+            <ion-label class="ml-5">All Overs</ion-label>
+          </ion-col>              
+        </ion-row>
+      </ion-radio-group>
+    </ion-grid>
+  </ng-container>
+</ion-content>
+
+<ion-footer>
+  <ion-item class="submit m-0" lines="none">
+  <ion-button shape="round" class="cancel" (click)="dismissModal()">Cancel</ion-button>
+  <ion-button class="secondary" (click)="saveAndDismissModal()">Save</ion-button>
+</ion-item>
+</ion-footer>

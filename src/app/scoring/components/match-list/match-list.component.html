@@ -1,0 +1,45 @@
+<!-- Start: template to display Matches detail -->
+<ng-container *ngFor="let match of matchList">
+  <ion-card class="main-card" (click)="onCardClick($event, match)">
+    <ion-item lines="none" color="light">
+      <ion-label size="9" class="ion-align-items-center ion-no-margin">
+        <p class="card-header-font f-14">
+          {{match.date}}
+        </p>
+        <ng-container *ngIf="match.location">
+          <ion-label class="f-11">{{match.location}} </ion-label>
+        </ng-container>
+      </ion-label>
+      <ion-label size="3" class="ion-text-end f-14 color-blue m-0 bold">
+        {{match.time}}
+      </ion-label>
+    </ion-item>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-text-left f-12 ion-padding-horizontal pb-0 pt-0" size="12">
+            {{match.seriesName}}
+          </ion-col>
+        </ion-row>
+        <ion-item lines="none" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="ccUtil.RESOURCE_URL + match.t1_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + match.t1_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+          </ion-avatar>
+          <ion-label class="card-header-font f-14">{{match.teamOneName}}</ion-label>
+          <!-- add Youtube link -->
+          <ion-button slot="end" fill="clear" color="primary" (click)="openYoutubeLink(match.youtubePublicUrl)" *ngIf="match.youtubePublicUrl">
+            <!-- stream Youtube URL button - to open stream in Youtube -->
+            <ion-icon name="logo-youtube" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item lines="none" class="matches-list">
+          <ion-avatar slot="start">
+            <img class="img-size" [src]="ccUtil.RESOURCE_URL + match.t2_logo_file_path" [style.background-image]="'url(ccUtil.RESOURCE_URL + match.t2_logo_file_path)'" onError="this.src='./assets/images/noTeam.png'">
+          </ion-avatar>
+          <ion-label class="card-header-font f-14">{{match.teamTwoName}}</ion-label>
+        </ion-item>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ng-container>
+<!-- End: template to display Matches detail -->

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1003131010427",
+    "firebase_url": "https://cricclubstestapp.firebaseio.com",
+    "project_id": "cricclubstestapp",
+    "storage_bucket": "cricclubstestapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003131010427:android:4cbfe0243e1f5524ebd1de",
+        "android_client_info": {
+          "package_name": "com.cricclubs.connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003131010427-o1vufp4brcgu18lpg326v95deo5ehppg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa_nIv_ZdO0_NUbojroX3hAijzalw3QGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003131010427-o1vufp4brcgu18lpg326v95deo5ehppg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1003131010427-ck38do08vkb472isv1t5io50mam0n80v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cricclubs.connect",
+                "app_store_id": "1548237864"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,56 @@
+.live-batsman-bowler ion-card-header {
+    background-color: #fff;
+    min-height: 42px!important;
+    border-bottom: 1px solid #dddddd;
+}
+.live-batsman-bowler{
+    border-bottom: 0px!important;
+    ion-icon{
+        color: #ddd!important;
+    }
+}
+.result{
+    color: #000;
+    font-weight: 400;
+}
+.over-end{
+    background: #ddd;
+    color: #000;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    ion-col{
+        padding: 6px 5px;
+    }
+}
+.border-left{
+   border-left: 1px solid #fff;
+   margin: 5px 0px;
+}
+
+.border-right{
+    border-right: 1px solid #fff;
+    margin: 8px 0px;
+ }
+h6{
+    width: 25px;
+    height: 25px;
+    background: #979797;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-size: 14px;
+    display: flex;
+    color: #fff;
+    margin: 5px 0px;
+    align-items: center;
+    justify-content: center;
+}
+.over-start{
+    border-bottom: 7px solid #ddd;
+}
+.team-name{
+    margin: 0px 15px;
+    --inner-padding-start: 0px;
+    --padding-start: 0px;
+    --inner-padding-end: 0px;
+  }

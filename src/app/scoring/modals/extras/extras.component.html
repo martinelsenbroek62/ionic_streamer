@@ -1,0 +1,397 @@
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="f-16">Extras</ion-title>
+    <ion-buttons collapse="true" slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="extrasList">
+  <ion-card class="main-card">
+    <ion-card-header color="light f-14 bold">
+      Runs
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',0)">0</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',1)">1</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',2)">2</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',3)">3</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="moreRuns=!moreRuns">
+              <ion-icon name="ellipsis-horizontal"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-row>
+        <ion-row *ngIf="moreRuns">
+          <div>
+            <ion-button class="btn" fill="outline" (click)="isBoundary('Good Ball',4)">4</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',5)">5</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="isBoundary('Good Ball',6)">6</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',7)">7</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',8)">8</ion-button>
+          </div>
+        </ion-row>
+        <ion-row *ngIf="moreRuns">
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',9)">9</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',10)">10</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',11)">11</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',12)">12</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',13)">13</ion-button>
+          </div>
+        </ion-row>
+        <ion-row *ngIf="moreRuns">
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-1)">-1</ion-button>
+          </div>        
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-2)">-2</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-3)">-3</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-4)">-4</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-5)">-5</ion-button>
+          </div>
+        </ion-row>
+        <ion-row *ngIf="moreRuns">
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-6)">-6</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-7)">-7</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-8)">-8</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-9)">-9</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good Ball',-10)">-10</ion-button>
+          </div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="main-card">
+    <ion-card-header color="light f-14 bold">Byes</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',1)">b1</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',2)">b2</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',3)">b3</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',4)">b4</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="moreByes=!moreByes"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreByes">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',5)">b5</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',6)">b6</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',7)">b7</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',8)">b8</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Bye',9)">b9</ion-button></div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="main-card"> 
+    <ion-card-header color="light f-14 bold">Leg Byes</ion-card-header>
+    <ion-card-content>
+      <ion-grid class="extrasList">
+        <ion-row>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',1)">lb1</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',2)">lb2</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',3)">lb3</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',4)">lb4</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="moreLegByes=!moreLegByes"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreLegByes">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',5)">lb5</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',6)">lb6</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',7)">lb7</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',8)">lb8</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Leg Bye',9)">lb9</ion-button></div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="extrasAsGoodBall" class="main-card">
+    <ion-card-header color="light f-14 bold">Wide As Good Ball</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',1)">WD</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',2)">WD+1</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',3)">WD+2</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',4)">WD+3</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="moreGoodWides=!moreGoodWides"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreGoodWides">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',5)">WD+4</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',6)">WD+5</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',7)">WD+6</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',8)">WD+7</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Good Wide',9)">WD+8</ion-button></div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="main-card">
+    <ion-card-header color="light f-14 bold">Wide</ion-card-header>
+    <ion-card-content>
+      <ion-grid class="extrasList">
+        <ion-row>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',1)">WD</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',2)">WD+1</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',3)">WD+2</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',4)">WD+3</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="moreWides=!moreWides"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreWides">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',5)">WD+4</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',6)">WD+5</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',7)">WD+6</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',8)">WD+7</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Wide',9)">WD+8</ion-button></div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card class="radio-btns-card">
+    <ion-grid>
+      <ion-row radio-group class="displayinradio">
+        <div-5>
+          <ion-radio [value]="runsOfBat" (click)="getExtraBallType('runsOfBat')" checked></ion-radio>
+          <ion-label>Off the Bat</ion-label>
+        </div-5>
+        <div-3>
+          <ion-radio [value]="bye" (click)="getExtraBallType('bye')"></ion-radio>
+          <ion-label>Bye</ion-label>
+        </div-3>
+        <div-4>
+          <ion-radio [value]="legBye" (click)="getExtraBallType('legBye')"></ion-radio>
+          <ion-label>Leg Bye</ion-label>
+        </div-4>
+      </ion-row>      
+    </ion-grid>
+  </ion-card> -->
+
+  <ion-card *ngIf="extrasAsGoodBall" class="noballbtns main-card">
+    <ion-card-header color="light f-14 bold">No Ball As Good Ball</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-radio-group value="extraBallType" [(ngModel)]="extraBallType">
+          <ion-row class="displayinradio">
+            <ion-col class="align-items justify-center-left" size="4" (click)="getExtraBallType('goodRunsOfBat', 'goodBall')">
+              <ion-radio [value]="'runsOfBat'" checked="checked"></ion-radio>
+              <ion-label class="ml-5">Off the Bat</ion-label>
+            </ion-col>
+            <ion-col class="align-items justify-center-center" size="4" (click)="getExtraBallType('goodBye', 'goodBall')">
+              <ion-radio [value]="'bye'"></ion-radio>
+              <ion-label class="ml-5">Bye</ion-label>
+            </ion-col>
+            <ion-col class="align-items justify-center-right" size="4" (click)="getExtraBallType('goodLegBye', 'goodBall')">
+              <ion-radio [value]="'legBye'"></ion-radio>
+              <ion-label class="ml-5">Leg Bye</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+        <ion-row>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',1)" [disabled]="extraGoodBallType == 'goodBye' || extraGoodBallType == 'goodLegBye'">NB</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',2)">NB+1</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',3)">NB+2</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',4)">NB+3</ion-button>
+          </div>   
+          <div > <ion-button class="btn" fill="outline" (click)="moreGoodNoBallOfBat=!moreGoodNoBallOfBat"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>       
+        </ion-row>
+        <ion-row *ngIf="moreGoodNoBallOfBat"> 
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',5)">NB+4</ion-button>
+          </div>       
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',6)">NB+5</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',7)">NB+6</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',8)">NB+7</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',9)">NB+8</ion-button>
+          </div>
+          <!-- <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('Good No Ball',10)">NB+9</ion-button>
+          </div> -->
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="noballbtns main-card">
+    <ion-card-header color="light bold f-14">No Ball</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-radio-group value="extraBallType" [(ngModel)]="extraBallType">
+          <ion-row radio-group class="displayinradio">
+            <ion-col class="align-items" size="4" (click)="getExtraBallType('runsOfBat', 'normalBall')">
+              <ion-radio [value]="'runsOfBat'" checked="checked"></ion-radio>
+              <ion-label class="ml-5">Off the Bat</ion-label>
+            </ion-col>
+            <ion-col class="align-items" size="4" (click)="getExtraBallType('bye', 'normalBall')">
+              <ion-radio [value]="'bye'"></ion-radio>
+              <ion-label class="ml-5">Bye</ion-label>
+            </ion-col>
+            <ion-col class="align-items" size="4" (click)="getExtraBallType('legBye', 'normalBall')">
+              <ion-radio [value]="'legBye'"></ion-radio>
+              <ion-label class="ml-5">Leg Bye</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-radio-group>
+        <ion-row>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',1)" [disabled]="extraBallType == 'bye' || extraBallType == 'legBye'">NB</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',2)">NB+1</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',3)">NB+2</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',4)">NB+3</ion-button>
+          </div>        
+          <div > <ion-button class="btn" fill="outline" (click)="moreNoBallOfBat=!moreNoBallOfBat"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreNoBallOfBat"> 
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',5)">NB+4</ion-button>
+          </div>       
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',6)">NB+5</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',7)">NB+6</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',8)">NB+7</ion-button>
+          </div>
+          <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',9)">NB+8</ion-button>
+          </div>
+          <!-- <div>
+            <ion-button class="btn" fill="outline" (click)="addExtras('No Ball',10)">NB+9</ion-button>
+          </div>           -->
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="main-card">
+    <ion-card-header color="light f-14 bold">Penalties +</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',1)">+P1</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',2)">+P2</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',3)">+P3</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',4)">+P4</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="moreAddPenalties=!moreAddPenalties"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreAddPenalties">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',5)">+P5</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',6)">+P6</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',7)">+P7</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',8)">+P8</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',9)">+P9</ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreAddPenalties">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',10)">+P10</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',20)">+P20</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',50)">+P50</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',100)">+P100</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Add Penalties',150)">+P150</ion-button></div>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="main-card">
+    <ion-card-header color="light f-14 bold">Penalties -</ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',1)">-P1</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',2)">-P2</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',3)">-P3</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',4)">-P4</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="moreRemovePenalties=!moreRemovePenalties"><ion-icon name="ellipsis-horizontal"></ion-icon></ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreRemovePenalties">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',5)">-P5</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',6)">-P6</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',7)">-P7</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',8)">-P8</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',9)">-P9</ion-button></div>
+        </ion-row>
+        <ion-row *ngIf="moreRemovePenalties">
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',10)">-P10</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',20)">-P20</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',50)">-P50</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',100)">-P100</ion-button></div>
+          <div><ion-button class="btn" fill="outline" (click)="addExtras('Remove Penalties',150)">-P150</ion-button></div>
+        </ion-row>
+      </ion-grid> 
+    </ion-card-content>
+  </ion-card>
+                
+  <ion-item lines="none" class="submit">
+    <ion-button shape="round" (click)="dismissModal()">Cancel</ion-button>
+  </ion-item>
+  
+</ion-content>
